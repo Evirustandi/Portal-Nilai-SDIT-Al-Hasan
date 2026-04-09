@@ -1,0 +1,1933 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal Nilai STS — SD IT Al-Hasan</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f4f8; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+  .wrap { width: 100%; max-width: 520px; }
+  .header { text-align: center; margin-bottom: 1.5rem; }
+  .header .sekolah { font-size: 13px; color: #666; }
+  .header h1 { font-size: 22px; font-weight: 700; color: #185FA5; margin: 4px 0 2px; }
+  .header .sub { font-size: 13px; color: #888; }
+  .card { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  label { display: block; font-size: 13px; color: #555; margin-bottom: 5px; font-weight: 500; }
+  input { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px; margin-bottom: 1rem; outline: none; transition: border 0.2s; }
+  input:focus { border-color: #185FA5; }
+  .btn { width: 100%; padding: 11px; background: #185FA5; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+  .btn:hover { background: #0C447C; }
+  .error { background: #fff5f5; border: 1px solid #fcc; color: #c0392b; border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-bottom: 1rem; display: none; }
+  .info-siswa { display: flex; align-items: center; gap: 12px; margin-bottom: 1.2rem; padding-bottom: 1rem; border-bottom: 1px solid #eee; }
+  .avatar { width: 46px; height: 46px; border-radius: 50%; background: #E6F1FB; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; color: #185FA5; flex-shrink: 0; }
+  .nama { font-size: 16px; font-weight: 600; }
+  .kelas { font-size: 13px; color: #888; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 1rem; }
+  th { text-align: left; font-size: 12px; color: #888; padding: 6px 8px; border-bottom: 2px solid #eee; }
+  td { padding: 9px 8px; border-bottom: 1px solid #f0f0f0; }
+  .nilai-num { font-weight: 600; }
+  .nilai-tinggi { color: #0F6E56; }
+  .nilai-sedang { color: #BA7517; }
+  .nilai-rendah { color: #A32D2D; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .tuntas { background: #E1F5EE; color: #0F6E56; }
+  .belum { background: #FEF0F0; color: #A32D2D; }
+  .rata-row td { font-weight: 700; background: #f7f9fc; }
+  .back { width: 100%; padding: 9px; background: none; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; color: #666; cursor: pointer; }
+  .back:hover { background: #f5f5f5; }
+  .warning { background: #fffbea; border: 1px solid #f0d060; color: #7a5c00; border-radius: 8px; padding: 8px 12px; font-size: 12px; margin-bottom: 1rem; display: none; }
+  footer { text-align: center; margin-top: 1rem; font-size: 11px; color: #bbb; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="sekolah">SD Islam Terpadu Al-Hasan — Bojonggenteng</div>
+    <h1>Portal Nilai STS</h1>
+    <div class="sub">Sumatif Tengah Semester 2 &bull; Tahun Pelajaran 2025/2026</div>
+  </div>
+
+  <div class="card" id="form-login">
+    <div class="error" id="pesan-error">Data tidak ditemukan. Periksa kembali NISN dan tanggal lahir.</div>
+    <label>NISN Siswa</label>
+    <input type="text" id="nisn" placeholder="Masukkan NISN siswa" inputmode="numeric" maxlength="12">
+    <label>Tanggal Lahir Siswa</label>
+    <input type="date" id="tgl-lahir">
+    <button class="btn" onclick="cariNilai()">Lihat Nilai</button>
+  </div>
+
+  <div class="card" id="hasil" style="display:none">
+    <div class="warning" id="pesan-warning"></div>
+    <div class="info-siswa">
+      <div class="avatar" id="inisial"></div>
+      <div>
+        <div class="nama" id="nama-siswa"></div>
+        <div class="kelas" id="info-kelas"></div>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Mata Pelajaran</th>
+          <th style="text-align:center">Nilai</th>
+          <th style="text-align:center">KKM</th>
+          <th style="text-align:center">Status</th>
+        </tr>
+      </thead>
+      <tbody id="isi-nilai"></tbody>
+    </table>
+    <button class="back" onclick="kembali()">&#8592; Kembali</button>
+  </div>
+
+  <footer>SD IT Al-Hasan &bull; TA 2025/2026</footer>
+</div>
+
+<script>
+const DATA = [
+  {
+    "nisn": "3177667971",
+    "tglLahir": "2017-05-25",
+    "nama": "Abdilah Abqori",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 77,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 69,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 74,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 71,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 71,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 79,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 75,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3164685720",
+    "tglLahir": "2016-10-12",
+    "nama": "Adreena Azkayra Aurellia",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 76,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 74,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 69,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 71,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 81,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 75,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3154530949",
+    "tglLahir": "2015-12-02",
+    "nama": "Afdhal Az-Zikra",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 79,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 80,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 70,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 71,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 79,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 75,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3177567596",
+    "tglLahir": "2017-01-19",
+    "nama": "Agista Yanwarija Pratama",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 69,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 69,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 74,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 74,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3179314654",
+    "tglLahir": "2017-04-18",
+    "nama": "Allesia Putri Lukman",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 80,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 79,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 74,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 80,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 71,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 77,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 74,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 73,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3163001520",
+    "tglLahir": "2016-04-21",
+    "nama": "Aqillah Muthi",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 82,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 87,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 86,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 84,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 74,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 82,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 83,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 77,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3176433492",
+    "tglLahir": "2017-07-31",
+    "nama": "Arghani Akbar Sidiq",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 83,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 87,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 81,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 91,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 84,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 87,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 80,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 82,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3177901861",
+    "tglLahir": "2017-04-18",
+    "nama": "Clara Nathania",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 84,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 90,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 82,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 81,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 88,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 81,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 82,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 79,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 79,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3179692512",
+    "tglLahir": "2017-01-02",
+    "nama": "Diva Alicya",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 91,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 89,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 84,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 87,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 77,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 82,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 80,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 86,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 82,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 83,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3166684275",
+    "tglLahir": "2016-04-09",
+    "nama": "Faiz Rajba Al Arkhan",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 82,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 83,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 86,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 89,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 74,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 89,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 83,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 76,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 85,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3177493544",
+    "tglLahir": "2017-04-17",
+    "nama": "Hafiza Mardiani",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 77,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 91,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 87,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 76,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 74,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 80,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 76,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3163190154",
+    "tglLahir": "2016-08-13",
+    "nama": "Hamzah Alivandra",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 90,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 87,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 85,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 87,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 79,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 84,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 84,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 81,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 79,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 88,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3162905835",
+    "tglLahir": "2016-07-17",
+    "nama": "Hasna Alesha Noufalin",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 82,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 80,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 82,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 88,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 78,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 80,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 74,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 79,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3165399012",
+    "tglLahir": "2016-09-29",
+    "nama": "Humaira Sholiha Alhakim",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 90,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 92,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 86,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 79,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 83,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 84,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 86,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 74,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 86,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3178380790",
+    "tglLahir": "2017-07-05",
+    "nama": "Kenzio Arsakha Putra Widya",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 71,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 71,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 74,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3167316379",
+    "tglLahir": "2016-05-10",
+    "nama": "Latania Fii Dzikrillah Asfas",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 91,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 84,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 83,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 86,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 74,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 82,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 74,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 81,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 76,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 85,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3169485973",
+    "tglLahir": "2016-03-03",
+    "nama": "M. Rizieq Husaini",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 85,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 83,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 83,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 84,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 81,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 74,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 83,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 78,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 84,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3166669664",
+    "tglLahir": "2016-08-20",
+    "nama": "Muhamad Nurilhadi",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 71,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 69,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 66,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 67,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 70,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3169337225",
+    "tglLahir": "2016-12-13",
+    "nama": "Muhammad Bayu Aditia",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 74,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 71,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 68,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 69,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 66,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 67,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 74,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3169983635",
+    "tglLahir": "2016-11-30",
+    "nama": "Muhammad Hamzah Syafi'i Mubarok",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 92,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 87,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 86,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 84,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 76,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 82,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 79,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 89,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 78,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 84,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3177868698",
+    "tglLahir": "2017-07-20",
+    "nama": "Muhammad Rasyid Albysofwan",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 79,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 90,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 71,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 77,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 75,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3171583407",
+    "tglLahir": "2017-06-05",
+    "nama": "Muhammad Ridho Al Hafiedz",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 80,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 82,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 85,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 76,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 69,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 77,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 78,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 84,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3169705480",
+    "tglLahir": "2016-07-05",
+    "nama": "Nafisa Priatna",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 84,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 88,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 85,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 91,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 80,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 85,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 81,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 86,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 80,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 82,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3161250672",
+    "tglLahir": "2016-11-26",
+    "nama": "Nur Shakila Ariska",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 74,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 74,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 76,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 77,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3161699763",
+    "tglLahir": "2016-10-13",
+    "nama": "Putri Rahayu",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 88,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 87,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 85,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 93,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 79,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 81,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 78,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 93,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 79,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 80,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3168933024",
+    "tglLahir": "2016-11-03",
+    "nama": "Ramadia Nurayunah",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 80,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 90,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 86,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 80,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 74,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 86,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 82,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 76,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 80,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3161331762",
+    "tglLahir": "2016-06-19",
+    "nama": "Rhamadhanis Pradipta Iskandar",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 74,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 70,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 78,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 73,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 68,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 68,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 74,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3174052493",
+    "tglLahir": "2017-04-01",
+    "nama": "Sekar Syafa Azizah",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 89,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 87,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 86,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 91,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 77,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 84,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 78,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 88,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 80,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "0172821127",
+    "tglLahir": "2017-05-02",
+    "nama": "Zalikha Meidy Rahmah",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 85,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 79,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 89,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 92,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 75,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 82,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 77,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 86,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 76,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 83,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "3175355895",
+    "tglLahir": "",
+    "nama": "Ailia Azmi Azkadiena",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 93,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 91,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 94,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 86,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 81,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 82,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 89,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 91,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 80,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 92,
+        "kkm": 70
+      }
+    ]
+  },
+  {
+    "nisn": "0168972444",
+    "tglLahir": "",
+    "nama": "Gian Al Han",
+    "kelas": "3A",
+    "nilai": [
+      {
+        "mapel": "P. Agama & BP",
+        "nilai": 85,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Pancasila",
+        "nilai": 90,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Indonesia",
+        "nilai": 82,
+        "kkm": 70
+      },
+      {
+        "mapel": "Seni",
+        "nilai": 84,
+        "kkm": 70
+      },
+      {
+        "mapel": "Matematika",
+        "nilai": 76,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Inggris",
+        "nilai": 81,
+        "kkm": 70
+      },
+      {
+        "mapel": "B. Sunda",
+        "nilai": 72,
+        "kkm": 70
+      },
+      {
+        "mapel": "P. Al-Quran",
+        "nilai": 82,
+        "kkm": 70
+      },
+      {
+        "mapel": "PJOK",
+        "nilai": 76,
+        "kkm": 70
+      },
+      {
+        "mapel": "IPAS",
+        "nilai": 81,
+        "kkm": 70
+      }
+    ]
+  }
+];
+
+function cariNilai() {
+  const nisn = document.getElementById('nisn').value.trim();
+  const tgl = document.getElementById('tgl-lahir').value;
+  const err = document.getElementById('pesan-error');
+  err.style.display = 'none';
+  const siswa = DATA.find(s => s.nisn === nisn && s.tglLahir === tgl);
+  if (!siswa) {
+    err.style.display = 'block';
+    return;
+  }
+  tampilkan(siswa);
+}
+
+function tampilkan(siswa) {
+  document.getElementById('form-login').style.display = 'none';
+  document.getElementById('hasil').style.display = 'block';
+  const inisial = siswa.nama.split(' ').map(w => w[0]).slice(0,2).join('');
+  document.getElementById('inisial').textContent = inisial;
+  document.getElementById('nama-siswa').textContent = siswa.nama;
+  document.getElementById('info-kelas').textContent = 'Kelas ' + siswa.kelas + ' • NISN: ' + siswa.nisn;
+  let total = 0, html = '';
+  siswa.nilai.forEach(r => {
+    total += r.nilai;
+    const cls = r.nilai >= 85 ? 'nilai-tinggi' : r.nilai >= 70 ? 'nilai-sedang' : 'nilai-rendah';
+    const tuntas = r.nilai >= r.kkm;
+    html += `<tr><td>${r.mapel}</td><td style="text-align:center"><span class="nilai-num ${cls}">${r.nilai}</span></td><td style="text-align:center;color:#aaa">${r.kkm}</td><td style="text-align:center"><span class="badge ${tuntas ? 'tuntas' : 'belum'}">${tuntas ? 'Tuntas' : 'Belum Tuntas'}</span></td></tr>`;
+  });
+  const rata = Math.round(total / siswa.nilai.length);
+  const clsRata = rata >= 85 ? 'nilai-tinggi' : rata >= 70 ? 'nilai-sedang' : 'nilai-rendah';
+  html += `<tr class="rata-row"><td>Rata-rata</td><td style="text-align:center"><span class="nilai-num ${clsRata}">${rata}</span></td><td></td><td></td></tr>`;
+  document.getElementById('isi-nilai').innerHTML = html;
+}
+
+function kembali() {
+  document.getElementById('form-login').style.display = 'block';
+  document.getElementById('hasil').style.display = 'none';
+  document.getElementById('nisn').value = '';
+  document.getElementById('tgl-lahir').value = '';
+}
+
+document.getElementById('nisn').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') cariNilai();
+});
+</script>
+</body>
+</html>
