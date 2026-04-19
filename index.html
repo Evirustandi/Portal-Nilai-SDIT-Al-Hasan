@@ -6,33 +6,8 @@
 <title>SD Islam Terpadu Al-Hasan</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
-<!-- ============================================================
-  PANDUAN CEPAT — tekan Ctrl+F dan cari kata kunci:
-
-  EDIT-NAMA-SEKOLAH   → nama & kota sekolah
-  EDIT-LOGO           → cara pasang logo gambar
-  EDIT-STATISTIK      → jumlah siswa, guru, tahun
-  EDIT-KEUNGGULAN     → 6 kartu keunggulan
-  EDIT-GALERI         → foto galeri
-  EDIT-BERITA         → kartu berita/pengumuman
-  EDIT-CTA            → banner CTA sebelum footer
-  EDIT-PROFIL         → tentang kami, visi, misi
-  EDIT-STRUKTUR       → kepala sekolah, staf
-  EDIT-AKADEMIK       → kurikulum, mapel, kalender
-  EDIT-PROGRAM        → 6 kartu program sekolah
-  EDIT-SPMB           → jadwal & syarat SPMB
-  EDIT-KONTAK         → alamat, telepon, email
-  EDIT-NILAI-SISWA    → data nilai portal siswa
-  EDIT-ULANGAN        → pilihan ulangan di portal
-  EDIT-WARNA          → warna utama website
-============================================================ -->
-
 <style>
-/* ============================================================
-   EDIT-WARNA — ubah 2 kode warna di bawah untuk ganti tema
-   #0D2147 = warna utama (biru tua)
-   #C8942A = warna aksen (emas)
-============================================================ */
+
 :root {
   --utama     : #0D2147;
   --utama-2   : #1A3A6B;
@@ -450,9 +425,7 @@ footer strong { color:white; }
 <nav id="navbar">
   <div class="logo" onclick="ganti('beranda')">
     <div class="logo-ikon">
-      <!-- EDIT-LOGO: Untuk pasang logo gambar, hapus <svg> di bawah dan ganti dengan:
-           <img src="logo.png" style="width:38px;height:38px;object-fit:cover;">
-           Letakkan file logo.png di folder yang sama dengan file HTML ini. -->
+    
       <img src="logo.png" style="width:38px;height:38px;object-fit:cover;">
     </div>
     <div>
@@ -487,17 +460,11 @@ footer strong { color:white; }
   <button class="nav-cta" onclick="ganti('spmb')">Daftar Sekarang</button>
 </div>
 
-
-<!-- ══════════════════════════════════════════════════════
-     HALAMAN 1 — BERANDA
-══════════════════════════════════════════════════════ -->
 <div class="hal aktif" id="hal-beranda">
 
-  <!-- Hero -->
   <div class="hero">
     <div class="hero-inner">
       <div>
-        <!-- EDIT-NAMA-SEKOLAH: ganti tahun pelajaran dan nama sekolah -->
         <div class="hero-badge" data-cms="tahun">Tahun Pelajaran 2025 / 2026</div>
         <h1>Selamat Datang di<br><span>SD Islam Terpadu<br>Al-Hasan</span></h1>
         <p class="hero-sub">Mencetak generasi Islami yang cerdas, berakhlak mulia, dan berdaya saing di era global.</p>
@@ -506,9 +473,6 @@ footer strong { color:white; }
           <button class="btn-outline" onclick="ganti('profil')">Kenali Sekolah Kami</button>
         </div>
       </div>
-      <!-- EDIT-FOTO: Ganti src="..." dengan path foto Anda.
-           Contoh: src="foto/kegiatan1.jpg"
-           Letakkan folder "foto" di tempat yang sama dengan file HTML ini. -->
       <div class="hero-foto">
         <div><img src="foto/bacaquran.jpg" alt="Kegiatan sekolah"></div>
         <div><img src="foto/karate.jpg" alt="Pembelajaran kelas"></div>
@@ -607,9 +571,6 @@ footer strong { color:white; }
     <div class="seksi-max">
       <div class="tag-kecil">Informasi Terkini</div>
       <div class="seksi-judul">Berita &amp; Pengumuman</div>
-      <!-- EDIT-BERITA: Untuk menambah berita, salin satu blok <div class="berita-kartu"> sampai </div>
-           dan tempel di bawahnya. Ubah badge (badge-penting/badge-info/badge-prestasi),
-           warna background .berita-img, emoji, tanggal, dan judul. -->
       <div class="grid-3">
         <div class="berita-kartu">
           <div class="berita-img" style="background:#E8F5EC">📋</div>
@@ -1104,32 +1065,6 @@ function kirimForm() {
   document.getElementById('f-tgl').value  = '';
   document.getElementById('f-wa').value   = '';
 }
-
-// ════════════════════════════════════════════════════════
-// EDIT-NILAI-SISWA
-// Format data siswa:
-// {
-//   nisn: "NOMOR_NISN",
-//   tglLahir: "TAHUN-BULAN-TANGGAL",   ← contoh: "2017-03-15"
-//   nama: "Nama Lengkap Siswa",
-//   kelas: "3A",
-//   nilai: {
-//     sts1: [ daftar nilai STS 1 ],
-//     sas1: [ daftar nilai SAS 1 ],
-//     sts2: [ daftar nilai STS 2 ],   ← ini yang tampil di portal saat ini
-//     sas2: [ daftar nilai SAS 2 ],
-//   }
-// }
-//
-// Format tiap nilai: {mapel:"Nama Mapel", nilai:85, kkm:70}
-//
-// Untuk menambah siswa baru: salin satu blok { ... },
-// tempel sebelum tanda ]; di bawah ini.
-//
-// EDIT-ULANGAN: untuk menambah jenis ulangan baru (contoh: UH1),
-// tambahkan key "uh1" di setiap data siswa dan tambahkan option baru
-// di <select id="p-ulangan"> di HTML atas.
-// ════════════════════════════════════════════════════════
 var DATA_NILAI = [
   {nisn:"3177667971", tglLahir:"2017-05-25", nama:"Abdilah Abqori", kelas:"3A",
    nilai:{
