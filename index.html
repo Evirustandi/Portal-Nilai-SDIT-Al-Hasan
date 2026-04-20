@@ -72,15 +72,34 @@ nav {
           cursor:pointer; padding:6px; }
 .burger span { display:block; width:22px; height:2px; background:var(--teks-2);
                border-radius:2px; transition:all .2s; }
-.menu-hp { display:none; background:var(--putih); border-top:1px solid var(--border);
-           flex-direction:column; gap:2px; padding:10px 14px 14px; }
+.menu-hp {
+  display:none; position:fixed; inset:0; z-index:1000;
+  flex-direction:row; background:rgba(0,0,0,.5); }
 .menu-hp.buka { display:flex; }
-.menu-hp button { width:100%; text-align:left; background:none; border:none; padding:10px 14px;
-                  font-size:14px; font-family:var(--f-teks); font-weight:500; color:var(--teks-2);
-                  cursor:pointer; border-radius:8px; transition:background .15s; }
-.menu-hp button:hover, .menu-hp button.aktif
-                 { background:var(--utama-bg); color:var(--utama); }
-.menu-hp .nav-cta { margin:6px 0 0; text-align:center; border-radius:8px; }
+.menu-hp-panel {
+  background:var(--putih); width:82%; max-width:290px; height:100%;
+  display:flex; flex-direction:column; overflow-y:auto;
+  box-shadow:4px 0 24px rgba(0,0,0,.18);
+  animation:slideInLeft .25s ease; }
+@keyframes slideInLeft {
+  from { transform:translateX(-100%); }
+  to   { transform:translateX(0); } }
+.menu-hp-header {
+  display:flex; align-items:center; gap:10px;
+  padding:16px 16px 14px; border-bottom:1px solid var(--border);
+  flex-shrink:0; }
+.menu-hp-header-logo {
+  width:34px; height:34px; border-radius:9px; overflow:hidden; flex-shrink:0; }
+.menu-hp-header-logo img { width:100%; height:100%; object-fit:cover; }
+.menu-hp-header-nama { font-size:12px; font-weight:700; color:var(--utama); line-height:1.3; }
+.menu-hp-items { padding:10px 10px 20px; flex:1; display:flex; flex-direction:column; gap:2px; }
+.menu-hp-items button { width:100%; text-align:left; background:none; border:none; padding:11px 14px;
+  font-size:14px; font-family:var(--f-teks); font-weight:500; color:var(--teks-2);
+  cursor:pointer; border-radius:8px; transition:background .15s; }
+.menu-hp-items button:hover, .menu-hp-items button.aktif
+  { background:var(--utama-bg); color:var(--utama); }
+.menu-hp-items .nav-cta { margin-top:10px; text-align:center; border-radius:8px; }
+.menu-hp-overlay { flex:1; cursor:pointer; }
 
 /* ── HALAMAN ─────────────────────────────────────────── */
 .hal { display:none; animation: muncul .3s ease; }
@@ -379,6 +398,7 @@ footer strong { color:white; }
 @media (max-width: 767px) {
   .nav-tombol, .nav-cta { display: none; }
   .burger { display: flex; }
+  .menu-hp-panel { width: 82%; }
 
   /* Stat: tetap 3 kolom */
   .stat-bar { grid-template-columns: repeat(3,1fr); }
@@ -451,13 +471,22 @@ footer strong { color:white; }
 </nav>
 
 <div class="menu-hp" id="menu-hp">
-  <button onclick="ganti('beranda')">Beranda</button>
-  <button onclick="ganti('profil')">Profil</button>
-  <button onclick="ganti('akademik')">Akademik</button>
-  <button onclick="ganti('program')">Program</button>
-  <button onclick="ganti('spmb')">SPMB</button>
-  <button onclick="ganti('portal')">Portal Nilai</button>
-  <button class="nav-cta" onclick="ganti('spmb')">Daftar Sekarang</button>
+  <div class="menu-hp-panel">
+    <div class="menu-hp-header">
+      <div class="menu-hp-header-logo"><img src="logo.png" alt="Logo"></div>
+      <div class="menu-hp-header-nama">SD Islam Terpadu<br>Al-Hasan</div>
+    </div>
+    <div class="menu-hp-items" id="menu-hp-items">
+      <button onclick="ganti('beranda')">&#127968; Beranda</button>
+      <button onclick="ganti('profil')">&#128211; Profil</button>
+      <button onclick="ganti('akademik')">&#128218; Akademik</button>
+      <button onclick="ganti('program')">&#127891; Program</button>
+      <button onclick="ganti('spmb')">&#128203; SPMB</button>
+      <button onclick="ganti('portal')">&#128196; Portal Nilai</button>
+      <button class="nav-cta" onclick="ganti('spmb')">Daftar Sekarang</button>
+    </div>
+  </div>
+  <div class="menu-hp-overlay" onclick="tutupMenu()"></div>
 </div>
 
 <div class="hal aktif" id="hal-beranda">
@@ -1032,15 +1061,22 @@ function ganti(id) {
       if (b.textContent.toLowerCase().includes(id.substring(0,5))) b.classList.add('aktif');
     });
   tutupMenu();
-  window.scrollTo(0, 0);
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 // ── Menu Mobile ───────────────────────────────────────
 function toggleMenu() {
-  document.getElementById('menu-hp').classList.toggle('buka');
+  var menu = document.getElementById('menu-hp');
+  if (menu.classList.contains('buka')) {
+    tutupMenu();
+  } else {
+    menu.classList.add('buka');
+    document.body.style.overflow = 'hidden';
+  }
 }
 function tutupMenu() {
   document.getElementById('menu-hp').classList.remove('buka');
+  document.body.style.overflow = '';
 }
 
 // ── Tab Akademik ──────────────────────────────────────
