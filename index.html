@@ -566,31 +566,7 @@ footer strong { color:white; }
       <div class="tag-kecil">Galeri</div>
       <div class="seksi-judul">Momen Bersama</div>
       <!-- EDIT-GALERI: ganti src foto dan caption. Bisa tambah/kurangi item galeri. -->
-      <div class="galeri">
-        <div class="galeri-item">
-          <img src="foto/kelas 5.jpg" alt="Foto 1">
-          <div class="galeri-caption">Angkatan Kelas 5</div>
-        </div>
-        <div class="galeri-item">
-          <img src="foto/kelas 4.jpg" alt="Foto 2">
-          <div class="galeri-caption">Angkatan Kelas 4</div>
-        </div>
-        <div class="galeri-item">
-          <img src="foto/kelas 3b.jpg" alt="Foto 3">
-          <div class="galeri-caption">Angkatan Kelas 3B</div>
-        </div>
-        <div class="galeri-item">
-          <img src="foto/kelas 3a.jpg" alt="Foto 4">
-          <div class="galeri-caption">Angkatan Kelas 3A</div>
-        </div>
-        <div class="galeri-item">
-          <img src="foto/kelas 2.jpg" alt="Foto 5">
-          <div class="galeri-caption">Angkatan Kelas 2</div>
-        </div>
-        <div class="galeri-item">
-          <img src="foto/kelas 1.jpg" alt="Foto 6">
-          <div class="galeri-caption">Angkatan Kelas 1</div>
-        </div>
+      <div class="galeri" id="cms-galeri">
       </div>
     </div>
   </div>
@@ -600,31 +576,7 @@ footer strong { color:white; }
     <div class="seksi-max">
       <div class="tag-kecil">Informasi Terkini</div>
       <div class="seksi-judul">Berita &amp; Pengumuman</div>
-      <div class="grid-3">
-        <div class="berita-kartu">
-          <div class="berita-img" style="background:#E8F5EC">📋</div>
-          <div class="berita-body">
-            <span class="berita-badge badge-info">Pengumuman</span>
-            <div class="berita-tgl">08 April 2026</div>
-            <div class="berita-judul">Hasil STS Semester 2 Sudah Dapat Dilihat di Portal Nilai</div>
-          </div>
-        </div>
-        <div class="berita-kartu">
-          <div class="berita-img" style="background:#FFF8E8">🏆</div>
-          <div class="berita-body">
-            <span class="berita-badge badge-prestasi">Prestasi</span>
-            <div class="berita-tgl">02 April 2026</div>
-            <div class="berita-judul">Siswa SDIT Al-Hasan Raih Juara 1 Lomba MHQ dan Lomba Shalat Berjamaah di Pentas PAI Tingkat Kecamatan</div>
-          </div>
-        </div>
-        <div class="berita-kartu">
-          <div class="berita-img" style="background:#F0F4FF">📝</div>
-          <div class="berita-body">
-            <span class="berita-badge badge-penting">Penting</span>
-            <div class="berita-tgl">28 Maret 2026</div>
-            <div class="berita-judul">Pendaftaran SPMB Tahun Ajaran 2026/2027 Resmi Ditutup</div>
-          </div>
-        </div>
+            <div class="grid-3" id="cms-berita">
       </div>
     </div>
   </div>
@@ -693,12 +645,7 @@ footer strong { color:white; }
       <!-- EDIT-STRUKTUR: ganti nama, jabatan, inisial avatar -->
       <div>
         <div class="h3-seksi">Struktur Organisasi</div>
-        <div class="staf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;">
-          <div class="staf-kartu"><div class="staf-avatar">R</div><div class="staf-nama">Rahmatuloh, S.Pd.I</div><div class="staf-jabatan">Kepala Sekolah</div></div>
-          <div class="staf-kartu"><div class="staf-avatar">AO</div><div class="staf-nama">Agisa Oktanadila S.I.Pust</div><div class="staf-jabatan">Bendahara</div></div>
-          <div class="staf-kartu"><div class="staf-avatar">ME</div><div class="staf-nama">Muhammad Evirustandi, S.Kom</div><div class="staf-jabatan">Operator Sekolah</div></div>
-          <div class="staf-kartu"><div class="staf-avatar">BFM</div><div class="staf-nama">Bambam Faidul Manan</div><div class="staf-jabatan">Administrasi</div></div>
-          <div class="staf-kartu"><div class="staf-avatar">RN</div><div class="staf-nama">Risvia Ningsih</div><div class="staf-jabatan">Media Informasi</div></div>
+                <div class="staf-grid" id="cms-guru" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;">
         </div>
       </div>
 
@@ -842,37 +789,7 @@ footer strong { color:white; }
   <div class="seksi">
     <div class="seksi-max">
       <!-- EDIT-PROGRAM: edit emoji, nama, tag, deskripsi, dan pill tiap kartu -->
-      <div class="grid-2">
-        <div class="prog-kartu" style="background:#EDFAF3;border-color:#7DCEA0;">
-          <div class="prog-header"><span class="prog-emoji">📖</span><div><div class="prog-tag">Program Unggulan</div><div class="prog-nama">Tahfidz Al-Qur'an</div></div></div>
-          <div class="prog-desc">Program hafalan Al-Qur'an intensif dengan target minimal Juz 30 sebelum lulus. Dibimbing ustadz/ustadzah berpengalaman.</div>
-          <div class="prog-pills"><span class="prog-pill">Hafalan Juz 30</span><span class="prog-pill">Sertifikat Tahfidz</span><span class="prog-pill">Lomba MTQ</span><span class="prog-pill">Wisuda Tahfidz</span></div>
-        </div>
-        <div class="prog-kartu" style="background:#EEF6FF;border-color:#B5D4F4;">
-          <div class="prog-header"><span class="prog-emoji">⚽</span><div><div class="prog-tag">Ekstrakurikuler</div><div class="prog-nama">Olahraga &amp; Pramuka</div></div></div>
-          <div class="prog-desc">Pembinaan fisik dan mental melalui sepak bola, bola voli, badminton, dan pramuka yang melatih kemandirian dan kepemimpinan.</div>
-          <div class="prog-pills"><span class="prog-pill">Kompetisi olahraga</span><span class="prog-pill">Perkemahan</span><span class="prog-pill">Jambore pramuka</span></div>
-        </div>
-        <div class="prog-kartu" style="background:#FFFBF0;border-color:#F0D060;">
-          <div class="prog-header"><span class="prog-emoji">🎨</span><div><div class="prog-tag">Ekstrakurikuler</div><div class="prog-nama">Seni &amp; Kreativitas</div></div></div>
-          <div class="prog-desc">Pengembangan bakat seni melalui melukis, kaligrafi Islam, nasyid, dan seni tari. Karya ditampilkan dalam pameran tahunan.</div>
-          <div class="prog-pills"><span class="prog-pill">Pameran karya</span><span class="prog-pill">Lomba kaligrafi</span><span class="prog-pill">Nasyid</span></div>
-        </div>
-        <div class="prog-kartu" style="background:#F5F0FF;border-color:#C4B5FD;">
-          <div class="prog-header"><span class="prog-emoji">💻</span><div><div class="prog-tag">Program Baru</div><div class="prog-nama">Literasi Digital</div></div></div>
-          <div class="prog-desc">Pengenalan teknologi informasi untuk kelas 4–6: komputer, presentasi digital, dan etika internet yang bertanggung jawab.</div>
-          <div class="prog-pills"><span class="prog-pill">Ms. Office dasar</span><span class="prog-pill">Presentasi digital</span><span class="prog-pill">Etika digital</span></div>
-        </div>
-        <div class="prog-kartu" style="background:#EDFAF3;border-color:#7DCEA0;">
-          <div class="prog-header"><span class="prog-emoji">🌱</span><div><div class="prog-tag">Program Sekolah</div><div class="prog-nama">Adiwiyata</div></div></div>
-          <div class="prog-desc">Program peduli lingkungan: berkebun, daur ulang, dan kampanye kebersihan sebagai wujud syukur kepada Allah SWT.</div>
-          <div class="prog-pills"><span class="prog-pill">Kebun hidroponik</span><span class="prog-pill">Bank sampah</span><span class="prog-pill">Penghijauan</span></div>
-        </div>
-        <div class="prog-kartu" style="background:#FEF2F2;border-color:#FCA5A5;">
-          <div class="prog-header"><span class="prog-emoji">🏅</span><div><div class="prog-tag">Prestasi</div><div class="prog-nama">Olimpiade &amp; Lomba</div></div></div>
-          <div class="prog-desc">Pembinaan khusus siswa berprestasi untuk olimpiade sains, matematika, dan lomba tingkat kecamatan hingga provinsi.</div>
-          <div class="prog-pills"><span class="prog-pill">Olimpiade sains</span><span class="prog-pill">Lomba MTQ</span><span class="prog-pill">Bimbingan intensif</span></div>
-        </div>
+            <div class="grid-2" id="cms-program">
       </div>
     </div>
   </div>
