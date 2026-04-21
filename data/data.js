@@ -1,5 +1,5 @@
 // data.js — Di-generate otomatis oleh CMS Admin SDIT Al-Hasan
-// Tanggal export: 21/4/2026 — FIXED VERSION
+// Tanggal export: 21/4/2026, 12.45.27
 // JANGAN edit file ini manual! Gunakan dashboard admin.
 
 var CMS_BERITA = [];
@@ -7,32 +7,32 @@ var CMS_BERITA = [];
 var CMS_GALERI = [
   {
     "id": "mo8554lr1g5sapcwfgb",
-    "url": "https://drive.google.com/thumbnail?id=1uLX4d7MsnFfxJ0QI3Rk6tE1VIbkGWf-1&sz=w600",
+    "url": "https://drive.google.com/file/d/1uLX4d7MsnFfxJ0QI3Rk6tE1VIbkGWf-1/view?usp=drive_link",
     "caption": "Foto Bersama Kelas 1"
   },
   {
     "id": "mo8571nfxisandf1kh",
-    "url": "https://drive.google.com/thumbnail?id=15xjJXMqh9Ga0lTdy-pDZnfosL3MXXE2I&sz=w600",
+    "url": "https://drive.google.com/file/d/15xjJXMqh9Ga0lTdy-pDZnfosL3MXXE2I/view?usp=drive_link",
     "caption": "Foto Bersama Kelas 2"
   },
   {
     "id": "mo857q6l7sn5venyjp",
-    "url": "https://drive.google.com/thumbnail?id=15VSEBklhVAox3wSf2HdQ6YkwVkSvqL2A&sz=w600",
+    "url": "https://drive.google.com/file/d/15VSEBklhVAox3wSf2HdQ6YkwVkSvqL2A/view?usp=drive_link",
     "caption": "Foto Bersama Kelas 3A"
   },
   {
     "id": "mo858dtp0n4ls2prfaoq",
-    "url": "https://drive.google.com/thumbnail?id=1OdEwGx8nyuVpNU_y-Uak5ybLtXnR7kTW&sz=w600",
+    "url": "https://drive.google.com/file/d/1OdEwGx8nyuVpNU_y-Uak5ybLtXnR7kTW/view?usp=drive_link",
     "caption": "Foto Bersama Kelas 3B"
   },
   {
     "id": "mo858pg3t9icbmd7ljq",
-    "url": "https://drive.google.com/thumbnail?id=1yjDNpJ2m0JzbEKUf0gZOSyWyybgULoFZ&sz=w600",
+    "url": "https://drive.google.com/file/d/1yjDNpJ2m0JzbEKUf0gZOSyWyybgULoFZ/view?usp=drive_link",
     "caption": "Foto Bersama Kelas 4"
   },
   {
     "id": "mo8597kzfa53i1vc1sw",
-    "url": "https://drive.google.com/thumbnail?id=1XX1MneqKoj4VCq2n0fxUL2DeGMz4mUh9&sz=w600",
+    "url": "https://drive.google.com/file/d/1XX1MneqKoj4VCq2n0fxUL2DeGMz4mUh9/view?usp=sharing",
     "caption": "Foto Bersama Kelas 5"
   }
 ];
@@ -181,7 +181,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "P. Pancasila",
-          "nilai": 98,
+          "nilai": 97,
           "kkm": 70
         },
         {
@@ -269,7 +269,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Sunda",
-          "nilai": 68,
+          "nilai": 67,
           "kkm": 70
         },
         {
@@ -350,7 +350,7 @@ var DATA_NILAI = [
       "sts2": [
         {
           "mapel": "Matematika",
-          "nilai": 66,
+          "nilai": 65,
           "kkm": 70
         },
         {
@@ -385,7 +385,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Sunda",
-          "nilai": 52,
+          "nilai": 51,
           "kkm": 70
         },
         {
@@ -559,7 +559,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Sunda",
-          "nilai": 82,
+          "nilai": 81,
           "kkm": 70
         },
         {
@@ -582,7 +582,7 @@ var DATA_NILAI = [
       "sts2": [
         {
           "mapel": "Matematika",
-          "nilai": 68,
+          "nilai": 67,
           "kkm": 70
         },
         {
@@ -592,7 +592,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Indonesia",
-          "nilai": 78,
+          "nilai": 77,
           "kkm": 70
         },
         {
@@ -660,7 +660,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "Seni",
-          "nilai": 52,
+          "nilai": 51,
           "kkm": 70
         },
         {
@@ -718,7 +718,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "Seni",
-          "nilai": 66,
+          "nilai": 65,
           "kkm": 70
         },
         {
@@ -756,17 +756,17 @@ var DATA_NILAI = [
       "sts2": [
         {
           "mapel": "Matematika",
-          "nilai": 88,
+          "nilai": 87,
           "kkm": 70
         },
         {
           "mapel": "P. Pancasila",
-          "nilai": 98,
+          "nilai": 97,
           "kkm": 70
         },
         {
           "mapel": "B. Indonesia",
-          "nilai": 90,
+          "nilai": 89,
           "kkm": 70
         },
         {
@@ -814,12 +814,12 @@ var DATA_NILAI = [
       "sts2": [
         {
           "mapel": "Matematika",
-          "nilai": 88,
+          "nilai": 87,
           "kkm": 70
         },
         {
           "mapel": "P. Pancasila",
-          "nilai": 88,
+          "nilai": 87,
           "kkm": 70
         },
         {
@@ -844,12 +844,12 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Inggris",
-          "nilai": 82,
+          "nilai": 81,
           "kkm": 70
         },
         {
           "mapel": "B. Sunda",
-          "nilai": 88,
+          "nilai": 87,
           "kkm": 70
         },
         {
@@ -887,7 +887,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "Seni",
-          "nilai": 72,
+          "nilai": 71,
           "kkm": 70
         },
         {
@@ -897,7 +897,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Sunda",
-          "nilai": 52,
+          "nilai": 51,
           "kkm": 70
         },
         {
@@ -925,7 +925,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "P. Pancasila",
-          "nilai": 98,
+          "nilai": 97,
           "kkm": 70
         },
         {
@@ -978,12 +978,12 @@ var DATA_NILAI = [
       "sts2": [
         {
           "mapel": "Matematika",
-          "nilai": 98,
+          "nilai": 97,
           "kkm": 70
         },
         {
           "mapel": "P. Pancasila",
-          "nilai": 88,
+          "nilai": 87,
           "kkm": 70
         },
         {
@@ -1041,7 +1041,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "P. Pancasila",
-          "nilai": 78,
+          "nilai": 77,
           "kkm": 70
         },
         {
@@ -1066,7 +1066,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Inggris",
-          "nilai": 78,
+          "nilai": 77,
           "kkm": 70
         },
         {
@@ -1094,7 +1094,7 @@ var DATA_NILAI = [
       "sts2": [
         {
           "mapel": "Matematika",
-          "nilai": 98,
+          "nilai": 97,
           "kkm": 70
         },
         {
@@ -1152,7 +1152,7 @@ var DATA_NILAI = [
       "sts2": [
         {
           "mapel": "Matematika",
-          "nilai": 88,
+          "nilai": 87,
           "kkm": 70
         },
         {
@@ -1172,7 +1172,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "Seni",
-          "nilai": 86,
+          "nilai": 85,
           "kkm": 70
         },
         {
@@ -1301,7 +1301,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "P. Pancasila",
-          "nilai": 88,
+          "nilai": 87,
           "kkm": 70
         },
         {
@@ -1326,7 +1326,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Inggris",
-          "nilai": 86,
+          "nilai": 85,
           "kkm": 70
         },
         {
@@ -1374,7 +1374,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "Seni",
-          "nilai": 64,
+          "nilai": 63,
           "kkm": 70
         },
         {
@@ -1432,7 +1432,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "Seni",
-          "nilai": 88,
+          "nilai": 87,
           "kkm": 70
         },
         {
@@ -1533,7 +1533,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Indonesia",
-          "nilai": 88,
+          "nilai": 87,
           "kkm": 70
         },
         {
@@ -1581,12 +1581,12 @@ var DATA_NILAI = [
       "sts2": [
         {
           "mapel": "Matematika",
-          "nilai": 98,
+          "nilai": 97,
           "kkm": 70
         },
         {
           "mapel": "P. Pancasila",
-          "nilai": 98,
+          "nilai": 97,
           "kkm": 70
         },
         {
@@ -1649,7 +1649,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Indonesia",
-          "nilai": 84,
+          "nilai": 83,
           "kkm": 70
         },
         {
@@ -1692,12 +1692,12 @@ var DATA_NILAI = [
       "sts2": [
         {
           "mapel": "Matematika",
-          "nilai": 88,
+          "nilai": 87,
           "kkm": 70
         },
         {
           "mapel": "P. Pancasila",
-          "nilai": 88,
+          "nilai": 87,
           "kkm": 70
         },
         {
@@ -1750,7 +1750,7 @@ var DATA_NILAI = [
       "sts2": [
         {
           "mapel": "Matematika",
-          "nilai": 66,
+          "nilai": 65,
           "kkm": 70
         },
         {
@@ -1760,7 +1760,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Indonesia",
-          "nilai": 66,
+          "nilai": 65,
           "kkm": 70
         },
         {
@@ -1813,7 +1813,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "P. Pancasila",
-          "nilai": 52,
+          "nilai": 51,
           "kkm": 70
         },
         {
@@ -1838,12 +1838,12 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Inggris",
-          "nilai": 56,
+          "nilai": 55,
           "kkm": 70
         },
         {
           "mapel": "B. Sunda",
-          "nilai": 52,
+          "nilai": 51,
           "kkm": 70
         },
         {
@@ -1866,7 +1866,7 @@ var DATA_NILAI = [
       "sts2": [
         {
           "mapel": "Matematika",
-          "nilai": 74,
+          "nilai": 73,
           "kkm": 70
         },
         {
@@ -1901,7 +1901,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Sunda",
-          "nilai": 72,
+          "nilai": 71,
           "kkm": 70
         }
       ],
@@ -1954,7 +1954,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Sunda",
-          "nilai": 96,
+          "nilai": 95,
           "kkm": 70
         },
         {
@@ -1977,7 +1977,7 @@ var DATA_NILAI = [
       "sts2": [
         {
           "mapel": "Matematika",
-          "nilai": 68,
+          "nilai": 67,
           "kkm": 70
         },
         {
@@ -2012,7 +2012,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Sunda",
-          "nilai": 86,
+          "nilai": 85,
           "kkm": 70
         },
         {
@@ -2035,7 +2035,7 @@ var DATA_NILAI = [
       "sts2": [
         {
           "mapel": "Matematika",
-          "nilai": 74,
+          "nilai": 73,
           "kkm": 70
         },
         {
@@ -2065,7 +2065,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Inggris",
-          "nilai": 76,
+          "nilai": 75,
           "kkm": 70
         },
         {
@@ -2128,7 +2128,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Sunda",
-          "nilai": 80,
+          "nilai": 79,
           "kkm": 70
         },
         {
@@ -2181,7 +2181,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Inggris",
-          "nilai": 66,
+          "nilai": 65,
           "kkm": 70
         },
         {
@@ -2272,7 +2272,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "P. Pancasila",
-          "nilai": 16,
+          "nilai": 15,
           "kkm": 70
         },
         {
@@ -2297,12 +2297,12 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Inggris",
-          "nilai": 32,
+          "nilai": 31,
           "kkm": 70
         },
         {
           "mapel": "B. Sunda",
-          "nilai": 44,
+          "nilai": 43,
           "kkm": 70
         },
         {
@@ -2383,7 +2383,7 @@ var DATA_NILAI = [
       "sts2": [
         {
           "mapel": "Matematika",
-          "nilai": 44,
+          "nilai": 43,
           "kkm": 70
         },
         {
@@ -2481,7 +2481,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "P. Al-Quran",
-          "nilai": 84,
+          "nilai": 83,
           "kkm": 70
         }
       ],
@@ -2499,12 +2499,12 @@ var DATA_NILAI = [
       "sts2": [
         {
           "mapel": "Matematika",
-          "nilai": 68,
+          "nilai": 67,
           "kkm": 70
         },
         {
           "mapel": "P. Pancasila",
-          "nilai": 60,
+          "nilai": 59,
           "kkm": 70
         },
         {
@@ -2529,12 +2529,12 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Inggris",
-          "nilai": 58,
+          "nilai": 57,
           "kkm": 70
         },
         {
           "mapel": "B. Sunda",
-          "nilai": 36,
+          "nilai": 35,
           "kkm": 70
         },
         {
@@ -2587,7 +2587,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Sunda",
-          "nilai": 62,
+          "nilai": 61,
           "kkm": 70
         },
         {
@@ -2645,7 +2645,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Sunda",
-          "nilai": 66,
+          "nilai": 65,
           "kkm": 70
         },
         {
@@ -2673,12 +2673,12 @@ var DATA_NILAI = [
         },
         {
           "mapel": "P. Pancasila",
-          "nilai": 84,
+          "nilai": 83,
           "kkm": 70
         },
         {
           "mapel": "B. Indonesia",
-          "nilai": 74,
+          "nilai": 73,
           "kkm": 70
         },
         {
@@ -2688,7 +2688,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "Seni",
-          "nilai": 74,
+          "nilai": 73,
           "kkm": 70
         },
         {
@@ -2698,12 +2698,12 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Inggris",
-          "nilai": 74,
+          "nilai": 73,
           "kkm": 70
         },
         {
           "mapel": "B. Sunda",
-          "nilai": 90,
+          "nilai": 89,
           "kkm": 70
         },
         {
@@ -2726,17 +2726,17 @@ var DATA_NILAI = [
       "sts2": [
         {
           "mapel": "Matematika",
-          "nilai": 50,
+          "nilai": 49,
           "kkm": 70
         },
         {
           "mapel": "P. Pancasila",
-          "nilai": 84,
+          "nilai": 83,
           "kkm": 70
         },
         {
           "mapel": "B. Indonesia",
-          "nilai": 84,
+          "nilai": 83,
           "kkm": 70
         },
         {
@@ -2746,7 +2746,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "Seni",
-          "nilai": 84,
+          "nilai": 83,
           "kkm": 70
         },
         {
@@ -2870,7 +2870,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Indonesia",
-          "nilai": 90,
+          "nilai": 89,
           "kkm": 70
         },
         {
@@ -2880,7 +2880,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "Seni",
-          "nilai": 90,
+          "nilai": 89,
           "kkm": 70
         },
         {
@@ -2981,7 +2981,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "P. Pancasila",
-          "nilai": 84,
+          "nilai": 83,
           "kkm": 70
         },
         {
@@ -3069,7 +3069,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Sunda",
-          "nilai": 70,
+          "nilai": 69,
           "kkm": 70
         },
         {
@@ -3102,7 +3102,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Indonesia",
-          "nilai": 94,
+          "nilai": 93,
           "kkm": 70
         },
         {
@@ -3112,7 +3112,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "Seni",
-          "nilai": 94,
+          "nilai": 93,
           "kkm": 70
         },
         {
@@ -3190,7 +3190,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "P. Al-Quran",
-          "nilai": 76,
+          "nilai": 75,
           "kkm": 70
         }
       ],
@@ -3218,7 +3218,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Indonesia",
-          "nilai": 92,
+          "nilai": 91,
           "kkm": 70
         },
         {
@@ -3228,7 +3228,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "Seni",
-          "nilai": 92,
+          "nilai": 91,
           "kkm": 70
         },
         {
@@ -3243,7 +3243,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Sunda",
-          "nilai": 90,
+          "nilai": 89,
           "kkm": 70
         },
         {
@@ -3276,7 +3276,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "B. Indonesia",
-          "nilai": 84,
+          "nilai": 83,
           "kkm": 70
         },
         {
@@ -3286,7 +3286,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "Seni",
-          "nilai": 84,
+          "nilai": 83,
           "kkm": 70
         },
         {
@@ -15146,7 +15146,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "PJOK",
-          "nilai": 68,
+          "nilai": 67,
           "kkm": 70
         },
         {
@@ -15262,7 +15262,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "PJOK",
-          "nilai": 68,
+          "nilai": 67,
           "kkm": 70
         },
         {
@@ -15552,7 +15552,7 @@ var DATA_NILAI = [
         },
         {
           "mapel": "PJOK",
-          "nilai": 68,
+          "nilai": 67,
           "kkm": 70
         },
         {
