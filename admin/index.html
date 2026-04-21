@@ -398,21 +398,31 @@ textarea.fi{min-height:85px;resize:vertical;}
 
     <!-- UPLOAD CSV -->
     <div class="page" id="page-upload">
-      <div class="ph"><div><div class="ph-title">Upload Nilai via CSV</div><div class="ph-sub">Import data nilai banyak siswa sekaligus</div></div></div>
+      <div class="ph"><div><div class="ph-title">Upload Nilai via Excel / CSV</div><div class="ph-sub">Import data nilai langsung dari file Excel (.xlsx) atau CSV</div></div></div>
       <div class="card" style="padding:1.4rem">
         <div style="font-size:14px;font-weight:600;color:var(--t);margin-bottom:.7rem">Format File CSV</div>
-        <div class="code-block">NISN,Nama,Kelas,TglLahir,Ulangan,P. Agama &amp; BP,P. Pancasila,B. Indonesia,Seni,Matematika,B. Inggris,B. Sunda,P. Al-Quran,PJOK,IPAS
-3177667971,Abdilah Abqori,3A,2017-05-25,sts2,75,75,77,69,74,71,71,79,75,75
-3164685720,Adreena Azkayra,3A,2016-10-12,sts2,73,76,75,73,74,69,71,81,73,75</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--t);margin-bottom:.5rem">Format Excel (.xlsx) — Langsung Upload:</div>
+            <div class="code-block">No | NISN | Nama | MTK | PKN | B.INDO | PJOK | SBdP | PAI | B.INGGRIS | B. SUNDA | AL-QURAN | ...
+1  | 3190599085 | Adhelise ... | 100 | 97 | 98 | 86 | 100 | 100 | 100 | 90 | 87 | ...</div>
+            <div style="font-size:12px;color:#059669;margin-top:.4rem">✅ Format ini cocok dengan file Upload_Nilai.xlsx Anda!</div>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--t);margin-bottom:.5rem">Format CSV (alternatif):</div>
+            <div class="code-block">NISN,Nama,Kelas,TglLahir,Ulangan,P. Agama &amp; BP,...
+3177667971,Abdilah,3A,2017-05-25,sts2,75,75,77,...</div>
+          </div>
+        </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin:1rem 0">
           <button class="btn btn-e" onclick="unduhTemplate()">⬇️ Unduh Template CSV</button>
           <button class="btn btn-e" onclick="exportNilai()">⬇️ Export Nilai Saat Ini</button>
         </div>
         <div class="upload-zone" onclick="document.getElementById('csv-file').click()" id="upload-zone">
           <div class="upload-icon">📂</div>
-          <div class="upload-title">Klik untuk pilih file CSV</div>
-          <div class="upload-sub">Bisa dibuat dari Excel → Save As → CSV</div>
-          <input type="file" id="csv-file" accept=".csv" style="display:none" onchange="prosesCSV(this.files[0])">
+          <div class="upload-title">Klik untuk pilih file Excel atau CSV</div>
+          <div class="upload-sub">Langsung upload .xlsx dari data yang sudah ada • atau .csv</div>
+          <input type="file" id="csv-file" accept=".xlsx,.csv,.xls" style="display:none" onchange="prosesFile(this.files[0])">
         </div>
         <div id="csv-result" style="margin-top:1rem"></div>
       </div>
@@ -810,6 +820,127 @@ function saveNilai(){
 // ══════════════════════════════════════════════
 // NILAI — UPLOAD CSV
 // ══════════════════════════════════════════════
+// Kolom Excel → nama mapel standar
+var EXCEL_COL_MAP = {
+  'MTK':'Matematika','PKN':'P. Pancasila','B.INDO':'B. Indonesia',
+  'PJOK':'PJOK','SBdP':'Seni','PAI':'P. Agama & BP',
+  'B.INGGRIS':'B. Inggris','B. SUNDA':'B. Sunda','AL-QURAN':'P. Al-Quran',
+  'IPAS':'IPAS','B. ARAB':'B. Arab','KITAB FIQIH':'Kitab Fiqih',
+  'KITAB TAUHID':'Kitab Tauhid','KITAB AKHLAK':'Kitab Akhlak',
+  'PROJEK PKN':'Projek PKN','PROJEK SENI':'Projek Seni',
+  'PROJEK IPAS':'Projek IPAS',
+  'PRAKTIK PAI (HAFALAN HADIST)':'Praktik Hafalan Hadist',
+  'PRAKTIK PAI (BACAAN SHALAT)':'Praktik Bacaan Shalat'
+};
+
+function prosesFile(file) {
+  if (!file) return;
+  var name = file.name.toLowerCase();
+  if (name.endsWith('.xlsx') || name.endsWith('.xls')) {
+    prosesExcel(file);
+  } else {
+    prosesCSV(file);
+  }
+}
+
+function prosesExcel(file) {
+  // Gunakan SheetJS jika tersedia, jika tidak tampilkan petunjuk
+  if (typeof XLSX === 'undefined') {
+    // Load SheetJS dari CDN
+    var script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    script.onload = function() { bacaExcel(file); };
+    script.onerror = function() {
+      document.getElementById('csv-result').innerHTML =
+        '<div class="info-box info-red">❌ Gagal memuat library Excel. Coba konversi file ke CSV dulu (di Excel: File → Save As → CSV).</div>';
+    };
+    document.head.appendChild(script);
+  } else {
+    bacaExcel(file);
+  }
+}
+
+function bacaExcel(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var wb = XLSX.read(e.target.result, {type:'array'});
+      var totalOk = 0, totalGagal = 0, preview = '';
+
+      wb.SheetNames.forEach(function(sheetName) {
+        var ws = wb.Sheets[sheetName];
+        var rows = XLSX.utils.sheet_to_json(ws, {defval:null});
+        if (!rows.length) return;
+
+        // Deteksi kolom yang ada di sheet ini
+        var cols = Object.keys(rows[0] || {});
+
+        rows.forEach(function(row) {
+          // Ambil NISN — bersihkan dari scientific notation
+          var rawNisn = row['NISN'] || row['nisn'] || '';
+          var nisn = String(rawNisn).replace(/\.0+$/, '').trim();
+          // Handle scientific notation (e.g. 3.19e9)
+          if (nisn && !isNaN(nisn) && nisn.includes('e')) {
+            nisn = String(parseInt(parseFloat(nisn)));
+          } else if (nisn && !isNaN(nisn) && parseFloat(nisn) > 1e7) {
+            nisn = String(parseInt(parseFloat(nisn)));
+          }
+
+          var nama = String(row['Nama'] || row['NAMA'] || '').trim();
+          if (!nisn || nisn === 'null' || nisn === 'undefined' || !nama || nama === 'null') {
+            totalGagal++;
+            return;
+          }
+
+          // Cari atau buat entry siswa di DATA_NILAI
+          var idx = DATA_NILAI.findIndex(function(s){ return s.nisn === nisn; });
+          if (idx === -1) {
+            DATA_NILAI.push({
+              nisn: nisn, nama: nama, kelas: sheetName,
+              tglLahir: '2016-01-01',
+              nilai: { sts1:[], sas1:[], sts2:[], sas2:[] }
+            });
+            idx = DATA_NILAI.length - 1;
+          }
+
+          // Bangun array nilai dari kolom yang ada
+          var nilaiArr = [];
+          Object.entries(EXCEL_COL_MAP).forEach(function(entry) {
+            var colName = entry[0], mapelName = entry[1];
+            if (cols.includes(colName) && row[colName] !== null && row[colName] !== undefined) {
+              var v = parseInt(parseFloat(row[colName]));
+              if (!isNaN(v) && v >= 0) {
+                nilaiArr.push({ mapel: mapelName, nilai: v, kkm: 70 });
+              }
+            }
+          });
+
+          if (!DATA_NILAI[idx].nilai) DATA_NILAI[idx].nilai = {sts1:[],sas1:[],sts2:[],sas2:[]};
+          DATA_NILAI[idx].nilai['sts2'] = nilaiArr;
+
+          totalOk++;
+          if (preview.split('<tr>').length <= 10) {
+            preview += '<tr><td><code>' + nisn + '</code></td><td>' + nama +
+              '</td><td>' + sheetName + '</td><td><span class="badge bh">' + nilaiArr.length + ' mapel</span></td></tr>';
+          }
+        });
+      });
+
+      var html = '<div class="info-box info-green" style="margin-bottom:1rem">✅ Berhasil: <strong>' + totalOk + ' siswa</strong> dari ' +
+        wb.SheetNames.length + ' kelas' + (totalGagal ? ' | ❌ Dilewati: ' + totalGagal : '') +
+        '. Jangan lupa klik <strong>Export data.js</strong>!</div>';
+      if (preview) html += '<div class="card"><table><thead><tr><th>NISN</th><th>Nama</th><th>Kelas</th><th>Mapel</th></tr></thead><tbody>' + preview + '</tbody></table></div>';
+      document.getElementById('csv-result').innerHTML = html;
+      renderStat();
+      OK('Upload Excel selesai: ' + totalOk + ' siswa berhasil!');
+    } catch(err) {
+      document.getElementById('csv-result').innerHTML =
+        '<div class="info-box info-red">❌ Error membaca file Excel: ' + err.message + '. Coba konversi ke CSV.</div>';
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
 function unduhTemplate(){
   var hdr='NISN,Nama,Kelas,TglLahir,Ulangan,'+MAPEL.join(',')+'\n';
   var ex='3177667971,Nama Siswa,3A,2017-05-25,sts2,'+MAPEL.map(function(){return '75';}).join(',')+'\n';
