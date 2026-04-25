@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Migrasi Data ke Firebase — SDIT Al-Hasan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #F0F4FA; color: #1A2236; padding: 40px; line-height: 1.6; }
+    .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    h1 { color: #0D2147; margin-bottom: 20px; }
+    .card { border: 1px solid #DDE4F0; padding: 20px; border-radius: 8px; margin-bottom: 20px; background: #F9FBFF; }
+    textarea { width: 100%; height: 150px; font-family: monospace; padding: 10px; border: 1px solid #DDE4F0; border-radius: 4px; margin-top: 10px; }
+    button { background: #0D2147; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 16px; transition: 0.3s; }
+    button:hover { background: #1A3A6B; }
+    button:disabled { background: #CCC; cursor: not-allowed; }
+    #status { margin-top: 20px; white-space: pre-wrap; font-family: monospace; background: #000; color: #0F0; padding: 15px; border-radius: 6px; display: none; max-height: 300px; overflow-y: auto; }
+    .step { font-weight: 600; color: #C8942A; margin-bottom: 5px; display: block; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🚀 Migrasi Data SDIT Al-Hasan</h1>
+  <p>Gunakan alat ini untuk memindahkan data dari <code>data.js</code> langsung ke Firebase Firestore Anda.</p>
+
+  <div class="card">
+    <span class="step">Langkah 1: Masukkan Konfigurasi Firebase</span>
+    <p style="font-size: 13px; color: #666;">Salin dari Firebase Console (Settings > General > Your Apps)</p>
+    <textarea id="fb-config" placeholder='const firebaseConfig = {
+  apiKey: "...",
+  authDomain: "...",
+  projectId: "...",
+  ...
+};'></textarea>
+  </div>
+
+  <div class="card">
+    <span class="step">Langkah 2: Jalankan Migrasi</span>
+    <p>Pastikan file <code>data.js</code> sudah terhubung (script ini akan mendeteksi variabel CMS_BERITA, DATA_NILAI, dll).</p>
+    <button id="btn-start">Mulai Pindahkan Data</button>
+  </div>
+
+  <div id="status"></div>
+</div>
+
+<!-- HUBUNGKAN DATA.JS ANDA DI SINI -->
+<script src="data.js"></script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, doc, setDoc, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  const btn = document.getElementById('btn-start');
+  const statusEl = document.getElementById('status');
+
+  function log(msg) {
+    statusEl.style.display = 'block';
+    statusEl.textContent += msg + '\n';
+    statusEl.scrollTop = statusEl.scrollHeight;
+  }
+
+  btn.addEventListener('click', async () => {
+    const configStr = document.getElementById('fb-config').value;
+    if (!configStr.includes('apiKey')) {
+      alert('Masukkan konfigurasi Firebase yang valid!');
+      return;
+    }
+
+    try {
+      // Ekstrak objek dari string (cara cepat untuk demo)
+      const config = eval(configStr.replace('const firebaseConfig =', ''));
+      const app = initializeApp(config);
+      const db = getFirestore(app);
+
+      btn.disabled = true;
+      log('--- MEMULAI MIGRASI ---');
+
+      const dataToMigrate = [
+        { name: 'berita', data: typeof CMS_BERITA !== 'undefined' ? CMS_BERITA : [] },
+        { name: 'galeri', data: typeof CMS_GALERI !== 'undefined' ? CMS_GALERI : [] },
+        { name: 'guru', data: typeof CMS_GURU !== 'undefined' ? CMS_GURU : [] },
+        { name: 'program', data: typeof CMS_PROGRAM !== 'undefined' ? CMS_PROGRAM : [] },
+        { name: 'spmb', data: typeof CMS_SPMB !== 'undefined' ? CMS_SPMB : [] },
+        { name: 'nilai_siswa', data: typeof DATA_NILAI !== 'undefined' ? DATA_NILAI : [] }
+      ];
+
+      for (const item of dataToMigrate) {
+        log(`Memproses koleksi: ${item.name}...`);
+        if (item.data.length === 0) {
+          log(`⚠️ Koleksi ${item.name} kosong, dilewati.`);
+          continue;
+        }
+
+        for (let i = 0; i < item.data.length; i++) {
+          const entry = item.data[i];
+          // Gunakan ID unik jika ada, atau buat ID string
+          const docId = entry.id || entry.nisn || `item_${i}`;
+          
+          await setDoc(doc(db, item.name, String(docId)), entry);
+          log(` ✅ Berhasil upload ${item.name} [ID: ${docId}]`);
+        }
+      }
+
+      log('--- MIGRASI SELESAI ---');
+      log('Sekarang Anda bisa menghapus file data.js dan mulai menggunakan data dari Firestore.');
+      alert('Migrasi Selesai!');
+
+    } catch (err) {
+      log('❌ ERROR: ' + err.message);
+      btn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>
