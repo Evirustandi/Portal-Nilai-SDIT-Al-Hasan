@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- Ikon -->
-  <script src="logo.jpg"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -22,11 +22,11 @@
           },
           colors: {
             navy: {
-              900: '#0B152A', // Sesuai warna gelap di footer/header baru
+              900: '#0B152A',
               800: '#162F65',
             },
             primary: '#1A3A6B',
-            accent: '#0A58CA', // Biru terang untuk tombol
+            accent: '#0A58CA',
             gold: '#C8942A',
           }
         }
@@ -53,7 +53,6 @@
       50% { transform: translateY(-10px); }
     }
     
-    /* Utility untuk transisi view */
     .view-section { display: none; animation: fadeIn 0.4s ease-out; }
     .view-section.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -121,9 +120,6 @@
     <a href="javascript:navigate('portal');" class="text-accent">Portal Nilai Siswa</a>
   </div>
 
-  <!-- ========================================== -->
-  <!-- KONTEN UTAMA (SPA)                         -->
-  <!-- ========================================== -->
   <main class="flex-1 w-full relative">
 
     <!-- 1. BERANDA -->
@@ -188,7 +184,6 @@
 
     <!-- 2. PROFIL -->
     <div id="profil" class="view-section">
-      <!-- Page Hero -->
       <div class="bg-navy-900 mx-4 md:mx-8 mt-4 rounded-3xl p-8 md:p-14 relative overflow-hidden text-white flex flex-col md:flex-row items-center gap-8 max-w-7xl xl:mx-auto">
         <div class="absolute right-0 top-0 w-full md:w-1/2 h-full opacity-30 md:opacity-100 bg-[url('https://images.unsplash.com/photo-1546410531-bea5aadcb6ce?auto=format&fit=crop&w=800&q=80')] bg-cover bg-center [mask-image:linear-gradient(to_right,transparent,black)]"></div>
         <div class="relative z-10 md:w-1/2">
@@ -241,38 +236,6 @@
           <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4" id="grid-org"></div>
         </div>
       </section>
-      
-      <section class="py-12 px-4 md:px-8 max-w-6xl mx-auto">
-        <div class="flex items-center gap-3 mb-8">
-          <div class="w-10 h-10 bg-blue-100 text-accent rounded-lg flex items-center justify-center text-xl"><i class="ph-bold ph-clipboard-text"></i></div>
-          <h2 class="text-2xl font-extrabold text-navy-900">Data & Fasilitas</h2>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white p-6 rounded-2xl border border-gray-100 flex items-start gap-4">
-            <div class="flex-1">
-              <h3 class="font-bold text-navy-900 mb-4 flex items-center gap-2"><i class="ph-fill ph-identification-card text-gray-400"></i> Identitas Sekolah</h3>
-              <div class="space-y-3 text-sm font-medium text-gray-600">
-                <div class="flex"><span class="w-32 flex items-center gap-2"><i class="ph-bold ph-buildings"></i> Status</span>: Swasta</div>
-                <div class="flex"><span class="w-32 flex items-center gap-2"><i class="ph-bold ph-star"></i> Akreditasi</span>: On Proses</div>
-                <div class="flex"><span class="w-32 flex items-center gap-2"><i class="ph-bold ph-books"></i> Kurikulum</span>: Merdeka</div>
-              </div>
-            </div>
-            <i class="ph-fill ph-buildings text-6xl text-gray-100"></i>
-          </div>
-          <div class="bg-white p-6 rounded-2xl border border-gray-100 flex items-start gap-4">
-            <div class="flex-1">
-              <h3 class="font-bold text-navy-900 mb-4 flex items-center gap-2"><i class="ph-fill ph-building-office text-gray-400"></i> Fasilitas</h3>
-              <div class="grid grid-cols-2 gap-y-3 text-sm font-medium text-gray-600">
-                <div class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-accent"></i> 12 Ruang Kelas</div>
-                <div class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-accent"></i> Masjid</div>
-                <div class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-accent"></i> Perpustakaan</div>
-                <div class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-accent"></i> Lapangan Olahraga</div>
-                <div class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-accent"></i> Kantin</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
 
     <!-- 3. AKADEMIK -->
@@ -285,86 +248,15 @@
           <p class="text-blue-100 font-medium text-lg">Informasi kurikulum, mata pelajaran, sistem penilaian, dan kalender akademik.</p>
         </div>
       </div>
-
-      <div class="max-w-6xl mx-auto px-4 md:px-8 mt-8">
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-2 flex flex-wrap gap-2 text-sm font-bold">
-          <button class="px-5 py-2.5 bg-accent text-white rounded-lg">Kurikulum</button>
-          <button class="px-5 py-2.5 text-gray-500 hover:bg-gray-50 rounded-lg transition">Mata Pelajaran</button>
-          <button class="px-5 py-2.5 text-gray-500 hover:bg-gray-50 rounded-lg transition">Sistem Penilaian</button>
-          <button class="px-5 py-2.5 text-gray-500 hover:bg-gray-50 rounded-lg transition">Kalender Akademik</button>
-        </div>
-      </div>
-
+      
       <section class="py-12 px-4 md:px-8 max-w-6xl mx-auto">
         <div class="flex flex-col lg:flex-row gap-10 items-center mb-12">
           <div class="lg:w-1/2">
             <h2 class="text-2xl font-extrabold text-navy-900 mb-4">Kurikulum Merdeka</h2>
             <p class="text-gray-500 font-medium leading-relaxed mb-6">SDIT Al-Hasan mengimplementasikan Kurikulum Merdeka yang berfokus pada pengembangan kompetensi, karakter, dan kemampuan berpikir kritis, diintegrasikan dengan nilai-nilai Islam.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div class="bg-white p-5 rounded-2xl border border-gray-100 text-center shadow-sm">
-                <div class="w-12 h-12 mx-auto bg-blue-50 text-accent rounded-full flex items-center justify-center text-xl mb-3"><i class="ph-fill ph-shield-star"></i></div>
-                <h4 class="font-bold text-navy-900 text-sm mb-2">Profil Pelajar Pancasila</h4>
-                <p class="text-xs text-gray-500 font-medium">Karakter beriman, mandiri, gotong royong, dan kritis.</p>
-              </div>
-              <div class="bg-white p-5 rounded-2xl border border-gray-100 text-center shadow-sm">
-                <div class="w-12 h-12 mx-auto bg-green-50 text-green-600 rounded-full flex items-center justify-center text-xl mb-3"><i class="ph-fill ph-book-open"></i></div>
-                <h4 class="font-bold text-navy-900 text-sm mb-2">Pembelajaran Diferensiasi</h4>
-                <p class="text-xs text-gray-500 font-medium">Penyesuaian metode dengan gaya belajar siswa.</p>
-              </div>
-              <div class="bg-white p-5 rounded-2xl border border-gray-100 text-center shadow-sm">
-                <div class="w-12 h-12 mx-auto bg-yellow-50 text-yellow-600 rounded-full flex items-center justify-center text-xl mb-3"><i class="ph-fill ph-lightbulb"></i></div>
-                <h4 class="font-bold text-navy-900 text-sm mb-2">Projek Nyata</h4>
-                <p class="text-xs text-gray-500 font-medium">Pembelajaran berbasis proyek relevan kehidupan.</p>
-              </div>
-            </div>
           </div>
           <div class="lg:w-1/2">
             <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80" alt="Belajar" class="rounded-3xl shadow-lg w-full object-cover aspect-[4/3]">
-          </div>
-        </div>
-
-        <h2 class="text-2xl font-extrabold text-navy-900 mb-6">Struktur Waktu Belajar</h2>
-        <div class="space-y-4 mb-12">
-          <div class="bg-white p-4 rounded-2xl border border-gray-100 flex items-center gap-6 shadow-sm overflow-hidden relative">
-            <div class="w-12 h-12 bg-blue-50 text-accent rounded-full flex items-center justify-center text-xl shrink-0 z-10 ml-2"><i class="ph-fill ph-calendar-blank"></i></div>
-            <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 z-10 font-bold text-sm">
-              <div class="text-navy-900">Senin – Kamis</div>
-              <div class="text-gray-600">07.00 – 14.30 WIB</div>
-              <div class="text-gray-500 font-medium">Pembelajaran + sholat berjamaah</div>
-            </div>
-            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=200&q=80" class="absolute right-0 top-0 h-full w-48 object-cover [mask-image:linear-gradient(to_right,transparent,black)] opacity-50">
-          </div>
-          <div class="bg-white p-4 rounded-2xl border border-gray-100 flex items-center gap-6 shadow-sm overflow-hidden relative">
-            <div class="w-12 h-12 bg-blue-50 text-accent rounded-full flex items-center justify-center text-xl shrink-0 z-10 ml-2"><i class="ph-fill ph-calendar-blank"></i></div>
-            <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 z-10 font-bold text-sm">
-              <div class="text-navy-900">Jumat</div>
-              <div class="text-gray-600">07.00 – 11.30 WIB</div>
-              <div class="text-gray-500 font-medium">Pembelajaran + Jumat bersama</div>
-            </div>
-          </div>
-        </div>
-
-        <h2 class="text-2xl font-extrabold text-navy-900 mb-6">Informasi Pendukung Akademik</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="bg-white p-6 rounded-2xl border border-gray-100 text-center shadow-sm">
-            <div class="w-14 h-14 mx-auto bg-blue-50 text-accent rounded-full flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-books"></i></div>
-            <h4 class="font-bold text-navy-900 mb-2">Buku & Sumber Belajar</h4>
-            <p class="text-xs text-gray-500 font-medium">Buku berkualitas dan sumber belajar digital untuk mendukung proses.</p>
-          </div>
-          <div class="bg-white p-6 rounded-2xl border border-gray-100 text-center shadow-sm">
-            <div class="w-14 h-14 mx-auto bg-teal-50 text-teal-600 rounded-full flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-desktop"></i></div>
-            <h4 class="font-bold text-navy-900 mb-2">Teknologi Pendidikan</h4>
-            <p class="text-xs text-gray-500 font-medium">Pemanfaatan teknologi untuk pembelajaran interaktif menyenangkan.</p>
-          </div>
-          <div class="bg-white p-6 rounded-2xl border border-gray-100 text-center shadow-sm">
-            <div class="w-14 h-14 mx-auto bg-purple-50 text-purple-600 rounded-full flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-users"></i></div>
-            <h4 class="font-bold text-navy-900 mb-2">Pendampingan Siswa</h4>
-            <p class="text-xs text-gray-500 font-medium">Guru mendampingi perkembangan akademik dan karakter setiap siswa.</p>
-          </div>
-          <div class="bg-white p-6 rounded-2xl border border-gray-100 text-center shadow-sm">
-            <div class="w-14 h-14 mx-auto bg-orange-50 text-orange-500 rounded-full flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-chart-line-up"></i></div>
-            <h4 class="font-bold text-navy-900 mb-2">Evaluasi Berkala</h4>
-            <p class="text-xs text-gray-500 font-medium">Evaluasi rutin untuk memantau kemajuan belajar secara konstruktif.</p>
           </div>
         </div>
       </section>
@@ -382,33 +274,7 @@
       </div>
 
       <section class="py-16 px-4 md:px-8 max-w-6xl mx-auto">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-10 h-10 bg-blue-100 text-accent rounded-lg flex items-center justify-center text-xl"><i class="ph-bold ph-medal"></i></div>
-          <h2 class="text-2xl font-extrabold text-navy-900">Program Unggulan</h2>
-        </div>
-        <p class="text-gray-500 font-medium mb-8">Program-program unggulan yang dirancang untuk membentuk generasi muslim yang cerdas, berakhlak, dan siap menghadapi masa depan.</p>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="program-unggulan-grid"></div>
-
-        <div class="flex items-center gap-3 mt-16 mb-4">
-          <div class="w-10 h-10 bg-blue-100 text-accent rounded-lg flex items-center justify-center text-xl"><i class="ph-bold ph-puzzle-piece"></i></div>
-          <h2 class="text-2xl font-extrabold text-navy-900">Program Pendukung</h2>
-        </div>
-        <p class="text-gray-500 font-medium mb-8">Program pendukung untuk menunjang proses pembelajaran dan pengembangan diri siswa secara optimal.</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="program-pendukung-grid"></div>
-
-        <div class="flex justify-between items-center mt-16 mb-6">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-blue-100 text-accent rounded-lg flex items-center justify-center text-xl"><i class="ph-bold ph-image"></i></div>
-            <h2 class="text-2xl font-extrabold text-navy-900">Galeri Kegiatan Program</h2>
-          </div>
-          <a href="javascript:navigate('galeri')" class="text-accent font-bold text-sm border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50 flex items-center gap-2">Lihat Semua Galeri <i class="ph-bold ph-arrow-right"></i></a>
-        </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=400&q=80" class="rounded-2xl aspect-[4/3] object-cover shadow-sm">
-          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80" class="rounded-2xl aspect-[4/3] object-cover shadow-sm">
-          <img src="https://images.unsplash.com/photo-1605333036495-2eb42a781b0f?auto=format&fit=crop&w=400&q=80" class="rounded-2xl aspect-[4/3] object-cover shadow-sm">
-          <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&q=80" class="rounded-2xl aspect-[4/3] object-cover shadow-sm">
-        </div>
       </section>
     </div>
 
@@ -423,185 +289,35 @@
           </div>
         </div>
       </div>
-
-      <section class="max-w-6xl mx-auto px-4 relative z-20 -mt-8 mb-16">
-        <div class="bg-white rounded-3xl shadow-lg p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 border border-gray-100">
-          <div class="flex items-center gap-4"><div class="w-12 h-12 bg-blue-50 text-accent rounded-full flex items-center justify-center text-xl shrink-0"><i class="ph-fill ph-users"></i></div><div><div class="font-bold text-sm text-navy-900">Kuota Terpenuhi</div><div class="text-[11px] text-gray-500 font-medium">Tahun Ajaran 2026/2027 sudah terpenuhi.</div></div></div>
-          <div class="flex items-center gap-4"><div class="w-12 h-12 bg-blue-50 text-accent rounded-full flex items-center justify-center text-xl shrink-0"><i class="ph-fill ph-calendar"></i></div><div><div class="font-bold text-sm text-navy-900">Tahun Ajaran 2026/2027</div><div class="text-[11px] text-gray-500 font-medium">Tahun ajaran baru dimulai Juli 2026.</div></div></div>
-          <div class="flex items-center gap-4"><div class="w-12 h-12 bg-blue-50 text-accent rounded-full flex items-center justify-center text-xl shrink-0"><i class="ph-fill ph-headset"></i></div><div><div class="font-bold text-sm text-navy-900">Informasi & Bantuan</div><div class="text-[11px] text-gray-500 font-medium">(0266) 123-4567<br>info@sdital-hasan.sch.id</div></div></div>
-          <div class="flex items-center gap-4"><div class="w-12 h-12 bg-blue-50 text-accent rounded-full flex items-center justify-center text-xl shrink-0"><i class="ph-fill ph-clock"></i></div><div><div class="font-bold text-sm text-navy-900">Waktu Layanan</div><div class="text-[11px] text-gray-500 font-medium">Senin - Jumat<br>07.00 - 15.00 WIB</div></div></div>
-        </div>
-      </section>
-
-      <section class="py-8 px-4 md:px-8 max-w-6xl mx-auto">
-        <h2 class="text-2xl font-extrabold text-navy-900 mb-8">Time Schedule SPMB 2026/2027</h2>
-        <div class="space-y-6" id="spmb-timeline"></div>
-
-        <h2 class="text-2xl font-extrabold text-navy-900 mt-16 mb-6">Persyaratan</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-            <h3 class="font-bold text-navy-900 mb-4 border-b border-gray-100 pb-3">Usia & Akademik</h3>
-            <ul class="text-sm font-medium text-gray-600 space-y-3 list-disc pl-4 marker:text-gray-300">
-              <li>Usia minimal 6 tahun per 1 Juli 2026</li>
-              <li>Sudah/sedang di TK/PAUD</li>
-              <li>Mampu membaca huruf latin dasar</li>
-            </ul>
-            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=300&q=80" class="mt-6 rounded-xl w-full h-32 object-cover">
-          </div>
-          <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-            <h3 class="font-bold text-navy-900 mb-4 border-b border-gray-100 pb-3">Dokumen Wajib</h3>
-            <ul class="text-sm font-medium text-gray-600 space-y-3 list-disc pl-4 marker:text-gray-300">
-              <li>Fotokopi Akta Kelahiran (2 lembar)</li>
-              <li>Fotokopi Kartu Keluarga (2 lembar)</li>
-              <li>Pas foto 3x4 (4 lembar)</li>
-              <li>Surat Keterangan Lulus TK</li>
-            </ul>
-            <div class="mt-6 bg-gray-100 rounded-xl h-32 flex items-center justify-center text-gray-400 text-4xl"><i class="ph-fill ph-files"></i></div>
-          </div>
-          <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-            <h3 class="font-bold text-navy-900 mb-4 border-b border-gray-100 pb-3">Catatan Penting</h3>
-            <ul class="text-sm font-medium text-gray-600 space-y-3 list-disc pl-4 marker:text-gray-300">
-              <li>Semua berkas dimasukkan ke dalam map berwarna kuning.</li>
-              <li>Berkas tidak dikembalikan.</li>
-            </ul>
-            <div class="mt-6 bg-yellow-50 rounded-xl h-32 flex items-center justify-center text-yellow-500 text-4xl"><i class="ph-fill ph-folder"></i></div>
-          </div>
-        </div>
-
-        <h2 class="text-2xl font-extrabold text-navy-900 mb-2">Formulir Pendaftaran Online</h2>
-        <p class="text-gray-500 font-medium mb-6">Lengkapi data calon siswa pada formulir di bawah ini.</p>
-        <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm mb-16">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">Nama Lengkap Calon Siswa</label><input type="text" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:border-accent focus:ring-1 focus:ring-accent outline-none transition" placeholder="Sesuai akta lahir"></div>
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">Tanggal Lahir</label><input type="date" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:border-accent focus:ring-1 focus:ring-accent outline-none transition"></div>
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">Jenis Kelamin</label><select class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:border-accent outline-none"><option>Pilih jenis kelamin</option><option>Laki-laki</option><option>Perempuan</option></select></div>
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">Asal TK / PAUD</label><input type="text" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:border-accent outline-none" placeholder="Nama sekolah asal"></div>
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">Nama Orang Tua / Wali</label><input type="text" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:border-accent outline-none" placeholder="Nama lengkap"></div>
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">No. WhatsApp Aktif</label><input type="text" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:border-accent outline-none" placeholder="08xxxxxxxxxx"></div>
-          </div>
-          <div class="mb-8"><label class="block text-xs font-bold text-navy-900 mb-2">Alamat Lengkap</label><input type="text" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:border-accent outline-none" placeholder="Jalan, RT/RW, Kelurahan, Kecamatan, Kabupaten/Kota"></div>
-          <button class="w-full bg-navy-900 text-white font-bold py-4 rounded-xl hover:bg-navy-800 transition">Kirim Formulir Pendaftaran</button>
-        </div>
-
-        <div class="bg-blue-50 border border-blue-100 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div class="flex items-center gap-4">
-            <div class="w-10 h-10 bg-accent text-white rounded-full flex items-center justify-center text-xl shrink-0"><i class="ph-bold ph-info"></i></div>
-            <div><h4 class="font-bold text-navy-900">Butuh bantuan atau informasi lebih lanjut?</h4><p class="text-sm text-gray-600 font-medium mt-0.5">Hubungi kami melalui WhatsApp atau datang langsung ke sekolah pada jam kerja.</p></div>
-          </div>
-          <button class="bg-white border border-gray-200 text-navy-900 font-bold px-6 py-2.5 rounded-xl hover:bg-gray-50 flex items-center gap-2 whitespace-nowrap">Hubungi Kami <i class="ph-fill ph-whatsapp-logo text-green-500 text-lg"></i></button>
-        </div>
-      </section>
     </div>
 
     <!-- 6. GALERI -->
     <div id="galeri" class="view-section">
       <div class="bg-navy-900 mx-4 md:mx-8 mt-4 rounded-3xl p-8 md:p-14 relative overflow-hidden text-white flex flex-col md:flex-row items-center gap-8 max-w-7xl xl:mx-auto">
-        <div class="absolute right-0 top-0 w-full md:w-1/2 h-full opacity-30 md:opacity-100 bg-[url('https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80')] bg-cover bg-center [mask-image:linear-gradient(to_right,transparent,black)]"></div>
         <div class="relative z-10 md:w-1/2">
           <span class="text-xs font-bold uppercase tracking-wider text-blue-200 mb-3 block">Beranda > Galeri</span>
           <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Galeri Kegiatan</h1>
-          <p class="text-blue-100 font-medium text-lg">Kumpulan dokumentasi kegiatan dan momen berharga di SD Islam Terpadu Al-Hasan.</p>
-          <button class="mt-6 bg-transparent border border-white/30 text-white px-6 py-3 rounded-xl font-bold hover:bg-white/10 transition flex items-center gap-2"><i class="ph-bold ph-squares-four"></i> Lihat Video Kegiatan</button>
         </div>
       </div>
 
       <section class="py-12 px-4 md:px-8 max-w-7xl mx-auto">
-        <div class="flex gap-3 overflow-x-auto hide-scrollbar pb-4 mb-8">
-          <button class="bg-navy-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 flex items-center gap-2 shadow-md"><i class="ph-bold ph-squares-four"></i> Semua Kegiatan</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2"><i class="ph-bold ph-graduation-cap"></i> Akademik</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2"><i class="ph-bold ph-mosque"></i> Agama</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2"><i class="ph-bold ph-soccer-ball"></i> Olahraga</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2"><i class="ph-bold ph-palette"></i> Seni & Budaya</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2"><i class="ph-bold ph-users-three"></i> Ekstrakurikuler</button>
-        </div>
-
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12" id="galeri-grid"></div>
-        
-        <div class="text-center border-b border-gray-200 pb-16">
-          <button class="bg-white border border-accent text-accent px-6 py-3 rounded-xl font-bold text-sm hover:bg-blue-50 transition inline-flex items-center gap-2">Muat Lebih Banyak <i class="ph-bold ph-arrows-clockwise"></i></button>
-        </div>
-
-        <div class="flex justify-between items-end mt-16 mb-8">
-          <h2 class="text-3xl font-extrabold text-navy-900">Video Kegiatan</h2>
-          <a href="#" class="text-accent font-bold text-sm border border-gray-200 px-5 py-2.5 rounded-xl hover:bg-gray-50 hidden sm:flex items-center gap-2">Lihat Semua Video <i class="ph-bold ph-arrow-right"></i></a>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6" id="video-grid"></div>
       </section>
     </div>
 
     <!-- 7. BERITA -->
     <div id="berita" class="view-section">
       <div class="bg-navy-900 mx-4 md:mx-8 mt-4 rounded-3xl p-8 md:p-14 relative overflow-hidden text-white flex flex-col md:flex-row items-center gap-8 max-w-7xl xl:mx-auto">
-        <div class="absolute right-0 top-0 w-full md:w-1/2 h-full opacity-30 md:opacity-100 bg-[url('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80')] bg-cover bg-center [mask-image:linear-gradient(to_right,transparent,black)]"></div>
         <div class="relative z-10 md:w-1/2">
           <span class="text-xs font-bold uppercase tracking-wider text-blue-200 mb-3 block">Beranda > Berita</span>
           <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Berita & Informasi</h1>
-          <p class="text-blue-100 font-medium text-lg mb-8">Informasi terbaru seputar kegiatan, prestasi, dan pengumuman dari SD Islam Terpadu Al-Hasan.</p>
-          <div class="flex max-w-md bg-white rounded-xl overflow-hidden p-1 shadow-lg">
-            <input type="text" placeholder="Cari berita..." class="flex-1 px-4 py-2 text-gray-800 outline-none text-sm font-medium">
-            <button class="bg-accent text-white px-5 py-2.5 rounded-lg hover:bg-blue-700"><i class="ph-bold ph-magnifying-glass"></i></button>
-          </div>
         </div>
       </div>
 
       <section class="py-12 px-4 md:px-8 max-w-7xl mx-auto">
-        <div class="flex justify-between gap-3 overflow-x-auto hide-scrollbar pb-4 mb-8">
-          <div class="flex gap-2">
-            <button class="bg-navy-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm shrink-0">Semua Berita</button>
-            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50">Pengumuman</button>
-            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50">Kegiatan Sekolah</button>
-            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50">Prestasi</button>
-            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50">Artikel Pendidikan</button>
-          </div>
-          <select class="bg-white border border-gray-200 text-gray-800 px-4 py-2.5 rounded-xl font-bold text-sm outline-none"><option>Terbaru</option><option>Terlama</option></select>
-        </div>
-
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div class="lg:col-span-2 space-y-6" id="berita-list-main"></div>
-          
-          <div class="lg:col-span-1 space-y-8">
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-              <h3 class="text-lg font-extrabold text-navy-900 mb-5 flex items-center gap-2"><i class="ph-fill ph-fire text-red-500"></i> Berita Populer</h3>
-              <div class="space-y-4" id="berita-populer"></div>
-            </div>
-            
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-              <h3 class="text-lg font-extrabold text-navy-900 mb-5 flex items-center gap-2"><i class="ph-fill ph-folder-notch text-gray-400"></i> Kategori Berita</h3>
-              <ul class="space-y-3 text-sm font-bold text-gray-600">
-                <li class="flex justify-between items-center"><a href="#" class="hover:text-accent flex items-center gap-2"><i class="ph-bold ph-link"></i> Kegiatan Sekolah</a> <span class="bg-gray-100 px-2 py-0.5 rounded text-xs">24</span></li>
-                <li class="flex justify-between items-center"><a href="#" class="hover:text-accent flex items-center gap-2"><i class="ph-bold ph-trophy"></i> Prestasi</a> <span class="bg-gray-100 px-2 py-0.5 rounded text-xs">18</span></li>
-                <li class="flex justify-between items-center"><a href="#" class="hover:text-accent flex items-center gap-2"><i class="ph-bold ph-megaphone"></i> Pengumuman</a> <span class="bg-gray-100 px-2 py-0.5 rounded text-xs">12</span></li>
-                <li class="flex justify-between items-center"><a href="#" class="hover:text-accent flex items-center gap-2"><i class="ph-bold ph-book-open"></i> Artikel Pendidikan</a> <span class="bg-gray-100 px-2 py-0.5 rounded text-xs">15</span></li>
-              </ul>
-              <button class="w-full mt-5 text-accent font-bold text-sm border border-gray-200 py-2.5 rounded-lg hover:bg-gray-50 flex justify-center items-center gap-2">Lihat Semua Kategori <i class="ph-bold ph-arrow-right"></i></button>
-            </div>
-            
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-              <h3 class="text-lg font-extrabold text-navy-900 mb-2 flex items-center gap-2"><i class="ph-fill ph-envelope-simple text-gray-400"></i> Newsletter</h3>
-              <p class="text-xs text-gray-500 font-medium mb-4">Dapatkan informasi terbaru dari kami langsung di email Anda.</p>
-              <div class="flex bg-gray-50 rounded-xl p-1 border border-gray-200">
-                <input type="email" placeholder="Masukkan email Anda" class="bg-transparent text-sm px-3 py-2 w-full text-navy-900 outline-none">
-                <button class="bg-accent text-white px-4 py-2 rounded-lg hover:bg-blue-600"><i class="ph-bold ph-paper-plane-right"></i></button>
-              </div>
-            </div>
-
-            <div class="bg-navy-900 p-6 rounded-2xl text-white shadow-xl">
-              <div class="w-12 h-12 bg-yellow-500/20 text-yellow-400 rounded-full flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-bell-ringing"></i></div>
-              <h3 class="text-lg font-extrabold mb-2">Jangan Lewatkan Informasi Terbaru!</h3>
-              <p class="text-xs text-blue-200 font-medium mb-6">Aktifkan notifikasi untuk mendapatkan update berita dan pengumuman terbaru dari SDIT Al-Hasan.</p>
-              <button class="w-full bg-white text-navy-900 font-bold py-3 rounded-xl hover:bg-gray-100 flex justify-center items-center gap-2">Aktifkan Notifikasi <i class="ph-bold ph-arrow-right"></i></button>
-            </div>
-          </div>
-        </div>
-
-        <div class="flex justify-center mt-12 gap-2 text-sm font-bold">
-          <button class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-gray-50"><i class="ph-bold ph-caret-left"></i></button>
-          <button class="w-10 h-10 rounded-lg bg-navy-900 text-white flex items-center justify-center">1</button>
-          <button class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-gray-50">2</button>
-          <button class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-gray-50">3</button>
-          <div class="w-10 h-10 flex items-center justify-center text-gray-400">..</div>
-          <button class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-gray-50">8</button>
-          <button class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-gray-50"><i class="ph-bold ph-caret-right"></i></button>
+          <div class="lg:col-span-1 space-y-8" id="berita-populer"></div>
         </div>
       </section>
     </div>
@@ -609,108 +325,16 @@
     <!-- 8. KONTAK -->
     <div id="kontak" class="view-section">
       <div class="bg-navy-900 mx-4 md:mx-8 mt-4 rounded-3xl p-8 md:p-14 relative overflow-hidden text-white flex flex-col md:flex-row items-center gap-8 max-w-7xl xl:mx-auto">
-        <div class="absolute right-0 top-0 w-full md:w-1/2 h-full opacity-30 md:opacity-100 bg-[url('https://images.unsplash.com/photo-1546410531-bea5aadcb6ce?auto=format&fit=crop&w=800&q=80')] bg-cover bg-center [mask-image:linear-gradient(to_right,transparent,black)]"></div>
         <div class="relative z-10 md:w-1/2">
           <span class="text-xs font-bold uppercase tracking-wider text-blue-200 mb-3 block">Beranda > Kontak</span>
           <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Hubungi Kami</h1>
-          <p class="text-blue-100 font-medium text-lg mb-8">Kami siap membantu Anda. Silakan hubungi kami melalui informasi di bawah ini atau kirim pesan melalui formulir.</p>
-          <div class="flex flex-col sm:flex-row gap-6">
-            <div class="flex items-center gap-3"><i class="ph-fill ph-chat-teardrop-dots text-3xl text-accent"></i> <div><div class="font-bold text-sm">Respon Cepat</div><div class="text-[10px] text-blue-200">Kami akan merespon dengan cepat</div></div></div>
-            <div class="flex items-center gap-3"><i class="ph-fill ph-users text-3xl text-accent"></i> <div><div class="font-bold text-sm">Layanan Ramah</div><div class="text-[10px] text-blue-200">Tim kami siap melayani dengan ramah</div></div></div>
-            <div class="flex items-center gap-3"><i class="ph-fill ph-shield-check text-3xl text-accent"></i> <div><div class="font-bold text-sm">Informasi Akurat</div><div class="text-[10px] text-blue-200">Informasi yang kami berikan jelas akurat</div></div></div>
-          </div>
         </div>
       </div>
-
-      <section class="max-w-6xl mx-auto px-4 relative z-20 mt-8 mb-12">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col items-center text-center">
-            <div class="w-14 h-14 bg-blue-50 text-accent rounded-full flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-map-pin"></i></div>
-            <h4 class="font-bold text-navy-900 mb-2">Alamat Sekolah</h4>
-            <p class="text-xs text-gray-500 font-medium mb-4">Jl. Raya Bojonggenteng, Sukabumi, Jawa Barat 43353</p>
-            <a href="#" class="text-accent text-xs font-bold mt-auto border-b border-accent pb-0.5">Lihat di Google Maps <i class="ph-bold ph-arrow-right"></i></a>
-          </div>
-          <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col items-center text-center">
-            <div class="w-14 h-14 bg-blue-50 text-accent rounded-full flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-phone"></i></div>
-            <h4 class="font-bold text-navy-900 mb-2">Telepon</h4>
-            <p class="text-xs text-gray-500 font-medium mb-4">(0266) 123-4567<br>(0266) 123-8901</p>
-            <a href="#" class="text-accent text-xs font-bold mt-auto border-b border-accent pb-0.5"><i class="ph-fill ph-whatsapp-logo text-green-500 text-base align-middle"></i> Hubungi via WhatsApp <i class="ph-bold ph-arrow-right"></i></a>
-          </div>
-          <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col items-center text-center">
-            <div class="w-14 h-14 bg-blue-50 text-accent rounded-full flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-envelope-simple"></i></div>
-            <h4 class="font-bold text-navy-900 mb-2">Email</h4>
-            <p class="text-xs text-gray-500 font-medium mb-4 break-all">info@sdital-hasan.sch.id<br>ppdb@sdital-hasan.sch.id</p>
-          </div>
-          <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col items-center text-center">
-            <div class="w-14 h-14 bg-blue-50 text-accent rounded-full flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-clock"></i></div>
-            <h4 class="font-bold text-navy-900 mb-2">Jam Operasional</h4>
-            <p class="text-xs text-gray-500 font-medium mb-4">Senin - Jum'at<br>07.00 - 15.00 WIB<br><br>Sabtu<br>07.00 - 12.00 WIB</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="max-w-6xl mx-auto px-4 mb-16">
-        <div class="bg-gray-200 w-full h-[400px] rounded-3xl overflow-hidden shadow-sm border border-gray-200">
-          <!-- Dummy Map -->
-          <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80" alt="Map" class="w-full h-full object-cover opacity-70 grayscale">
-        </div>
-      </section>
-
-      <section class="max-w-6xl mx-auto px-4 mb-16 grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
-          <h2 class="text-2xl font-extrabold text-navy-900 mb-2">Kirim Pesan</h2>
-          <p class="text-sm text-gray-500 font-medium mb-8">Isi formulir di bawah ini dan kami akan segera menghubungi Anda.</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">Nama Lengkap</label><input type="text" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm outline-none focus:border-accent" placeholder="Contoh: Ahmad Fauzan"></div>
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">Email</label><input type="email" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm outline-none focus:border-accent" placeholder="Contoh: email@anda.com"></div>
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">No. Telepon</label><input type="text" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm outline-none focus:border-accent" placeholder="Contoh: 0812-3456-7890"></div>
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">Subjek</label><select class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm outline-none focus:border-accent"><option>Pilih subjek</option></select></div>
-          </div>
-          <div class="mb-8"><label class="block text-xs font-bold text-navy-900 mb-2">Pesan</label><textarea class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm outline-none focus:border-accent min-h-[120px] resize-y" placeholder="Tulis pesan Anda di sini..."></textarea></div>
-          <button class="w-full bg-navy-900 text-white font-bold py-4 rounded-xl hover:bg-navy-800 transition flex items-center justify-center gap-2">Kirim Pesan <i class="ph-bold ph-paper-plane-right"></i></button>
-        </div>
-
-        <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
-          <h2 class="text-2xl font-extrabold text-navy-900 mb-8">Pertanyaan yang Sering Diajukan</h2>
-          <div class="space-y-4">
-            <div class="border-b border-gray-100 pb-4 flex gap-4 cursor-pointer group">
-              <div class="w-10 h-10 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-lg shrink-0 mt-1"><i class="ph-fill ph-envelope-open"></i></div>
-              <div class="flex-1">
-                <h4 class="font-bold text-navy-900 group-hover:text-accent transition">Bagaimana cara mendaftar di SDIT Al-Hasan?</h4>
-                <p class="text-xs text-gray-500 font-medium mt-1 leading-relaxed">Pendaftaran dapat dilakukan melalui halaman SPMB atau datang langsung ke sekolah pada jam operasional.</p>
-              </div>
-              <i class="ph-bold ph-caret-right text-gray-400 mt-2"></i>
-            </div>
-            <div class="border-b border-gray-100 pb-4 flex gap-4 cursor-pointer group">
-              <div class="w-10 h-10 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-lg shrink-0 mt-1"><i class="ph-fill ph-check-square-offset"></i></div>
-              <div class="flex-1">
-                <h4 class="font-bold text-navy-900 group-hover:text-accent transition">Apa saja persyaratan pendaftaran?</h4>
-                <p class="text-xs text-gray-500 font-medium mt-1 leading-relaxed">Persyaratan dapat dilihat di halaman SPMB pada bagian Persyaratan Pendaftaran.</p>
-              </div>
-              <i class="ph-bold ph-caret-right text-gray-400 mt-2"></i>
-            </div>
-            <div class="border-b border-gray-100 pb-4 flex gap-4 cursor-pointer group">
-              <div class="w-10 h-10 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-lg shrink-0 mt-1"><i class="ph-fill ph-magnifying-glass"></i></div>
-              <div class="flex-1">
-                <h4 class="font-bold text-navy-900 group-hover:text-accent transition">Apakah ada program beasiswa?</h4>
-                <p class="text-xs text-gray-500 font-medium mt-1 leading-relaxed">Ya, kami memiliki program beasiswa untuk siswa berprestasi dan kurang mampu. Informasi lebih lanjut hubungi kami.</p>
-              </div>
-              <i class="ph-bold ph-caret-right text-gray-400 mt-2"></i>
-            </div>
-          </div>
-          
-          <div class="mt-8 bg-yellow-50 border border-yellow-100 rounded-2xl p-6 flex items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-              <i class="ph-fill ph-headset text-3xl text-yellow-500"></i>
-              <div><h4 class="font-bold text-navy-900 text-sm">Butuh Bantuan Segera?</h4><p class="text-[10px] text-gray-600 font-medium">Hubungi kami langsung melalui WhatsApp.</p></div>
-            </div>
-            <button class="bg-navy-900 text-white font-bold px-4 py-2 rounded-lg text-xs whitespace-nowrap flex items-center gap-1.5"><i class="ph-fill ph-whatsapp-logo text-green-400 text-base"></i> Chat WhatsApp</button>
-          </div>
-        </div>
-      </section>
     </div>
 
-    <!-- 9. PORTAL NILAI -->
+    <!-- ==================================================== -->
+    <!-- 9. PORTAL NILAI (MENGGUNAKAN FIREBASE)               -->
+    <!-- ==================================================== -->
     <div id="portal" class="view-section">
       <div class="max-w-6xl mx-auto px-4 py-12 flex flex-col md:flex-row gap-8">
         
@@ -738,7 +362,7 @@
             <div class="relative z-10 flex justify-between items-center">
               <div class="max-w-md">
                 <h1 class="text-3xl md:text-4xl font-extrabold mb-3">Portal Nilai Siswa</h1>
-                <p class="text-blue-100 font-medium">Masukkan data siswa untuk melihat nilai terbaru.</p>
+                <p class="text-blue-100 font-medium">Masukkan data siswa untuk melihat nilai terbaru dari Database.</p>
               </div>
               <div class="hidden sm:block">
                 <div class="w-24 h-24 bg-white rounded-2xl flex items-center justify-center shadow-lg relative -rotate-6">
@@ -776,7 +400,8 @@
               </div>
             </div>
             
-            <button onclick="cariNilai()" class="w-full bg-navy-900 text-white font-bold py-4 rounded-xl hover:bg-navy-800 transition mb-6">Lihat Nilai</button>
+            <!-- Tombol sekarang menggunakan ID, bukan onclick di HTML -->
+            <button id="btn-cari-nilai" class="w-full bg-navy-900 text-white font-bold py-4 rounded-xl hover:bg-navy-800 transition mb-6">Lihat Nilai</button>
 
             <div class="bg-gray-50 border border-gray-100 rounded-xl p-4 flex gap-4 text-sm font-medium text-gray-500">
               <i class="ph-fill ph-shield-check text-2xl text-accent shrink-0"></i>
@@ -784,8 +409,9 @@
             </div>
           </div>
           
+          <!-- Kontainer Hasil -->
           <div id="hasil-nilai-container" class="hidden bg-white rounded-3xl border border-gray-100 p-8 shadow-sm mb-8 animate-fadeIn">
-             <!-- Diisi oleh JavaScript saat pencarian nilai -->
+             <!-- Diisi oleh JavaScript Firebase saat pencarian nilai -->
           </div>
 
           <!-- Cara Menggunakan -->
@@ -806,11 +432,6 @@
               </div>
             </div>
           </div>
-          
-          <div class="text-center text-sm font-medium text-gray-500 mt-12 mb-4">
-            <p class="font-bold text-navy-900 mb-1">SD Islam Terpadu Al-Hasan</p>
-            <p>Kendala teknis? Hubungi: (0266) 123-4567</p>
-          </div>
 
         </div>
       </div>
@@ -820,454 +441,210 @@
 
   <!-- 10. FOOTER -->
   <footer id="footer-section" class="bg-navy-900 text-gray-300 py-16 px-4 md:px-8 border-t-[6px] border-accent mt-auto">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 mb-12">
-      
-      <div class="lg:col-span-4 pr-4">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-navy-900 text-2xl">
-            <i class="ph-fill ph-mosque"></i>
-          </div>
-          <div>
-            <div class="font-extrabold text-white leading-tight text-[17px]">SD ISLAM TERPADU<br>AL-HASAN</div>
-          </div>
-        </div>
-        <p class="text-sm text-gray-400 mb-8 leading-relaxed font-medium">Mewujudkan generasi islami yang cerdas, berakhlak mulia, dan berdaya saing global di era digital.</p>
-        <div class="flex gap-3">
-          <a href="#" class="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-accent transition text-white"><i class="ph-fill ph-facebook-logo"></i></a>
-          <a href="#" class="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-accent transition text-white"><i class="ph-fill ph-instagram-logo"></i></a>
-          <a href="#" class="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-accent transition text-white"><i class="ph-fill ph-youtube-logo"></i></a>
-          <a href="#" class="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-green-500 transition text-white"><i class="ph-fill ph-whatsapp-logo"></i></a>
-        </div>
-      </div>
-      
-      <div class="lg:col-span-2">
-        <h4 class="text-white font-extrabold tracking-wide mb-6 uppercase text-sm">Tautan Cepat</h4>
-        <ul class="space-y-3 text-sm font-medium text-gray-400">
-          <li><a href="javascript:navigate('beranda')" class="hover:text-accent transition">Beranda</a></li>
-          <li><a href="javascript:navigate('profil')" class="hover:text-accent transition">Profil Sekolah</a></li>
-          <li><a href="javascript:navigate('akademik')" class="hover:text-accent transition">Akademik</a></li>
-          <li><a href="javascript:navigate('program')" class="hover:text-accent transition">Program</a></li>
-          <li><a href="javascript:navigate('spmb')" class="hover:text-accent transition">SPMB</a></li>
-        </ul>
-      </div>
-      
-      <div class="lg:col-span-2">
-        <h4 class="text-white font-extrabold tracking-wide mb-6 uppercase text-sm">Informasi</h4>
-        <ul class="space-y-3 text-sm font-medium text-gray-400">
-          <li><a href="javascript:navigate('portal')" class="hover:text-accent transition">Portal Orang Tua</a></li>
-          <li><a href="javascript:navigate('portal')" class="hover:text-accent transition">Portal Siswa</a></li>
-          <li><a href="javascript:navigate('akademik')" class="hover:text-accent transition">Kurikulum</a></li>
-          <li><a href="javascript:navigate('program')" class="hover:text-accent transition">Ekstrakurikuler</a></li>
-          <li><a href="javascript:navigate('kontak')" class="hover:text-accent transition">Kontak</a></li>
-        </ul>
-      </div>
-      
-      <div class="lg:col-span-4">
-        <h4 class="text-white font-extrabold tracking-wide mb-6 uppercase text-sm">Kontak Kami</h4>
-        <ul class="space-y-4 text-sm font-medium text-gray-400">
-          <li class="flex items-start gap-3">
-            <i class="ph-fill ph-map-pin text-xl text-gray-400 shrink-0 mt-0.5"></i>
-            <span>Jl. Raya Bojonggenteng,<br>Sukabumi, Jawa Barat</span>
-          </li>
-          <li class="flex items-center gap-3">
-            <i class="ph-fill ph-phone text-xl text-gray-400 shrink-0"></i>
-            <span>(0266) 123-4567</span>
-          </li>
-          <li class="flex items-center gap-3">
-            <i class="ph-fill ph-envelope-simple text-xl text-gray-400 shrink-0"></i>
-            <span>info@sdital-hasan.sch.id</span>
-          </li>
-          <li class="flex items-center gap-3">
-            <i class="ph-fill ph-clock text-xl text-gray-400 shrink-0"></i>
-            <span>Senin - Jumat: 07.00 - 15.00</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-    
+    <!-- Footer content ... -->
     <div class="max-w-7xl mx-auto pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium text-gray-500">
       <div>&copy; 2026 SD Islam Terpadu Al-Hasan. All rights reserved.</div>
-      <div class="flex gap-6">
-        <a href="#" class="hover:text-white transition">Kebijakan Privasi</a>
-        <a href="#" class="hover:text-white transition">Syarat & Ketentuan</a>
-      </div>
     </div>
   </footer>
 
   <!-- ========================================== -->
-  <!-- SCRIPT UNTUK MERENDER DATA & NAVIGASI      -->
+  <!-- SCRIPT FUNGSI DASAR WEB                    -->
   <!-- ========================================== -->
-  
-  <!-- File data CMS asli jika ada -->
-  <script src="data.js" onerror="console.warn('File data.js tidak ditemukan. Menggunakan data dummy.')"></script>
-
   <script>
-    // ── 1. FUNGSI NAVIGASI SPA (Single Page Application)
+    // FUNGSI NAVIGASI
     function navigate(viewId) {
-      // Sembunyikan semua view
-      document.querySelectorAll('.view-section').forEach(el => {
-        el.classList.remove('active');
-      });
-      // Tampilkan view yang dipilih
+      document.querySelectorAll('.view-section').forEach(el => { el.classList.remove('active'); });
       document.getElementById(viewId).classList.add('active');
-      // Scroll ke atas
       window.scrollTo(0, 0);
 
-      // Perbarui style navbar
       document.querySelectorAll('.nav-link').forEach(el => {
         el.classList.remove('active', 'text-accent', 'border-b-2', 'border-accent', 'pb-1');
         if(el.getAttribute('data-target') === viewId) {
            el.classList.add('active', 'text-accent', 'border-b-2', 'border-accent', 'pb-1');
         }
       });
-      // Sembunyikan mobile menu jika terbuka
       document.getElementById('mobile-menu').classList.add('hidden');
 
-      // Tampilkan/Sembunyikan Footer (Portal Nilai tidak pakai Footer gelap besar)
       if(viewId === 'portal') {
         document.getElementById('footer-section').style.display = 'none';
-        document.body.classList.add('bg-[#0B152A]'); // Latar portal lebih gelap
+        document.body.classList.add('bg-[#0B152A]'); 
       } else {
         document.getElementById('footer-section').style.display = 'block';
         document.body.classList.remove('bg-[#0B152A]');
       }
     }
 
-    // ── 2. DATA DUMMY (Render UI sesuai gambar screenshot)
-    const orgData = [
-      { inisial: 'R', nama: 'Rahmatuloh, S.Pd.I', jab: 'Kepala Sekolah' },
-      { inisial: 'AO', nama: 'Agisa Oktanadila, S.I.Pust', jab: 'Bendahara Sekolah' },
-      { inisial: 'ME', nama: 'Muhammad Evirustandi', jab: 'Operator Sekolah' },
-      { inisial: 'BFM', nama: 'Bambang Faidul Manan', jab: 'Administrasi' },
-      { inisial: 'RN', nama: 'Risvia Ningsih', jab: 'Media Informasi' },
-      { inisial: 'MSW', nama: 'Mega Sri Wahyuni, S.Pd', jab: 'Guru Kelas 1A' },
-      { inisial: 'DFN', nama: 'Dhea Fitria Ningsih', jab: 'Guru Kelas 1B' },
-      { inisial: 'ANF', nama: 'Alfi Nur Fauziyah, S.Pd', jab: 'Guru Kelas 2A' },
-      { inisial: 'RAB', nama: 'Rif\'at Abdul Basir, S.Pd', jab: 'Guru Kelas 2B' },
-      { inisial: 'RF', nama: 'Resti Febrianti', jab: 'Guru Kelas 3A' }
-    ];
-
-    const programUnggulan = [
-      { ic: 'ph-book-open-text', judul: 'Tahfidz Al-Qur\'an', desc: 'Program menghafal Al-Qur\'an dengan metode yang terstruktur dan menyenangkan.', img: 'https://images.unsplash.com/photo-1605333036495-2eb42a781b0f?auto=format&fit=crop&w=400&q=80' },
-      { ic: 'ph-flask', judul: 'Sains & Teknologi', desc: 'Pembelajaran sains dan teknologi untuk menumbuhkan rasa ingin tahu.', img: 'https://images.unsplash.com/photo-1564069114553-7215e1ff1890?auto=format&fit=crop&w=400&q=80' },
-      { ic: 'ph-soccer-ball', judul: 'Olahraga & Seni', desc: 'Mengembangkan bakat dan minat siswa di bidang olahraga dan seni secara seimbang.', img: 'https://images.unsplash.com/photo-1526232761682-d26e03ac148e?auto=format&fit=crop&w=400&q=80' },
-      { ic: 'ph-users-three', judul: 'Pembinaan Karakter', desc: 'Program pembinaan karakter dan kepemimpinan untuk membentuk pribadi mulia.', img: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=400&q=80' }
-    ];
-
-    const programPendukung = [
-      { ic: 'ph-translate', judul: 'Bahasa Arab & Inggris', desc: 'Meningkatkan kemampuan bahasa asing sebagai bekal.' },
-      { ic: 'ph-book-open', judul: 'Literasi & Numerasi', desc: 'Program penguatan literasi dan numerasi dasar.' },
-      { ic: 'ph-desktop', judul: 'Kelas Digital', desc: 'Pemanfaatan teknologi digital dalam proses pembelajaran.' },
-      { ic: 'ph-circles-three', judul: 'Proyek Penguatan P5', desc: 'Proyek berbasis karakter sesuai Kurikulum Merdeka.' },
-      { ic: 'ph-basketball', judul: 'Ekstrakurikuler', desc: 'Beragam kegiatan sesuai minat dan bakat siswa.' },
-      { ic: 'ph-heart', judul: 'Pembiasaan Islami', desc: 'Pembiasaan ibadah dan akhlak dalam kehidupan sehari-hari.' },
-      { ic: 'ph-users', judul: 'Parenting Class', desc: 'Program edukasi untuk orang tua dalam mendukung anak.' },
-      { ic: 'ph-bus', judul: 'Kunjungan Edukatif', desc: 'Kegiatan belajar di luar kelas untuk pengalaman nyata.' }
-    ];
-
-    const spmbTimeline = [
-      { step: 1, judul: 'Pembukaan Pendaftaran Gelombang 1', tgl: '06 Oktober - 30 November 2025', desc: 'Pengambilan dan pengisian formulir pendaftaran secara online atau langsung ke sekolah.', ic: 'ph-desktop' },
-      { step: 2, judul: 'Pendaftaran Gelombang 2', tgl: '01 Desember 2025 - 31 Januari 2026', desc: 'Pengisian formulir pendaftaran secara online atau langsung ke sekolah.', ic: 'ph-clipboard-text' },
-      { step: 3, judul: 'Daftar Ulang', tgl: '19 - 23 Januari 2026', desc: 'Pembayaran biaya pendaftaran dan penyerahan berkas dokumen asli.', ic: 'ph-folder-open' },
-      { step: 4, judul: 'Pengukuran Baju', tgl: '10 - 11 Maret 2026', desc: 'Pengukuran baju secara langsung oleh vendor.', ic: 'ph-t-shirt' },
-      { step: 5, judul: 'Pembagian Baju', tgl: '10 Juli 2026', desc: 'Pembagian baju seragam.', ic: 'ph-gift' },
-      { step: 6, judul: 'Silaturahmi & Serah Terima Siswa Baru', tgl: '10 Juli 2026', desc: 'Penyerahan amanat dari orang tua siswa ke sekolah.', ic: 'ph-handshake' },
-      { step: 7, judul: 'Hari Pertama Sekolah', tgl: '12 Juli 2026', desc: 'Seluruh Siswa SD Islam Terpadu Al-Hasan', ic: 'ph-buildings' }
-    ];
-
-    const galeriImg = [
-      { t: 'Kegiatan Belajar Mengajar', c: 'Akademik', f: 32, u: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Kegiatan Keagamaan', c: 'Agama', f: 28, u: 'https://images.unsplash.com/photo-1605333036495-2eb42a781b0f?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Kegiatan Olahraga', c: 'Olahraga', f: 24, u: 'https://images.unsplash.com/photo-1526232761682-d26e03ac148e?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Seni & Budaya', c: 'Seni & Budaya', f: 18, u: 'https://images.unsplash.com/photo-1563806225-728b7b2ce8f5?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Ekstrakurikuler Pramuka', c: 'Ekstrakurikuler', f: 21, u: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Upacara Bendera', c: 'Kegiatan Lainnya', f: 15, u: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Kunjungan & Study Tour', c: 'Kegiatan Lainnya', f: 27, u: 'https://images.unsplash.com/photo-1511649475669-e288648b2339?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Event & Peringatan Hari Besar', c: 'Kegiatan Lainnya', f: 16, u: 'https://images.unsplash.com/photo-1514365313628-d84e4e94119d?auto=format&fit=crop&w=400&q=80' }
-    ];
-
-    const beritaUtama = [
-      { kat: 'Kegiatan Sekolah', jdl: 'Siswa SDIT Al-Hasan Ikuti Kegiatan Menanam Pohon di Kebun Raya', desc: 'Kegiatan ini bertujuan untuk menanamkan kepedulian terhadap lingkungan sejak dini kepada para siswa.', tgl: '20 Mei 2026', l: '256', u: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=600&q=80', b:'20', m:'Mei\n2026' },
-      { kat: 'Prestasi', jdl: 'Tim Robotik SDIT Al-Hasan Raih Juara 2 Lomba Robotik Tingkat Kabupaten', desc: 'Prestasi membanggakan diraih oleh tim robotik SDIT Al-Hasan dalam ajang Lomba Robotik tingkat Kabupaten.', tgl: '15 Mei 2026', l: '342', u: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80', b:'15', m:'Mei\n2026' },
-      { kat: 'Pengumuman', jdl: 'Pengumuman Kelulusan Siswa Kelas 6 Tahun Ajaran 2025/2026', desc: 'Selamat kepada seluruh siswa kelas 6 atas kelulusannya. Teruslah berprestasi dan menjadi generasi terbaik.', tgl: '10 Mei 2026', l: '532', u: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80', b:'10', m:'Mei\n2026' },
-      { kat: 'Artikel Pendidikan', jdl: 'Tips Menumbuhkan Minat Baca pada Anak Usia Sekolah Dasar', desc: 'Membaca adalah jendela dunia. Berikut beberapa tips untuk menumbuhkan minat baca pada anak sejak dini.', tgl: '05 Mei 2026', l: '189', u: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80', b:'05', m:'Mei\n2026' }
-    ];
-
-    // ── 3. RENDER FUNGSI
+    // Render Data Dummy Sederhana untuk halaman lain
     document.addEventListener('DOMContentLoaded', () => {
-      
-      // Render Keunggulan Beranda (diambil dari data statis HTML di atas)
-      const kData = [
-        { i:'user-focus', t:'Guru Berkualitas', c:'purple' }, { i:'book-open-text', t:'Kurikulum Islami', c:'blue' },
-        { i:'trophy', t:'Akademik Unggul', c:'orange' }, { i:'shield-check', t:'Kegiatan Terstruktur', c:'green' },
-        { i:'plant', t:'Lingkungan Aman', c:'teal' }, { i:'chats-teardrop', t:'Komunikasi Aktif', c:'yellow' }
+      const orgData = [
+        { inisial: 'R', nama: 'Rahmatuloh, S.Pd.I', jab: 'Kepala Sekolah' },
+        { inisial: 'AO', nama: 'Agisa Oktanadila', jab: 'Bendahara Sekolah' }
       ];
-      document.getElementById('beranda-keunggulan').innerHTML = kData.map(k => `
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition flex gap-5">
-          <div class="w-12 h-12 bg-${k.c}-50 text-${k.c}-600 rounded-full flex items-center justify-center text-2xl shrink-0"><i class="ph-fill ph-${k.i}"></i></div>
-          <div><h3 class="font-bold text-navy-900 mb-1">${k.t}</h3><p class="text-sm text-gray-500 font-medium">Layanan dan fasilitas terbaik kami berikan untuk menunjang tumbuh kembang siswa.</p></div>
-        </div>
-      `).join('');
-
-      // Render Struktur Organisasi (Profil)
       document.getElementById('grid-org').innerHTML = orgData.map(o => `
-        <div class="bg-white p-5 rounded-2xl border border-gray-100 flex flex-col items-center text-center shadow-sm hover:shadow-md transition">
+        <div class="bg-white p-5 rounded-2xl border border-gray-100 flex flex-col items-center text-center shadow-sm">
           <div class="w-12 h-12 bg-blue-50 text-accent font-bold rounded-full flex items-center justify-center text-lg mb-3">${o.inisial}</div>
-          <h4 class="font-bold text-navy-900 text-sm mb-1 line-clamp-2">${o.nama}</h4>
+          <h4 class="font-bold text-navy-900 text-sm mb-1">${o.nama}</h4>
           <p class="text-[11px] text-gray-500 font-medium">${o.jab}</p>
         </div>
       `).join('');
-
-      // Render Program Unggulan & Pendukung
-      document.getElementById('program-unggulan-grid').innerHTML = programUnggulan.map(p => `
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden group hover:shadow-lg transition">
-          <div class="h-40 overflow-hidden relative">
-            <img src="${p.img}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-            <div class="absolute -bottom-6 left-5 w-12 h-12 bg-white rounded-xl shadow-md flex items-center justify-center text-accent text-2xl"><i class="ph-fill ${p.ic}"></i></div>
-          </div>
-          <div class="p-6 pt-8">
-            <h3 class="font-bold text-navy-900 text-lg mb-2">${p.judul}</h3>
-            <p class="text-sm text-gray-500 font-medium mb-4">${p.desc}</p>
-            <a href="#" class="text-accent text-sm font-bold flex items-center gap-1.5">Selengkapnya <i class="ph-bold ph-arrow-right"></i></a>
-          </div>
-        </div>
-      `).join('');
-
-      document.getElementById('program-pendukung-grid').innerHTML = programPendukung.map(p => `
-        <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4">
-          <div class="w-10 h-10 bg-gray-50 text-gray-600 rounded-xl flex items-center justify-center text-xl shrink-0"><i class="ph-fill ${p.ic}"></i></div>
-          <div><h4 class="font-bold text-navy-900 text-sm mb-1">${p.judul}</h4><p class="text-xs text-gray-500 font-medium">${p.desc}</p></div>
-        </div>
-      `).join('');
-
-      // Render Timeline SPMB
-      document.getElementById('spmb-timeline').innerHTML = spmbTimeline.map(t => `
-        <div class="flex gap-4 sm:gap-6 relative group">
-          <div class="absolute left-6 top-10 bottom-[-24px] w-px bg-gray-200 group-last:hidden"></div>
-          <div class="w-12 h-12 bg-navy-900 text-white rounded-full flex items-center justify-center font-bold shrink-0 shadow-md relative z-10">${t.step}</div>
-          <div class="bg-white border border-gray-100 rounded-2xl p-5 sm:p-6 flex-1 shadow-sm flex items-center justify-between gap-4">
-            <div>
-              <h3 class="font-bold text-navy-900 mb-1">${t.judul}</h3>
-              <p class="text-xs font-bold text-accent mb-2">${t.tgl}</p>
-              <p class="text-sm text-gray-500 font-medium">${t.desc}</p>
-            </div>
-            <i class="ph-fill ${t.ic} text-4xl text-gray-200 hidden sm:block"></i>
-          </div>
-        </div>
-      `).join('');
-
-      // Render Galeri
-      document.getElementById('galeri-grid').innerHTML = galeriImg.map(g => `
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden group cursor-pointer">
-          <div class="aspect-[4/3] relative overflow-hidden">
-            <img src="${g.u}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1.5 rounded flex items-center gap-1.5"><i class="ph-bold ph-image"></i> ${g.f} Foto</div>
-          </div>
-          <div class="p-4">
-            <h3 class="font-bold text-navy-900 mb-2 truncate">${g.t}</h3>
-            <span class="inline-block bg-blue-50 text-accent text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">${g.c}</span>
-          </div>
-        </div>
-      `).join('');
-
-      document.getElementById('video-grid').innerHTML = [
-        {t:'Profil SD Islam Terpadu Al-Hasan', d:'12 Jan 2026', dur:'02:45', u:'https://images.unsplash.com/photo-1546410531-bea5aadcb6ce?auto=format&fit=crop&w=400&q=80'},
-        {t:'Kegiatan Tahfidz Al-Qur\'an', d:'08 Jan 2026', dur:'03:18', u:'https://images.unsplash.com/photo-1605333036495-2eb42a781b0f?auto=format&fit=crop&w=400&q=80'},
-        {t:'Praktikum IPA di Laboratorium', d:'05 Jan 2026', dur:'04:02', u:'https://images.unsplash.com/photo-1564069114553-7215e1ff1890?auto=format&fit=crop&w=400&q=80'},
-        {t:'Pertandingan Persahabatan Futsal', d:'02 Jan 2026', dur:'01:56', u:'https://images.unsplash.com/photo-1526232761682-d26e03ac148e?auto=format&fit=crop&w=400&q=80'}
-      ].map(v => `
-        <div class="group cursor-pointer">
-          <div class="aspect-video bg-gray-200 rounded-2xl relative overflow-hidden mb-3">
-            <img src="${v.u}" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/40 transition">
-              <div class="w-12 h-12 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white text-2xl border border-white/50"><i class="ph-fill ph-play"></i></div>
-            </div>
-            <div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-2 py-1 rounded">${v.dur}</div>
-          </div>
-          <h4 class="font-bold text-navy-900 text-sm line-clamp-2 mb-1">${v.t}</h4>
-          <p class="text-xs text-gray-500 font-medium">${v.d}</p>
-        </div>
-      `).join('');
-
-      // Render Berita List Main
-      document.getElementById('berita-list-main').innerHTML = beritaUtama.map(b => `
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col sm:flex-row group hover:shadow-md transition">
-          <div class="w-full sm:w-56 h-48 sm:h-auto relative overflow-hidden shrink-0">
-            <img src="${b.u}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-            <div class="absolute top-3 left-3 bg-navy-900 text-white text-center rounded-lg overflow-hidden shadow-lg border border-white/20">
-              <div class="bg-accent text-sm font-black px-3 py-1">${b.b}</div>
-              <div class="text-[9px] font-bold px-3 py-1 whitespace-pre-wrap leading-tight bg-navy-900">${b.m}</div>
-            </div>
-          </div>
-          <div class="p-6 flex flex-col justify-center">
-            <div class="flex items-center justify-between mb-3">
-              <span class="bg-blue-50 text-accent text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">${b.kat}</span>
-            </div>
-            <h3 class="font-bold text-navy-900 text-lg sm:text-xl mb-2 group-hover:text-accent transition">${b.jdl}</h3>
-            <p class="text-sm text-gray-500 font-medium mb-4 line-clamp-2">${b.desc}</p>
-            <div class="flex items-center justify-between mt-auto">
-              <div class="flex items-center gap-4 text-xs text-gray-400 font-medium">
-                <span class="flex items-center gap-1.5"><i class="ph-bold ph-calendar-blank"></i> ${b.tgl}</span>
-                <span class="flex items-center gap-1.5"><i class="ph-bold ph-eye"></i> ${b.l} Dilihat</span>
-              </div>
-              <a href="#" class="text-accent text-xs font-bold flex items-center gap-1">Baca Selengkapnya <i class="ph-bold ph-arrow-right"></i></a>
-            </div>
-          </div>
-        </div>
-      `).join('');
-
-      // Render Berita Populer (Sidebar)
-      document.getElementById('berita-populer').innerHTML = [
-        { n:1, j:'SDIT Al-Hasan Borong Piala di Olimpiade Sains', d:'12 Mei 2026', u:'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=100' },
-        { n:2, j:'Kegiatan Pesantren Kilat Bulan Ramadan', d:'18 Mar 2026', u:'https://images.unsplash.com/photo-1605333036495-2eb42a781b0f?w=100' },
-        { n:3, j:'Upacara Hardiknas 2026 Berlangsung Khidmat', d:'02 Mei 2026', u:'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=100' },
-        { n:4, j:'Siswa SDIT Al-Hasan Lolos Seleksi O2SN', d:'22 Apr 2026', u:'https://images.unsplash.com/photo-1526232761682-d26e03ac148e?w=100' }
-      ].map(b => `
-        <div class="flex items-center gap-4 group cursor-pointer">
-          <div class="text-xl font-black text-gray-200 group-hover:text-accent transition w-4 text-center">${b.n}</div>
-          <img src="${b.u}" class="w-16 h-16 rounded-xl object-cover shadow-sm">
-          <div><h4 class="font-bold text-navy-900 text-xs mb-1 line-clamp-2 group-hover:text-accent transition">${b.j}</h4><p class="text-[10px] text-gray-400 font-medium">${b.d}</p></div>
-        </div>
-      `).join('');
-
     });
+  </script>
 
-    // ── 4. LOGIKA PENCARIAN NILAI (PORTAL NILAI)
-    function cariNilai() {
+  <!-- ========================================== -->
+  <!-- SCRIPT FIREBASE PORTAL NILAI               -->
+  <!-- ========================================== -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // --- PENTING: GANTI CONFIG INI DENGAN MILIK ANDA DARI FIREBASE CONSOLE ---
+ const firebaseConfig = {
+  apiKey: "AIzaSyBc6Xx8f2Y0NsZ3eMphEzadbDP4K4rFt1w",
+  authDomain: "sdital-hasan.firebaseapp.com",
+  projectId: "sdital-hasan",
+  storageBucket: "sdital-hasan.firebasestorage.app",
+  messagingSenderId: "499840534324",
+  appId: "1:499840534324:web:78b53daa11443fc258c761",
+  measurementId: "G-81YC02102W"
+};
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Fungsi Pencarian Firebase
+    async function cariNilaiSiswa() {
       const container = document.getElementById('hasil-nilai-container');
+      const btn = document.getElementById('btn-cari-nilai');
       const nisnInput = document.getElementById('p-nisn').value.trim();
+      const ulanganId = document.getElementById('p-ulangan').value;
+      const ulanganLabel = document.getElementById('p-ulangan').options[document.getElementById('p-ulangan').selectedIndex].text;
       
       if(!nisnInput) {
         alert("Silakan masukkan NISN terlebih dahulu.");
         return;
       }
 
-      // Ambil data nilai dari DATA_NILAI (dari data.js)
-      let dataSiswa = typeof DATA_NILAI !== 'undefined' ? DATA_NILAI.find(s => s.nisn === nisnInput) : null;
-      
-      // Tampilkan kontainer
       container.classList.remove('hidden');
+      btn.innerText = "Mencari ke Database...";
+      btn.disabled = true;
 
-      if (!dataSiswa) {
-        container.innerHTML = `
-          <div class="text-center py-6">
-            <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-4"><i class="ph-fill ph-warning-circle"></i></div>
-            <h3 class="font-bold text-navy-900 text-lg mb-2">Data Tidak Ditemukan</h3>
-            <p class="text-sm text-gray-500 font-medium">Siswa dengan NISN <strong>${nisnInput}</strong> tidak ditemukan di sistem kami. Pastikan NISN diketik dengan benar.</p>
-          </div>
-        `;
-        return;
-      }
+      try {
+        // Query ke Firestore Koleksi 'nilai_siswa'
+        const q = query(collection(db, "nilai_siswa"), where("nisn", "==", String(nisnInput)));
+        const querySnapshot = await getDocs(q);
 
-      // Ambil data ulangan sesuai seleksi
-      const ulanganId = document.getElementById('p-ulangan').value;
-      const ulanganLabel = document.getElementById('p-ulangan').options[document.getElementById('p-ulangan').selectedIndex].text;
-      const nilaiList = dataSiswa.nilai[ulanganId] || [];
-
-      if (nilaiList.length === 0) {
-        container.innerHTML = `
-          <div class="flex items-center gap-4 mb-6 pb-4 border-b border-gray-100">
-            <div class="w-12 h-12 bg-navy-900 text-white rounded-xl flex items-center justify-center text-xl font-bold"><i class="ph-fill ph-student"></i></div>
-            <div>
-              <div class="text-xs text-gray-500 font-medium tracking-wider mb-1">Nama Siswa</div>
-              <div class="font-extrabold text-navy-900 text-lg">${dataSiswa.nama} <span class="text-sm font-bold text-accent bg-blue-50 px-2 py-0.5 rounded ml-2">Kelas ${dataSiswa.kelas}</span></div>
+        if (querySnapshot.empty) {
+          container.innerHTML = `
+            <div class="text-center py-6">
+              <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-4"><i class="ph-fill ph-warning-circle"></i></div>
+              <h3 class="font-bold text-navy-900 text-lg mb-2">Data Tidak Ditemukan</h3>
+              <p class="text-sm text-gray-500 font-medium">Siswa dengan NISN <strong>${nisnInput}</strong> tidak ditemukan di database kami.</p>
             </div>
-          </div>
-          <div class="text-center py-6">
-            <i class="ph-fill ph-file-dashed text-4xl text-gray-300 mb-2"></i>
-            <h3 class="font-bold text-navy-900 text-sm mb-1">Nilai Belum Tersedia</h3>
-            <p class="text-xs text-gray-500">Nilai untuk ${ulanganLabel} belum diinput oleh guru kelas.</p>
-          </div>
-        `;
-        return;
-      }
+          `;
+          return;
+        }
 
-      // Jika nilai ada
-      let tableHtml = `
-        <table class="w-full text-left">
-          <thead>
-            <tr class="text-xs text-gray-500 uppercase tracking-wider border-b border-gray-100">
-              <th class="pb-3 font-bold">Mata Pelajaran</th>
-              <th class="pb-3 font-bold text-center">KKM</th>
-              <th class="pb-3 font-bold text-center">Nilai</th>
-              <th class="pb-3 font-bold text-right">Keterangan</th>
-            </tr>
-          </thead>
-          <tbody class="text-sm font-medium text-navy-900">
-      `;
-
-      let totalNilai = 0;
-      nilaiList.forEach(n => {
-        totalNilai += n.nilai;
-        let colorClass = n.nilai >= 85 ? 'text-green-600' : (n.nilai >= n.kkm ? 'text-accent' : 'text-red-600');
-        let badgeClass = n.nilai >= n.kkm ? 'bg-green-50 text-green-600 border border-green-200' : 'bg-red-50 text-red-600 border border-red-200';
-        let ketText = n.nilai >= n.kkm ? 'Tuntas' : 'Perlu Bimbingan';
+        // Ambil dokumen pertama
+        const dataSiswa = querySnapshot.docs[0].data();
         
-        tableHtml += `
-          <tr class="border-b border-gray-50">
-            <td class="py-4">${n.mapel}</td>
-            <td class="py-4 text-center text-gray-400">${n.kkm}</td>
-            <td class="py-4 text-center font-extrabold ${colorClass}">${n.nilai}</td>
-            <td class="py-4 text-right"><span class="text-[10px] font-bold px-2 py-1 rounded ${badgeClass}">${ketText}</span></td>
-          </tr>
-        `;
-      });
+        // Cek apakah ada nilai untuk ulangan yang dipilih
+        const nilaiList = (dataSiswa.nilai && dataSiswa.nilai[ulanganId]) ? dataSiswa.nilai[ulanganId] : [];
 
-      let rataRata = Math.round(totalNilai / nilaiList.length);
-      tableHtml += `
-          </tbody>
-          <tfoot>
-            <tr class="bg-gray-50">
-              <td class="py-3 px-4 font-bold text-navy-900 rounded-l-lg">Rata-rata</td>
-              <td class="py-3 text-center"></td>
-              <td class="py-3 text-center font-extrabold text-navy-900 text-lg">${rataRata}</td>
-              <td class="py-3 rounded-r-lg"></td>
-            </tr>
-          </tfoot>
-        </table>
-      `;
-
-      container.innerHTML = `
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-gray-100">
-          <div class="flex items-center gap-4">
-            <div class="w-14 h-14 bg-navy-900 text-white rounded-xl flex items-center justify-center text-2xl font-bold">${dataSiswa.nama.charAt(0)}</div>
-            <div>
-              <div class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Rapor Elektronik</div>
-              <div class="font-extrabold text-navy-900 text-lg leading-tight">${dataSiswa.nama}</div>
-              <div class="text-xs font-bold text-accent mt-0.5">NISN: ${dataSiswa.nisn} • Kelas ${dataSiswa.kelas}</div>
+        if (nilaiList.length === 0) {
+          container.innerHTML = `
+            <div class="flex items-center gap-4 mb-6 pb-4 border-b border-gray-100">
+              <div class="w-12 h-12 bg-navy-900 text-white rounded-xl flex items-center justify-center text-xl font-bold"><i class="ph-fill ph-student"></i></div>
+              <div>
+                <div class="text-xs text-gray-500 font-medium tracking-wider mb-1">Nama Siswa</div>
+                <div class="font-extrabold text-navy-900 text-lg">${dataSiswa.nama} <span class="text-sm font-bold text-accent bg-blue-50 px-2 py-0.5 rounded ml-2">Kelas ${dataSiswa.kelas || '-'}</span></div>
+              </div>
             </div>
+            <div class="text-center py-6">
+              <i class="ph-fill ph-file-dashed text-4xl text-gray-300 mb-2"></i>
+              <h3 class="font-bold text-navy-900 text-sm mb-1">Nilai Belum Tersedia</h3>
+              <p class="text-xs text-gray-500">Nilai untuk ${ulanganLabel} belum diinput oleh guru kelas.</p>
+            </div>
+          `;
+          return;
+        }
+
+        // Render Tabel Nilai jika data tersedia
+        let tableHtml = `
+          <table class="w-full text-left">
+            <thead>
+              <tr class="text-xs text-gray-500 uppercase tracking-wider border-b border-gray-100">
+                <th class="pb-3 font-bold">Mata Pelajaran</th>
+                <th class="pb-3 font-bold text-center">KKM</th>
+                <th class="pb-3 font-bold text-center">Nilai</th>
+                <th class="pb-3 font-bold text-right">Keterangan</th>
+              </tr>
+            </thead>
+            <tbody class="text-sm font-medium text-navy-900">
+        `;
+
+        let totalNilai = 0;
+        nilaiList.forEach(n => {
+          totalNilai += Number(n.nilai);
+          let kkm = Number(n.kkm) || 70; // fallback KKM 70 jika kosong
+          let colorClass = n.nilai >= 85 ? 'text-green-600' : (n.nilai >= kkm ? 'text-accent' : 'text-red-600');
+          let badgeClass = n.nilai >= kkm ? 'bg-green-50 text-green-600 border border-green-200' : 'bg-red-50 text-red-600 border border-red-200';
+          let ketText = n.nilai >= kkm ? 'Tuntas' : 'Perlu Bimbingan';
+          
+          tableHtml += `
+            <tr class="border-b border-gray-50">
+              <td class="py-4">${n.mapel}</td>
+              <td class="py-4 text-center text-gray-400">${kkm}</td>
+              <td class="py-4 text-center font-extrabold ${colorClass}">${n.nilai}</td>
+              <td class="py-4 text-right"><span class="text-[10px] font-bold px-2 py-1 rounded ${badgeClass}">${ketText}</span></td>
+            </tr>
+          `;
+        });
+
+        let rataRata = Math.round(totalNilai / nilaiList.length);
+        tableHtml += `
+            </tbody>
+            <tfoot>
+              <tr class="bg-gray-50">
+                <td class="py-3 px-4 font-bold text-navy-900 rounded-l-lg">Rata-rata</td>
+                <td class="py-3 text-center"></td>
+                <td class="py-3 text-center font-extrabold text-navy-900 text-lg">${rataRata}</td>
+                <td class="py-3 rounded-r-lg"></td>
+              </tr>
+            </tfoot>
+          </table>
+        `;
+
+        container.innerHTML = `
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-gray-100">
+            <div class="flex items-center gap-4">
+              <div class="w-14 h-14 bg-navy-900 text-white rounded-xl flex items-center justify-center text-2xl font-bold">${dataSiswa.nama.charAt(0)}</div>
+              <div>
+                <div class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Rapor Elektronik</div>
+                <div class="font-extrabold text-navy-900 text-lg leading-tight">${dataSiswa.nama}</div>
+                <div class="text-xs font-bold text-accent mt-0.5">NISN: ${dataSiswa.nisn} • Kelas ${dataSiswa.kelas || '-'}</div>
+              </div>
+            </div>
+            <button class="bg-white border border-gray-200 text-navy-900 px-4 py-2 rounded-lg text-xs font-bold hover:bg-gray-50 flex items-center justify-center gap-2"><i class="ph-bold ph-printer"></i> Cetak Nilai</button>
           </div>
-          <button class="bg-white border border-gray-200 text-navy-900 px-4 py-2 rounded-lg text-xs font-bold hover:bg-gray-50 flex items-center justify-center gap-2"><i class="ph-bold ph-printer"></i> Cetak Nilai</button>
-        </div>
-        <div class="mb-6">
-          <h4 class="font-bold text-navy-900 text-sm mb-1">${ulanganLabel}</h4>
-          <p class="text-xs text-gray-500 font-medium">Tahun Ajaran 2025/2026</p>
-        </div>
-        ${tableHtml}
-      `;
+          <div class="mb-6">
+            <h4 class="font-bold text-navy-900 text-sm mb-1">${ulanganLabel}</h4>
+            <p class="text-xs text-gray-500 font-medium">Data Resmi Tersinkronisasi Database</p>
+          </div>
+          ${tableHtml}
+        `;
+
+      } catch (err) {
+        console.error("Firebase Error:", err);
+        container.innerHTML = `<div class="text-red-500 font-bold py-6 text-center">Terjadi kesalahan sistem. Mohon coba lagi.</div>`;
+      } finally {
+        btn.innerText = "Lihat Nilai";
+        btn.disabled = false;
+      }
     }
 
+    // Pasangkan fungsi ke tombol saat diklik
+    document.getElementById('btn-cari-nilai').addEventListener('click', cariNilaiSiswa);
   </script>
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { getFirestore } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-  // Masukkan Config yang Anda dapatkan dari Firebase Console di sini
-  const firebaseConfig = {
-    apiKey: "AIza...",
-    authDomain: "sdit-al-hasan.firebaseapp.com",
-    projectId: "sdit-al-hasan",
-    storageBucket: "sdit-al-hasan.appspot.com",
-    messagingSenderId: "...",
-    appId: "..."
-  };
-
-  // Inisialisasi
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  // Simpan db ke window agar bisa dipakai di file JS lain
-  window.db = db;
-</script>
 </body>
 </html>
