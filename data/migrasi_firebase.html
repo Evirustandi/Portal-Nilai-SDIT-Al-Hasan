@@ -10,19 +10,21 @@
     .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
     h1 { color: #0D2147; margin-bottom: 20px; }
     .card { border: 1px solid #DDE4F0; padding: 20px; border-radius: 8px; margin-bottom: 20px; background: #F9FBFF; }
-    textarea { width: 100%; height: 150px; font-family: monospace; padding: 10px; border: 1px solid #DDE4F0; border-radius: 4px; margin-top: 10px; }
-    button { background: #0D2147; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 16px; transition: 0.3s; }
+    textarea, input[type="text"] { width: 100%; font-family: monospace; padding: 12px; border: 1px solid #DDE4F0; border-radius: 4px; margin-top: 10px; box-sizing: border-box; }
+    textarea { height: 120px; }
+    button { background: #0D2147; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 16px; transition: 0.3s; margin-top: 10px; }
     button:hover { background: #1A3A6B; }
     button:disabled { background: #CCC; cursor: not-allowed; }
-    #status { margin-top: 20px; white-space: pre-wrap; font-family: monospace; background: #000; color: #0F0; padding: 15px; border-radius: 6px; display: none; max-height: 300px; overflow-y: auto; }
+    #status { margin-top: 20px; white-space: pre-wrap; font-family: monospace; background: #000; color: #0F0; padding: 15px; border-radius: 6px; display: none; max-height: 300px; overflow-y: auto; font-size: 13px; }
     .step { font-weight: 600; color: #C8942A; margin-bottom: 5px; display: block; }
+    code { background: #eee; padding: 2px 4px; border-radius: 4px; }
   </style>
 </head>
 <body>
 
 <div class="container">
   <h1>🚀 Migrasi Data SDIT Al-Hasan</h1>
-  <p>Gunakan alat ini untuk memindahkan data dari <code>data.js</code> langsung ke Firebase Firestore Anda.</p>
+  <p>Pindahkan data dari GitHub <code>data.js</code> langsung ke Firebase Firestore Anda.</p>
 
   <div class="card">
     <span class="step">Langkah 1: Masukkan Konfigurasi Firebase</span>
@@ -36,20 +38,22 @@
   </div>
 
   <div class="card">
-    <span class="step">Langkah 2: Jalankan Migrasi</span>
-    <p>Pastikan file <code>data.js</code> sudah terhubung (script ini akan mendeteksi variabel CMS_BERITA, DATA_NILAI, dll).</p>
+    <span class="step">Langkah 2: URL Mentah (Raw) data.js GitHub</span>
+    <p style="font-size: 13px; color: #666;">Contoh: <code>https://raw.githubusercontent.com/username/repo/main/data.js</code></p>
+    <input type="text" id="github-url" placeholder="Masukkan URL raw data.js Anda">
+  </div>
+
+  <div class="card">
+    <span class="step">Langkah 3: Jalankan Migrasi</span>
     <button id="btn-start">Mulai Pindahkan Data</button>
   </div>
 
   <div id="status"></div>
 </div>
 
-<!-- HUBUNGKAN DATA.JS ANDA DI SINI -->
-<script src="data.js"></script>
-
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getFirestore, doc, setDoc, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
   const btn = document.getElementById('btn-start');
   const statusEl = document.getElementById('status');
@@ -62,52 +66,64 @@
 
   btn.addEventListener('click', async () => {
     const configStr = document.getElementById('fb-config').value;
-    if (!configStr.includes('apiKey')) {
-      alert('Masukkan konfigurasi Firebase yang valid!');
+    const githubUrl = document.getElementById('github-url').value;
+
+    if (!configStr.includes('apiKey') || !githubUrl) {
+      alert('Mohon lengkapi konfigurasi Firebase dan URL GitHub!');
       return;
     }
 
     try {
-      // Ekstrak objek dari string (cara cepat untuk demo)
+      btn.disabled = true;
+      log('--- PROSES DIMULAI ---');
+
+      // 1. Ambil file data.js dari GitHub
+      log('Mengambil data dari GitHub...');
+      const response = await fetch(githubUrl);
+      if (!response.ok) throw new Error('Gagal mengambil file dari GitHub. Pastikan URL benar.');
+      const scriptContent = await response.text();
+
+      // 2. "Eksekusi" script secara aman untuk mendapatkan variabelnya
+      // Kita buat element script sementara agar variabel masuk ke window global
+      const tempScript = document.createElement('script');
+      tempScript.textContent = scriptContent;
+      document.body.appendChild(tempScript);
+
+      // 3. Inisialisasi Firebase
       const config = eval(configStr.replace('const firebaseConfig =', ''));
       const app = initializeApp(config);
       const db = getFirestore(app);
 
-      btn.disabled = true;
-      log('--- MEMULAI MIGRASI ---');
+      log('Firebase terhubung. Memulai upload...');
 
-      const dataToMigrate = [
-        { name: 'berita', data: typeof CMS_BERITA !== 'undefined' ? CMS_BERITA : [] },
-        { name: 'galeri', data: typeof CMS_GALERI !== 'undefined' ? CMS_GALERI : [] },
-        { name: 'guru', data: typeof CMS_GURU !== 'undefined' ? CMS_GURU : [] },
-        { name: 'program', data: typeof CMS_PROGRAM !== 'undefined' ? CMS_PROGRAM : [] },
-        { name: 'spmb', data: typeof CMS_SPMB !== 'undefined' ? CMS_SPMB : [] },
-        { name: 'nilai_siswa', data: typeof DATA_NILAI !== 'undefined' ? DATA_NILAI : [] }
+      const collections = [
+        { name: 'berita', data: window.CMS_BERITA || [] },
+        { name: 'galeri', data: window.CMS_GALERI || [] },
+        { name: 'guru', data: window.CMS_GURU || [] },
+        { name: 'program', data: window.CMS_PROGRAM || [] },
+        { name: 'spmb', data: window.CMS_SPMB || [] },
+        { name: 'nilai_siswa', data: window.DATA_NILAI || [] }
       ];
 
-      for (const item of dataToMigrate) {
-        log(`Memproses koleksi: ${item.name}...`);
-        if (item.data.length === 0) {
-          log(`⚠️ Koleksi ${item.name} kosong, dilewati.`);
-          continue;
-        }
-
-        for (let i = 0; i < item.data.length; i++) {
-          const entry = item.data[i];
-          // Gunakan ID unik jika ada, atau buat ID string
+      for (const coll of collections) {
+        log(`📂 Memproses ${coll.name} (${coll.data.length} item)...`);
+        
+        for (let i = 0; i < coll.data.length; i++) {
+          const entry = coll.data[i];
           const docId = entry.id || entry.nisn || `item_${i}`;
           
-          await setDoc(doc(db, item.name, String(docId)), entry);
-          log(` ✅ Berhasil upload ${item.name} [ID: ${docId}]`);
+          await setDoc(doc(db, coll.name, String(docId)), entry);
+          log(`   ✅ Berhasil: ${coll.name} [ID: ${docId}]`);
         }
       }
 
-      log('--- MIGRASI SELESAI ---');
-      log('Sekarang Anda bisa menghapus file data.js dan mulai menggunakan data dari Firestore.');
+      log('--- SEMUA DATA BERHASIL DIPINDAHKAN ---');
       alert('Migrasi Selesai!');
 
     } catch (err) {
       log('❌ ERROR: ' + err.message);
+      console.error(err);
+    } finally {
       btn.disabled = false;
     }
   });
