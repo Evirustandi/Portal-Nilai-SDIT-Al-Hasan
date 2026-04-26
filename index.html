@@ -1248,26 +1248,7 @@
     }
 
   </script>
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { getFirestore } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-
-  // Masukkan Config yang Anda dapatkan dari Firebase Console di sini
-  const firebaseConfig = {
-    apiKey: "AIza...",
-    authDomain: "sdit-al-hasan.firebaseapp.com",
-    projectId: "sdit-al-hasan",
-    storageBucket: "sdit-al-hasan.appspot.com",
-    messagingSenderId: "...",
-    appId: "..."
-  };
-
-  // Inisialisasi
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  // Simpan db ke window agar bisa dipakai di file JS lain
-  window.db = db;
+ <script type="module" src="cms-integration-firebase.js">
 </script>
 </body>
 </html>
