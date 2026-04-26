@@ -6,10 +6,12 @@
   <title>SD Islam Terpadu Al-Hasan | Cerdas, Berakhlak, Berdaya Saing Global</title>
   
   <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <!-- Ikon -->
-  <script src="logo.png"></script>
+  <!-- Ikon Phosphor -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -22,12 +24,15 @@
           },
           colors: {
             navy: {
-              900: '#0B152A', // Sesuai warna gelap di footer/header baru
-              800: '#162F65',
+              900: '#111827', // Disesuaikan lebih gelap elegan
+              800: '#1F2937',
             },
             primary: '#1A3A6B',
-            accent: '#0A58CA', // Biru terang untuk tombol
+            accent: '#1D4ED8', // Biru terang sesuai desain (Blue 700)
             gold: '#C8942A',
+          },
+          borderRadius: {
+            '4xl': '2rem',
           }
         }
       }
@@ -38,38 +43,39 @@
     .hide-scrollbar::-webkit-scrollbar { display: none; }
     .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     
-    .hero-blob {
-      border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-      animation: morph 8s ease-in-out infinite;
-    }
-    @keyframes morph {
-      0%, 100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
-      34% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; }
-      67% { border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%; }
-    }
-    .animate-float { animation: float 4s ease-in-out infinite; }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
+    .view-section { display: none; animation: fadeIn 0.4s ease-out forwards; opacity: 0; }
+    .view-section.active { display: block; opacity: 1; }
     
-    /* Utility untuk transisi view */
-    .view-section { display: none; animation: fadeIn 0.4s ease-out; }
-    .view-section.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { 
+      from { opacity: 0; transform: translateY(10px); } 
+      to { opacity: 1; transform: translateY(0); } 
+    }
 
-    .nav-link.active { color: #0A58CA; border-bottom: 2px solid #0A58CA; padding-bottom: 4px; }
+    /* Navbar Link Active State */
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: #1D4ED8;
+      transition: width 0.3s;
+    }
+    .nav-link.active::after { width: 100%; }
+    .nav-link.active { color: #1D4ED8; }
   </style>
 </head>
 <body class="text-gray-800 antialiased bg-[#F8FAFC] flex flex-col min-h-screen">
 
   <!-- 1. TOP BAR -->
-  <div class="bg-navy-900 text-white text-xs py-2 px-4 md:px-8 flex justify-between items-center hidden lg:flex">
+  <div class="bg-navy-900 text-white text-[11px] font-medium py-2 px-4 md:px-8 flex justify-between items-center hidden lg:flex">
     <div class="flex items-center gap-6">
-      <div class="flex items-center gap-2"><i class="ph-fill ph-map-pin text-gray-400"></i> Jl. Raya Bojonggenteng, Sukabumi, Jawa Barat</div>
-      <div class="flex items-center gap-2"><i class="ph-fill ph-phone text-gray-400"></i> (0266) 123-4567</div>
+      <div class="flex items-center gap-2"><i class="ph ph-map-pin text-gray-400"></i> Jl. Raya Bojonggenteng, Sukabumi, Jawa Barat</div>
+      <div class="flex items-center gap-2"><i class="ph ph-phone text-gray-400"></i> (0266) 123-4567</div>
     </div>
-    <div class="flex items-center gap-6 font-medium text-gray-200">
+    <div class="flex items-center gap-6 text-gray-300">
       <a href="javascript:navigate('portal')" class="hover:text-white transition flex items-center gap-1.5"><i class="ph ph-user text-sm"></i> Portal Orang Tua</a>
       <a href="javascript:navigate('portal')" class="hover:text-white transition flex items-center gap-1.5"><i class="ph ph-student text-sm"></i> Portal Siswa</a>
       <a href="#" class="hover:text-white transition flex items-center gap-1.5"><i class="ph ph-desktop text-sm"></i> SIP Sekolah</a>
@@ -77,14 +83,14 @@
   </div>
 
   <!-- 2. NAVBAR -->
-  <nav class="bg-white py-4 px-4 md:px-8 shadow-[0_4px_20px_rgb(0,0,0,0.03)] sticky top-0 z-50 flex justify-between items-center">
+  <nav class="bg-white py-4 px-4 md:px-8 shadow-sm sticky top-0 z-50 flex justify-between items-center border-b border-gray-100">
     <div class="flex items-center gap-3 cursor-pointer" onclick="navigate('beranda')">
-      <div class="w-12 h-12 bg-navy-900 rounded-xl flex items-center justify-center text-white text-2xl shadow-md">
+      <div class="w-10 h-10 bg-navy-900 rounded-lg flex items-center justify-center text-white text-xl shadow-md">
         <i class="ph-fill ph-mosque"></i>
       </div>
       <div>
-        <div class="font-extrabold text-navy-900 leading-none tracking-tight">SD ISLAM TERPADU<br><span class="text-[19px] text-accent">AL-HASAN</span></div>
-        <div class="text-[9px] text-gray-500 font-medium tracking-wide uppercase mt-0.5">Cerdas, Berakhlak, Berdaya Saing Global</div>
+        <div class="font-extrabold text-navy-900 leading-none tracking-tight text-lg">SD ISLAM TERPADU<br><span class="text-accent">AL-HASAN</span></div>
+        <div class="text-[8px] text-gray-500 font-medium tracking-wide uppercase mt-0.5">Cerdas, Berakhlak, Berdaya Saing Global</div>
       </div>
     </div>
     
@@ -109,167 +115,216 @@
   </nav>
 
   <!-- Mobile Menu -->
-  <div id="mobile-menu" class="hidden bg-white border-b border-gray-100 shadow-sm p-4 flex flex-col gap-3 font-bold text-sm text-gray-600 lg:hidden">
-    <a href="javascript:navigate('beranda');" class="hover:text-accent">Beranda</a>
-    <a href="javascript:navigate('profil');" class="hover:text-accent">Profil</a>
-    <a href="javascript:navigate('akademik');" class="hover:text-accent">Akademik</a>
-    <a href="javascript:navigate('program');" class="hover:text-accent">Program</a>
-    <a href="javascript:navigate('spmb');" class="hover:text-accent">SPMB</a>
-    <a href="javascript:navigate('galeri');" class="hover:text-accent">Galeri</a>
-    <a href="javascript:navigate('berita');" class="hover:text-accent">Berita</a>
-    <a href="javascript:navigate('kontak');" class="hover:text-accent">Kontak</a>
-    <a href="javascript:navigate('portal');" class="text-accent">Portal Nilai Siswa</a>
+  <div id="mobile-menu" class="hidden bg-white border-b border-gray-100 shadow-sm p-4 flex flex-col gap-3 font-bold text-sm text-gray-600 lg:hidden fixed w-full z-40">
+    <a href="javascript:navigate('beranda');" class="hover:text-accent pb-2 border-b border-gray-50">Beranda</a>
+    <a href="javascript:navigate('profil');" class="hover:text-accent pb-2 border-b border-gray-50">Profil</a>
+    <a href="javascript:navigate('akademik');" class="hover:text-accent pb-2 border-b border-gray-50">Akademik</a>
+    <a href="javascript:navigate('program');" class="hover:text-accent pb-2 border-b border-gray-50">Program</a>
+    <a href="javascript:navigate('spmb');" class="hover:text-accent pb-2 border-b border-gray-50">SPMB</a>
+    <a href="javascript:navigate('galeri');" class="hover:text-accent pb-2 border-b border-gray-50">Galeri</a>
+    <a href="javascript:navigate('berita');" class="hover:text-accent pb-2 border-b border-gray-50">Berita</a>
+    <a href="javascript:navigate('kontak');" class="hover:text-accent pb-2 border-b border-gray-50">Kontak</a>
+    <a href="javascript:navigate('portal');" class="text-accent pt-2">Portal Nilai Siswa</a>
   </div>
 
   <!-- ========================================== -->
   <!-- KONTEN UTAMA (SPA)                         -->
   <!-- ========================================== -->
-  <main class="flex-1 w-full relative">
+  <main class="flex-1 w-full relative pb-10">
 
     <!-- 1. BERANDA -->
     <div id="beranda" class="view-section active">
-      <section class="relative pt-12 pb-32 px-4 md:px-8 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 overflow-hidden">
-        <div class="absolute top-0 right-0 w-1/2 h-full bg-[#EEF2FF] rounded-bl-[150px] -z-10 hidden lg:block"></div>
+      <!-- Hero -->
+      <section class="relative pt-12 pb-24 px-4 md:px-8 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
+        <div class="absolute top-0 right-0 w-2/3 h-[110%] bg-[#EEF2FF] rounded-bl-[200px] -z-10 hidden lg:block opacity-60"></div>
+        
         <div class="lg:w-1/2 z-10 relative">
-          <span class="inline-flex items-center gap-2 bg-blue-100 text-accent text-xs font-extrabold px-4 py-1.5 rounded-full mb-6 uppercase tracking-wider">Tahun Pelajaran 2025/2026</span>
-          <h1 class="text-4xl md:text-5xl lg:text-[54px] font-extrabold text-navy-900 leading-[1.15] mb-6">Mencetak Generasi Islami <span class="text-accent">Cerdas</span>, Berakhlak Mulia, Berdaya Saing Global</h1>
-          <p class="text-gray-600 leading-relaxed mb-8 text-lg font-medium pr-4">SD Islam Terpadu Al-Hasan berkomitmen memberikan pendidikan terbaik berlandaskan nilai-nilai Islam, ilmu pengetahuan, dan karakter unggul untuk masa depan yang gemilang.</p>
+          <span class="inline-flex items-center bg-blue-50 text-accent text-[10px] font-bold px-4 py-1.5 rounded-full mb-6 tracking-widest uppercase shadow-sm border border-blue-100">TAHUN PELAJARAN 2025/2026</span>
+          <h1 class="text-4xl md:text-5xl lg:text-[56px] font-extrabold text-navy-900 leading-[1.15] mb-6">Mencetak Generasi Islami<br><span class="text-accent">Cerdas</span>, Berakhlak Mulia, Berdaya Saing Global</h1>
+          <p class="text-gray-500 leading-relaxed mb-8 text-base font-medium pr-4">SD Islam Terpadu Al-Hasan berkomitmen memberikan pendidikan terbaik berlandaskan nilai-nilai Islam, ilmu pengetahuan, dan karakter unggul untuk masa depan yang gemilang.</p>
           <div class="flex flex-wrap items-center gap-4">
-            <a href="javascript:navigate('spmb')" class="bg-accent text-white px-7 py-3.5 rounded-full font-bold hover:bg-blue-800 transition flex items-center gap-2 shadow-lg shadow-blue-600/30">Daftar Peserta Didik Baru <i class="ph-bold ph-arrow-right"></i></a>
-            <a href="javascript:navigate('profil')" class="bg-white border-2 border-gray-200 text-navy-900 px-7 py-3.5 rounded-full font-bold hover:bg-gray-50 transition flex items-center gap-2 shadow-sm">Kenali Sekolah Kami <i class="ph ph-play-circle text-xl"></i></a>
+            <a href="javascript:navigate('spmb')" class="bg-accent text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-800 transition flex items-center gap-2 shadow-lg shadow-blue-600/30 text-sm">Daftar Peserta Didik Baru <i class="ph-bold ph-arrow-right"></i></a>
+            <a href="javascript:navigate('profil')" class="bg-white border border-gray-200 text-navy-900 px-6 py-3 rounded-xl font-bold hover:bg-gray-50 transition flex items-center gap-2 shadow-sm text-sm">Kenali Sekolah Kami <i class="ph ph-play-circle text-lg"></i></a>
           </div>
         </div>
-        <div class="lg:w-1/2 relative flex justify-center mt-10 lg:mt-0 w-full">
-          <div class="w-full max-w-[500px] aspect-square relative z-10">
-            <div class="hero-blob w-full h-full overflow-hidden shadow-2xl relative border-8 border-white bg-gray-200">
-              <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80&w=800" alt="Siswa SDIT" class="w-full h-full object-cover">
-            </div>
-            <div class="absolute bottom-4 -left-4 md:-left-10 bg-white rounded-2xl shadow-xl p-4 flex items-center gap-4 animate-float z-20 border border-gray-100">
-              <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-accent text-2xl shrink-0"><i class="ph-fill ph-star"></i></div>
-              <div>
-                <div class="font-extrabold text-navy-900 text-sm">Sekolah Islami<br>Berprestasi</div>
-                <div class="text-[10px] text-gray-500 font-medium mt-0.5">Unggul dalam Akademik,<br>Akhlak dan Kegiatan</div>
-              </div>
+
+        <div class="lg:w-1/2 relative w-full flex justify-end">
+          <div class="relative w-full max-w-[550px] aspect-[4/3] rounded-[3rem] rounded-bl-[6rem] overflow-hidden shadow-2xl border-8 border-white bg-gray-100">
+            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80&w=800" alt="Siswa SDIT" class="w-full h-full object-cover">
+          </div>
+          <!-- Floating Badge -->
+          <div class="absolute -bottom-6 -left-6 md:left-4 bg-white rounded-2xl shadow-xl p-4 flex items-center gap-4 z-20 border border-gray-100">
+            <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-accent text-2xl shrink-0"><i class="ph-fill ph-star"></i></div>
+            <div>
+              <div class="font-bold text-navy-900 text-sm">Sekolah Islami<br>Berprestasi</div>
+              <div class="text-[10px] text-gray-500 font-medium mt-0.5">Unggul dalam Akademik,<br>Akhlak dan Kegiatan</div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Stats Overlay Beranda -->
-      <section class="max-w-6xl mx-auto px-4 relative z-20 -mt-16 mb-20">
-        <div class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-8 flex flex-col md:flex-row justify-between items-center gap-8 border border-gray-100">
-          <div class="flex items-center gap-4 flex-1 justify-center md:justify-start">
-            <div class="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center text-accent text-[28px] shrink-0"><i class="ph-fill ph-users-three"></i></div>
-            <div><div class="text-3xl font-extrabold text-navy-900">250+</div><div class="text-xs text-gray-500 font-bold uppercase tracking-wider mt-1">Peserta Didik Aktif</div></div>
+      <!-- Stats -->
+      <section class="max-w-6xl mx-auto px-4 relative z-20 mb-20 mt-8">
+        <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8 flex flex-col md:flex-row justify-between items-center gap-8">
+          <div class="flex flex-col items-center flex-1">
+            <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-gray-500 text-2xl mb-3"><i class="ph-fill ph-users-three"></i></div>
+            <div class="text-3xl font-extrabold text-navy-900 mb-1">250+</div>
+            <div class="text-xs text-gray-500 font-medium">Peserta Didik Aktif</div>
           </div>
           <div class="hidden md:block w-px h-16 bg-gray-100"></div>
-          <div class="flex items-center gap-4 flex-1 justify-center">
-            <div class="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center text-accent text-[28px] shrink-0"><i class="ph-fill ph-graduation-cap"></i></div>
-            <div><div class="text-3xl font-extrabold text-navy-900">27</div><div class="text-xs text-gray-500 font-bold uppercase tracking-wider mt-1">Tenaga Pendidik</div></div>
+          <div class="flex flex-col items-center flex-1">
+            <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-gray-500 text-2xl mb-3"><i class="ph-fill ph-graduation-cap"></i></div>
+            <div class="text-3xl font-extrabold text-navy-900 mb-1">27</div>
+            <div class="text-xs text-gray-500 font-medium">Tenaga Pendidik</div>
           </div>
           <div class="hidden md:block w-px h-16 bg-gray-100"></div>
-          <div class="flex items-center gap-4 flex-1 justify-center md:justify-end">
-            <div class="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center text-accent text-[28px] shrink-0"><i class="ph-fill ph-medal"></i></div>
-            <div><div class="text-xl font-extrabold text-navy-900 leading-tight">Akreditasi A</div><div class="text-xs text-gray-500 font-bold uppercase tracking-wider mt-1">Standar Nasional</div></div>
+          <div class="flex flex-col items-center flex-1">
+            <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-gray-500 text-2xl mb-3"><i class="ph-fill ph-calendar"></i></div>
+            <div class="text-3xl font-extrabold text-navy-900 mb-1">5</div>
+            <div class="text-xs text-gray-500 font-medium">Tahun Berdiri</div>
+          </div>
+          <div class="hidden md:block w-px h-16 bg-gray-100"></div>
+          <div class="flex flex-col items-center flex-1">
+            <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-gray-500 text-2xl mb-3"><i class="ph-fill ph-medal"></i></div>
+            <div class="text-2xl font-extrabold text-navy-900 mb-1">Akreditasi A</div>
+            <div class="text-xs text-gray-500 font-medium">Standar Nasional</div>
           </div>
         </div>
       </section>
 
-      <!-- Beranda: Keunggulan -->
-      <section class="py-16 px-4 md:px-8 max-w-6xl mx-auto">
+      <!-- Keunggulan -->
+      <section class="py-10 px-4 md:px-8 max-w-6xl mx-auto">
         <div class="text-center mb-14">
-          <span class="text-accent text-xs font-extrabold tracking-widest uppercase mb-3 block">Keunggulan Kami</span>
+          <span class="text-accent text-[10px] font-bold tracking-widest uppercase mb-2 block">KEUNGGULAN KAMI</span>
           <h2 class="text-3xl md:text-4xl font-extrabold text-navy-900 mb-4">Mengapa Memilih <span class="text-accent">SDIT Al-Hasan?</span></h2>
-          <p class="text-gray-500 font-medium max-w-2xl mx-auto">Kami menyediakan lingkungan belajar terbaik dengan berbagai keunggulan untuk mendukung tumbuh kembang anak secara optimal.</p>
+          <p class="text-gray-500 text-sm font-medium max-w-2xl mx-auto">Kami menyediakan lingkungan belajar terbaik dengan berbagai keunggulan untuk mendukung tumbuh kembang anak secara optimal.</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="beranda-keunggulan"></div>
       </section>
+
+      <!-- Momen Bersama (Galeri Preview) -->
+      <section class="py-16 px-4 md:px-8 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
+          <div>
+            <span class="text-accent text-[10px] font-bold tracking-widest uppercase mb-2 block">GALERI</span>
+            <h2 class="text-3xl font-extrabold text-navy-900">Momen Bersama</h2>
+            <p class="text-gray-500 text-sm font-medium mt-2">Bersama membangun kenangan indah di lingkungan belajar yang menyenangkan.</p>
+          </div>
+          <a href="javascript:navigate('galeri')" class="text-navy-900 font-bold text-sm border border-gray-200 px-5 py-2.5 rounded-xl hover:bg-gray-50 flex items-center gap-2">Lihat Semua Galeri <i class="ph-bold ph-arrow-right"></i></a>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=400&q=80" class="rounded-[2rem] aspect-[4/3] object-cover shadow-sm w-full">
+          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80" class="rounded-[2rem] aspect-[4/3] object-cover shadow-sm w-full">
+          <img src="https://images.unsplash.com/photo-1605333036495-2eb42a781b0f?auto=format&fit=crop&w=400&q=80" class="rounded-[2rem] aspect-[4/3] object-cover shadow-sm w-full">
+          <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&q=80" class="rounded-[2rem] aspect-[4/3] object-cover shadow-sm w-full">
+        </div>
+      </section>
+
+      <!-- Berita & Pengumuman Preview -->
+      <section class="py-10 px-4 md:px-8 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
+          <div>
+            <span class="text-accent text-[10px] font-bold tracking-widest uppercase mb-2 block">BERITA TERKINI</span>
+            <h2 class="text-3xl font-extrabold text-navy-900">Berita & Pengumuman</h2>
+          </div>
+          <a href="javascript:navigate('berita')" class="text-navy-900 font-bold text-sm border border-gray-200 px-5 py-2.5 rounded-xl hover:bg-gray-50 flex items-center gap-2">Lihat Semua Berita <i class="ph-bold ph-arrow-right"></i></a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="beranda-berita-preview">
+          <!-- Diisi JS -->
+        </div>
+      </section>
+
     </div>
 
     <!-- 2. PROFIL -->
     <div id="profil" class="view-section">
       <!-- Page Hero -->
-      <div class="bg-navy-900 mx-4 md:mx-8 mt-4 rounded-3xl p-8 md:p-14 relative overflow-hidden text-white flex flex-col md:flex-row items-center gap-8 max-w-7xl xl:mx-auto">
-        <div class="absolute right-0 top-0 w-full md:w-1/2 h-full opacity-30 md:opacity-100 bg-[url('https://images.unsplash.com/photo-1546410531-bea5aadcb6ce?auto=format&fit=crop&w=800&q=80')] bg-cover bg-center [mask-image:linear-gradient(to_right,transparent,black)]"></div>
-        <div class="relative z-10 md:w-1/2">
-          <span class="text-xs font-bold uppercase tracking-wider text-blue-200 mb-3 block">Beranda > Profil Sekolah</span>
+      <div class="bg-navy-900 mx-4 md:mx-8 mt-6 rounded-[2rem] overflow-hidden text-white flex flex-col md:flex-row relative max-w-7xl xl:mx-auto">
+        <div class="p-8 md:p-14 relative z-10 md:w-1/2 flex flex-col justify-center">
+          <span class="text-[10px] font-bold uppercase tracking-widest text-blue-200 border border-blue-400/30 px-3 py-1 rounded-full w-max mb-4">PROFIL SEKOLAH</span>
           <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Profil SDIT Al-Hasan</h1>
-          <p class="text-blue-100 font-medium text-lg">Mengenal lebih dekat SD Islam Terpadu Al-Hasan — sejarah, visi, misi, dan struktur organisasi kami.</p>
+          <p class="text-gray-300 font-medium text-base">Mengenal lebih dekat SD Islam Terpadu Al-Hasan — sejarah, visi, misi, dan struktur organisasi kami.</p>
+        </div>
+        <div class="md:w-1/2 h-64 md:h-auto relative">
+          <div class="absolute inset-0 bg-gradient-to-r from-navy-900 to-transparent z-10 hidden md:block"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-navy-900 to-transparent z-10 block md:hidden"></div>
+          <img src="https://images.unsplash.com/photo-1546410531-bea5aadcb6ce?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
         </div>
       </div>
 
       <section class="py-16 px-4 md:px-8 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
         <div>
           <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 bg-blue-100 text-accent rounded-lg flex items-center justify-center text-xl"><i class="ph-bold ph-book-open"></i></div>
+            <div class="w-10 h-10 border border-gray-200 text-navy-900 rounded-xl flex items-center justify-center text-xl shadow-sm"><i class="ph-bold ph-book-open"></i></div>
             <h2 class="text-2xl font-extrabold text-navy-900">Tentang Kami</h2>
           </div>
-          <div class="text-gray-600 font-medium leading-relaxed space-y-4">
+          <div class="text-gray-500 text-sm font-medium leading-relaxed space-y-4">
             <p>SD Islam Terpadu Al-Hasan berdiri di Bojonggenteng, Kabupaten Sukabumi. Didirikan dengan tekad mulia untuk menghadirkan pendidikan dasar berbasis Islam yang berkualitas bagi masyarakat Bojonggenteng dan sekitarnya.</p>
             <p>Kami menggabungkan Kurikulum Merdeka dengan kurikulum khas Islam terpadu yang mencakup pendidikan Al-Qur'an, akidah, akhlak, dan pembiasaan ibadah sehari-hari.</p>
           </div>
         </div>
         <div>
-          <h2 class="text-2xl font-extrabold text-navy-900 mb-6">Visi & Misi</h2>
-          <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm mb-4 flex gap-4">
-            <div class="w-10 h-10 bg-blue-100 text-accent rounded-full flex items-center justify-center text-xl shrink-0"><i class="ph-fill ph-eye"></i></div>
-            <div>
-              <h3 class="font-bold text-navy-900 mb-2">Visi</h3>
-              <p class="text-sm text-gray-600 font-medium">Terwujudnya generasi muslim yang beriman, berilmu, berakhlak mulia, mandiri, dan berdaya saing di era global.</p>
+          <h2 class="text-2xl font-extrabold text-navy-900 mb-6 border-b border-gray-100 pb-4">Visi & Misi</h2>
+          <div class="flex gap-6">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-3">
+                <i class="ph-fill ph-eye text-accent text-xl"></i> <h3 class="font-bold text-navy-900">Visi</h3>
+              </div>
+              <p class="text-xs text-gray-500 font-medium leading-relaxed bg-white border border-gray-100 p-4 rounded-xl shadow-sm">Terwujudnya generasi muslim yang beriman, berilmu, berakhlak mulia, mandiri, dan berdaya saing di era global.</p>
             </div>
-          </div>
-          <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex gap-4">
-            <div class="w-10 h-10 bg-blue-100 text-accent rounded-full flex items-center justify-center text-xl shrink-0"><i class="ph-fill ph-target"></i></div>
-            <div>
-              <h3 class="font-bold text-navy-900 mb-3">Misi</h3>
-              <ul class="text-sm text-gray-600 font-medium space-y-2 list-none">
-                <li class="flex items-start gap-2"><i class="ph-fill ph-check-circle text-accent mt-0.5"></i> Menanamkan keimanan dan ketakwaan melalui pengamalan ajaran agama.</li>
-                <li class="flex items-start gap-2"><i class="ph-fill ph-check-circle text-accent mt-0.5"></i> Mengoptimalkan proses pembelajaran dan bimbingan.</li>
-                <li class="flex items-start gap-2"><i class="ph-fill ph-check-circle text-accent mt-0.5"></i> Mengembangkan bidang Ilmu Pengetahuan dan Teknologi.</li>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-3">
+                <i class="ph-fill ph-target text-accent text-xl"></i> <h3 class="font-bold text-navy-900">Misi</h3>
+              </div>
+              <ul class="text-xs text-gray-500 font-medium space-y-2 list-none bg-white border border-gray-100 p-4 rounded-xl shadow-sm">
+                <li class="flex items-start gap-2"><i class="ph-fill ph-check-circle text-accent shrink-0 mt-0.5"></i> Menanamkan Keimanan dan ketakwaan melalui pengamalan ajaran.</li>
+                <li class="flex items-start gap-2"><i class="ph-fill ph-check-circle text-accent shrink-0 mt-0.5"></i> Mengoptimalkan proses pembelajaran.</li>
               </ul>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="py-12 px-4 md:px-8 bg-white border-t border-gray-100">
+      <section class="py-12 px-4 md:px-8 bg-white border-y border-gray-100">
         <div class="max-w-6xl mx-auto">
-          <div class="flex items-center gap-3 mb-10">
-            <div class="w-10 h-10 bg-blue-100 text-accent rounded-lg flex items-center justify-center text-xl"><i class="ph-bold ph-users-three"></i></div>
+          <div class="flex items-center gap-3 mb-10 justify-center flex-col">
+            <div class="w-12 h-12 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-2xl"><i class="ph-fill ph-users-three"></i></div>
             <h2 class="text-2xl font-extrabold text-navy-900">Struktur Organisasi</h2>
           </div>
-          <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4" id="grid-org"></div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4" id="grid-org"></div>
         </div>
       </section>
       
-      <section class="py-12 px-4 md:px-8 max-w-6xl mx-auto">
+      <section class="py-16 px-4 md:px-8 max-w-6xl mx-auto">
         <div class="flex items-center gap-3 mb-8">
-          <div class="w-10 h-10 bg-blue-100 text-accent rounded-lg flex items-center justify-center text-xl"><i class="ph-bold ph-clipboard-text"></i></div>
+          <div class="w-10 h-10 border border-gray-200 text-navy-900 rounded-xl flex items-center justify-center text-xl"><i class="ph-bold ph-clipboard-text"></i></div>
           <h2 class="text-2xl font-extrabold text-navy-900">Data & Fasilitas</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white p-6 rounded-2xl border border-gray-100 flex items-start gap-4">
-            <div class="flex-1">
-              <h3 class="font-bold text-navy-900 mb-4 flex items-center gap-2"><i class="ph-fill ph-identification-card text-gray-400"></i> Identitas Sekolah</h3>
-              <div class="space-y-3 text-sm font-medium text-gray-600">
-                <div class="flex"><span class="w-32 flex items-center gap-2"><i class="ph-bold ph-buildings"></i> Status</span>: Swasta</div>
-                <div class="flex"><span class="w-32 flex items-center gap-2"><i class="ph-bold ph-star"></i> Akreditasi</span>: On Proses</div>
-                <div class="flex"><span class="w-32 flex items-center gap-2"><i class="ph-bold ph-books"></i> Kurikulum</span>: Merdeka</div>
+          <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between relative overflow-hidden">
+            <div class="relative z-10">
+              <h3 class="font-bold text-navy-900 mb-6 flex items-center gap-2"><i class="ph-fill ph-identification-card text-gray-400"></i> Identitas Sekolah</h3>
+              <div class="space-y-4 text-sm font-medium text-gray-600">
+                <div class="flex items-center"><span class="w-32 flex items-center gap-2 text-gray-400"><i class="ph ph-buildings"></i> Status</span> : Swasta</div>
+                <div class="flex items-center"><span class="w-32 flex items-center gap-2 text-gray-400"><i class="ph ph-star"></i> Akreditasi</span> : On Proses</div>
+                <div class="flex items-center"><span class="w-32 flex items-center gap-2 text-gray-400"><i class="ph ph-books"></i> Kurikulum</span> : Merdeka</div>
               </div>
             </div>
-            <i class="ph-fill ph-buildings text-6xl text-gray-100"></i>
+            <i class="ph-fill ph-buildings text-8xl text-gray-50 absolute -bottom-4 -right-4 z-0"></i>
           </div>
-          <div class="bg-white p-6 rounded-2xl border border-gray-100 flex items-start gap-4">
-            <div class="flex-1">
-              <h3 class="font-bold text-navy-900 mb-4 flex items-center gap-2"><i class="ph-fill ph-building-office text-gray-400"></i> Fasilitas</h3>
-              <div class="grid grid-cols-2 gap-y-3 text-sm font-medium text-gray-600">
-                <div class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-accent"></i> 12 Ruang Kelas</div>
-                <div class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-accent"></i> Masjid</div>
-                <div class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-accent"></i> Perpustakaan</div>
-                <div class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-accent"></i> Lapangan Olahraga</div>
-                <div class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-accent"></i> Kantin</div>
+          
+          <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm relative overflow-hidden">
+            <div class="relative z-10">
+              <h3 class="font-bold text-navy-900 mb-6 flex items-center gap-2"><i class="ph-fill ph-building-office text-gray-400"></i> Fasilitas</h3>
+              <div class="grid grid-cols-2 gap-y-4 text-sm font-medium text-gray-600">
+                <div class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-blue-50 flex items-center justify-center text-accent text-xs"><i class="ph-bold ph-check"></i></div> 12 Ruang Kelas</div>
+                <div class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-blue-50 flex items-center justify-center text-accent text-xs"><i class="ph-bold ph-check"></i></div> Masjid</div>
+                <div class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-blue-50 flex items-center justify-center text-accent text-xs"><i class="ph-bold ph-check"></i></div> Perpustakaan</div>
+                <div class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-blue-50 flex items-center justify-center text-accent text-xs"><i class="ph-bold ph-check"></i></div> Lapangan Olahraga</div>
+                <div class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-blue-50 flex items-center justify-center text-accent text-xs"><i class="ph-bold ph-check"></i></div> Kantin</div>
               </div>
             </div>
+            <i class="ph-fill ph-mosque text-8xl text-gray-50 absolute -bottom-4 -right-4 z-0"></i>
           </div>
         </div>
       </section>
@@ -277,94 +332,114 @@
 
     <!-- 3. AKADEMIK -->
     <div id="akademik" class="view-section">
-      <div class="bg-navy-900 mx-4 md:mx-8 mt-4 rounded-3xl p-8 md:p-14 relative overflow-hidden text-white flex flex-col md:flex-row items-center gap-8 max-w-7xl xl:mx-auto">
-        <div class="absolute right-0 top-0 w-full md:w-1/2 h-full opacity-30 md:opacity-100 bg-[url('https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80')] bg-cover bg-center [mask-image:linear-gradient(to_right,transparent,black)]"></div>
-        <div class="relative z-10 md:w-1/2">
-          <span class="text-xs font-bold uppercase tracking-wider text-blue-200 mb-3 block">Beranda > Akademik</span>
+      <div class="bg-navy-900 mx-4 md:mx-8 mt-6 rounded-[2rem] overflow-hidden text-white flex flex-col md:flex-row relative max-w-7xl xl:mx-auto">
+        <div class="p-8 md:p-14 relative z-10 md:w-1/2 flex flex-col justify-center">
           <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Akademik</h1>
-          <p class="text-blue-100 font-medium text-lg">Informasi kurikulum, mata pelajaran, sistem penilaian, dan kalender akademik.</p>
+          <p class="text-gray-300 font-medium text-base">Informasi kurikulum, mata pelajaran, sistem penilaian, dan kalender akademik.</p>
+        </div>
+        <div class="md:w-1/2 h-64 md:h-auto relative">
+          <div class="absolute inset-0 bg-gradient-to-r from-navy-900 to-transparent z-10 hidden md:block"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-navy-900 to-transparent z-10 block md:hidden"></div>
+          <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
         </div>
       </div>
 
       <div class="max-w-6xl mx-auto px-4 md:px-8 mt-8">
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-2 flex flex-wrap gap-2 text-sm font-bold">
-          <button class="px-5 py-2.5 bg-accent text-white rounded-lg">Kurikulum</button>
-          <button class="px-5 py-2.5 text-gray-500 hover:bg-gray-50 rounded-lg transition">Mata Pelajaran</button>
-          <button class="px-5 py-2.5 text-gray-500 hover:bg-gray-50 rounded-lg transition">Sistem Penilaian</button>
-          <button class="px-5 py-2.5 text-gray-500 hover:bg-gray-50 rounded-lg transition">Kalender Akademik</button>
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-2 flex flex-wrap gap-2 text-sm font-bold">
+          <button class="px-6 py-3 bg-accent text-white rounded-xl shadow-md">Kurikulum</button>
+          <button class="px-6 py-3 text-gray-500 hover:bg-gray-50 rounded-xl transition">Mata Pelajaran</button>
+          <button class="px-6 py-3 text-gray-500 hover:bg-gray-50 rounded-xl transition">Sistem Penilaian</button>
+          <button class="px-6 py-3 text-gray-500 hover:bg-gray-50 rounded-xl transition">Kalender Akademik</button>
         </div>
       </div>
 
       <section class="py-12 px-4 md:px-8 max-w-6xl mx-auto">
-        <div class="flex flex-col lg:flex-row gap-10 items-center mb-12">
+        <div class="flex flex-col lg:flex-row gap-12 items-center mb-16">
           <div class="lg:w-1/2">
             <h2 class="text-2xl font-extrabold text-navy-900 mb-4">Kurikulum Merdeka</h2>
-            <p class="text-gray-500 font-medium leading-relaxed mb-6">SDIT Al-Hasan mengimplementasikan Kurikulum Merdeka yang berfokus pada pengembangan kompetensi, karakter, dan kemampuan berpikir kritis, diintegrasikan dengan nilai-nilai Islam.</p>
+            <p class="text-gray-500 text-sm font-medium leading-relaxed mb-8">SDIT Al-Hasan mengimplementasikan Kurikulum Merdeka yang berfokus pada pengembangan kompetensi, karakter, dan kemampuan berpikir kritis, diintegrasikan dengan nilai-nilai Islam.</p>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div class="bg-white p-5 rounded-2xl border border-gray-100 text-center shadow-sm">
+              <div class="bg-white p-6 rounded-2xl border border-gray-100 text-center shadow-sm">
                 <div class="w-12 h-12 mx-auto bg-blue-50 text-accent rounded-full flex items-center justify-center text-xl mb-3"><i class="ph-fill ph-shield-star"></i></div>
                 <h4 class="font-bold text-navy-900 text-sm mb-2">Profil Pelajar Pancasila</h4>
-                <p class="text-xs text-gray-500 font-medium">Karakter beriman, mandiri, gotong royong, dan kritis.</p>
+                <p class="text-[11px] text-gray-500 font-medium">Karakter beriman, mandiri, gotong royong, dan kritis.</p>
               </div>
-              <div class="bg-white p-5 rounded-2xl border border-gray-100 text-center shadow-sm">
+              <div class="bg-white p-6 rounded-2xl border border-gray-100 text-center shadow-sm">
                 <div class="w-12 h-12 mx-auto bg-green-50 text-green-600 rounded-full flex items-center justify-center text-xl mb-3"><i class="ph-fill ph-book-open"></i></div>
                 <h4 class="font-bold text-navy-900 text-sm mb-2">Pembelajaran Diferensiasi</h4>
-                <p class="text-xs text-gray-500 font-medium">Penyesuaian metode dengan gaya belajar siswa.</p>
+                <p class="text-[11px] text-gray-500 font-medium">Penyesuaian metode dengan gaya belajar siswa.</p>
               </div>
-              <div class="bg-white p-5 rounded-2xl border border-gray-100 text-center shadow-sm">
+              <div class="bg-white p-6 rounded-2xl border border-gray-100 text-center shadow-sm">
                 <div class="w-12 h-12 mx-auto bg-yellow-50 text-yellow-600 rounded-full flex items-center justify-center text-xl mb-3"><i class="ph-fill ph-lightbulb"></i></div>
                 <h4 class="font-bold text-navy-900 text-sm mb-2">Projek Nyata</h4>
-                <p class="text-xs text-gray-500 font-medium">Pembelajaran berbasis proyek relevan kehidupan.</p>
+                <p class="text-[11px] text-gray-500 font-medium">Pembelajaran berbasis proyek relevan kehidupan.</p>
               </div>
             </div>
           </div>
           <div class="lg:w-1/2">
-            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80" alt="Belajar" class="rounded-3xl shadow-lg w-full object-cover aspect-[4/3]">
+            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80" alt="Belajar" class="rounded-[2rem] shadow-md w-full object-cover aspect-[4/3]">
           </div>
         </div>
 
         <h2 class="text-2xl font-extrabold text-navy-900 mb-6">Struktur Waktu Belajar</h2>
-        <div class="space-y-4 mb-12">
-          <div class="bg-white p-4 rounded-2xl border border-gray-100 flex items-center gap-6 shadow-sm overflow-hidden relative">
-            <div class="w-12 h-12 bg-blue-50 text-accent rounded-full flex items-center justify-center text-xl shrink-0 z-10 ml-2"><i class="ph-fill ph-calendar-blank"></i></div>
-            <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 z-10 font-bold text-sm">
-              <div class="text-navy-900">Senin – Kamis</div>
-              <div class="text-gray-600">07.00 – 14.30 WIB</div>
-              <div class="text-gray-500 font-medium">Pembelajaran + sholat berjamaah</div>
+        <div class="space-y-4 mb-16">
+          <div class="bg-white p-4 rounded-2xl border border-gray-100 flex flex-col md:flex-row md:items-center justify-between shadow-sm relative overflow-hidden">
+            <div class="flex items-center gap-6 z-10 p-2">
+               <div class="w-12 h-12 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-xl shrink-0"><i class="ph-fill ph-calendar-blank"></i></div>
+               <div class="w-32 font-bold text-navy-900 text-sm">Senin – Kamis</div>
+               <div class="w-40 text-gray-500 text-sm font-medium">07.00 – 14.30 WIB</div>
+               <div class="text-gray-500 text-sm font-medium hidden md:block">Pembelajaran + sholat berjamaah</div>
             </div>
-            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=200&q=80" class="absolute right-0 top-0 h-full w-48 object-cover [mask-image:linear-gradient(to_right,transparent,black)] opacity-50">
+            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=200&q=80" class="hidden md:block h-[80px] w-48 object-cover rounded-xl z-10 mr-2 opacity-90">
           </div>
-          <div class="bg-white p-4 rounded-2xl border border-gray-100 flex items-center gap-6 shadow-sm overflow-hidden relative">
-            <div class="w-12 h-12 bg-blue-50 text-accent rounded-full flex items-center justify-center text-xl shrink-0 z-10 ml-2"><i class="ph-fill ph-calendar-blank"></i></div>
-            <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 z-10 font-bold text-sm">
-              <div class="text-navy-900">Jumat</div>
-              <div class="text-gray-600">07.00 – 11.30 WIB</div>
-              <div class="text-gray-500 font-medium">Pembelajaran + Jumat bersama</div>
+          
+          <div class="bg-white p-4 rounded-2xl border border-gray-100 flex flex-col md:flex-row md:items-center justify-between shadow-sm relative overflow-hidden">
+            <div class="flex items-center gap-6 z-10 p-2">
+               <div class="w-12 h-12 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-xl shrink-0"><i class="ph-fill ph-calendar-blank"></i></div>
+               <div class="w-32 font-bold text-navy-900 text-sm">Jumat</div>
+               <div class="w-40 text-gray-500 text-sm font-medium">07.00 – 11.30 WIB</div>
+               <div class="text-gray-500 text-sm font-medium hidden md:block">Pembelajaran + Jumat bersama</div>
             </div>
+            <img src="https://images.unsplash.com/photo-1605333036495-2eb42a781b0f?auto=format&fit=crop&w=200&q=80" class="hidden md:block h-[80px] w-48 object-cover rounded-xl z-10 mr-2 opacity-90">
+          </div>
+
+          <div class="bg-white p-4 rounded-2xl border border-gray-100 flex flex-col md:flex-row md:items-center justify-between shadow-sm relative overflow-hidden">
+            <div class="flex items-center gap-6 z-10 p-2">
+               <div class="w-12 h-12 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-xl shrink-0"><i class="ph-fill ph-calendar-blank"></i></div>
+               <div class="w-32 font-bold text-navy-900 text-sm">Rabu</div>
+               <div class="w-40 text-gray-500 text-sm font-medium">10.00 – 12.30 WIB</div>
+               <div class="text-gray-500 text-sm font-medium hidden md:block">Kegiatan ekstrakurikuler</div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1526232761682-d26e03ac148e?auto=format&fit=crop&w=200&q=80" class="hidden md:block h-[80px] w-48 object-cover rounded-xl z-10 mr-2 opacity-90">
+          </div>
+
+          <div class="bg-blue-50 rounded-xl p-4 flex items-center gap-3 text-sm text-accent font-medium mt-4">
+             <i class="ph-fill ph-shield-check text-xl"></i>
+             Seluruh kegiatan akademik diselenggarakan dalam lingkungan islami, kondusif, dan aman bagi peserta didik.
           </div>
         </div>
 
         <h2 class="text-2xl font-extrabold text-navy-900 mb-6">Informasi Pendukung Akademik</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="bg-white p-6 rounded-2xl border border-gray-100 text-center shadow-sm">
-            <div class="w-14 h-14 mx-auto bg-blue-50 text-accent rounded-full flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-books"></i></div>
-            <h4 class="font-bold text-navy-900 mb-2">Buku & Sumber Belajar</h4>
-            <p class="text-xs text-gray-500 font-medium">Buku berkualitas dan sumber belajar digital untuk mendukung proses.</p>
+          <div class="bg-white p-8 rounded-3xl border border-gray-100 text-center shadow-sm">
+            <div class="w-14 h-14 mx-auto bg-blue-50 text-accent rounded-xl flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-book-open"></i></div>
+            <h4 class="font-bold text-navy-900 mb-2 text-sm">Buku & Sumber Belajar</h4>
+            <p class="text-xs text-gray-500 font-medium">Buku berkualitas dan sumber belajar digital untuk mendukung proses pembelajaran.</p>
           </div>
-          <div class="bg-white p-6 rounded-2xl border border-gray-100 text-center shadow-sm">
-            <div class="w-14 h-14 mx-auto bg-teal-50 text-teal-600 rounded-full flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-desktop"></i></div>
-            <h4 class="font-bold text-navy-900 mb-2">Teknologi Pendidikan</h4>
-            <p class="text-xs text-gray-500 font-medium">Pemanfaatan teknologi untuk pembelajaran interaktif menyenangkan.</p>
+          <div class="bg-white p-8 rounded-3xl border border-gray-100 text-center shadow-sm">
+            <div class="w-14 h-14 mx-auto bg-teal-50 text-teal-600 rounded-xl flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-desktop"></i></div>
+            <h4 class="font-bold text-navy-900 mb-2 text-sm">Teknologi Pendidikan</h4>
+            <p class="text-xs text-gray-500 font-medium">Pemanfaatan teknologi untuk pembelajaran interaktif dan menyenangkan.</p>
           </div>
-          <div class="bg-white p-6 rounded-2xl border border-gray-100 text-center shadow-sm">
-            <div class="w-14 h-14 mx-auto bg-purple-50 text-purple-600 rounded-full flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-users"></i></div>
-            <h4 class="font-bold text-navy-900 mb-2">Pendampingan Siswa</h4>
-            <p class="text-xs text-gray-500 font-medium">Guru mendampingi perkembangan akademik dan karakter setiap siswa.</p>
+          <div class="bg-white p-8 rounded-3xl border border-gray-100 text-center shadow-sm">
+            <div class="w-14 h-14 mx-auto bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-user-focus"></i></div>
+            <h4 class="font-bold text-navy-900 mb-2 text-sm">Pendampingan Siswa</h4>
+            <p class="text-xs text-gray-500 font-medium">Guru mendampingi perkembangan akademik dan karakter setiap siswa secara personal.</p>
           </div>
-          <div class="bg-white p-6 rounded-2xl border border-gray-100 text-center shadow-sm">
-            <div class="w-14 h-14 mx-auto bg-orange-50 text-orange-500 rounded-full flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-chart-line-up"></i></div>
-            <h4 class="font-bold text-navy-900 mb-2">Evaluasi Berkala</h4>
-            <p class="text-xs text-gray-500 font-medium">Evaluasi rutin untuk memantau kemajuan belajar secara konstruktif.</p>
+          <div class="bg-white p-8 rounded-3xl border border-gray-100 text-center shadow-sm">
+            <div class="w-14 h-14 mx-auto bg-orange-50 text-orange-500 rounded-xl flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-chart-line-up"></i></div>
+            <h4 class="font-bold text-navy-900 mb-2 text-sm">Evaluasi Berkala</h4>
+            <p class="text-xs text-gray-500 font-medium">Evaluasi rutin untuk memantau kemajuan belajar dan memberikan umpan balik yang konstruktif.</p>
           </div>
         </div>
       </section>
@@ -372,158 +447,218 @@
 
     <!-- 4. PROGRAM -->
     <div id="program" class="view-section">
-      <div class="bg-navy-900 mx-4 md:mx-8 mt-4 rounded-3xl p-8 md:p-14 relative overflow-hidden text-white flex flex-col md:flex-row items-center gap-8 max-w-7xl xl:mx-auto">
-        <div class="absolute right-0 top-0 w-full md:w-1/2 h-full opacity-30 md:opacity-100 bg-[url('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80')] bg-cover bg-center [mask-image:linear-gradient(to_right,transparent,black)]"></div>
-        <div class="relative z-10 md:w-1/2">
-          <span class="text-xs font-bold uppercase tracking-wider text-blue-200 mb-3 block">Beranda > Program</span>
+      <div class="bg-navy-900 mx-4 md:mx-8 mt-6 rounded-[2rem] overflow-hidden text-white flex flex-col md:flex-row relative max-w-7xl xl:mx-auto">
+        <div class="p-8 md:p-14 relative z-10 md:w-1/2 flex flex-col justify-center">
           <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Program Sekolah</h1>
-          <p class="text-blue-100 font-medium text-lg">Berbagai program untuk mengembangkan potensi akademik, spiritual, dan karakter siswa.</p>
+          <p class="text-gray-300 font-medium text-base">Berbagai program untuk mengembangkan potensi akademik, spiritual, dan karakter siswa.</p>
+        </div>
+        <div class="md:w-1/2 h-64 md:h-auto relative">
+          <div class="absolute inset-0 bg-gradient-to-r from-navy-900 to-transparent z-10 hidden md:block"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-navy-900 to-transparent z-10 block md:hidden"></div>
+          <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
         </div>
       </div>
 
       <section class="py-16 px-4 md:px-8 max-w-6xl mx-auto">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-10 h-10 bg-blue-100 text-accent rounded-lg flex items-center justify-center text-xl"><i class="ph-bold ph-medal"></i></div>
-          <h2 class="text-2xl font-extrabold text-navy-900">Program Unggulan</h2>
+        <div class="flex flex-col mb-8">
+          <div class="w-12 h-12 border border-gray-200 rounded-xl flex items-center justify-center text-2xl text-navy-900 mb-4 shadow-sm"><i class="ph-bold ph-medal"></i></div>
+          <h2 class="text-2xl font-extrabold text-navy-900 mb-2">Program Unggulan</h2>
+          <p class="text-gray-500 text-sm font-medium">Program-program unggulan yang dirancang untuk membentuk generasi muslim yang cerdas, berakhlak, dan siap menghadapi masa depan.</p>
         </div>
-        <p class="text-gray-500 font-medium mb-8">Program-program unggulan yang dirancang untuk membentuk generasi muslim yang cerdas, berakhlak, dan siap menghadapi masa depan.</p>
+        
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="program-unggulan-grid"></div>
 
-        <div class="flex items-center gap-3 mt-16 mb-4">
-          <div class="w-10 h-10 bg-blue-100 text-accent rounded-lg flex items-center justify-center text-xl"><i class="ph-bold ph-puzzle-piece"></i></div>
-          <h2 class="text-2xl font-extrabold text-navy-900">Program Pendukung</h2>
+        <div class="flex flex-col mt-16 mb-8">
+          <div class="w-12 h-12 border border-gray-200 rounded-xl flex items-center justify-center text-2xl text-navy-900 mb-4 shadow-sm"><i class="ph-bold ph-puzzle-piece"></i></div>
+          <h2 class="text-2xl font-extrabold text-navy-900 mb-2">Program Pendukung</h2>
+          <p class="text-gray-500 text-sm font-medium">Program pendukung untuk menunjang proses pembelajaran dan pengembangan diri siswa secara optimal.</p>
         </div>
-        <p class="text-gray-500 font-medium mb-8">Program pendukung untuk menunjang proses pembelajaran dan pengembangan diri siswa secara optimal.</p>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="program-pendukung-grid"></div>
 
         <div class="flex justify-between items-center mt-16 mb-6">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-blue-100 text-accent rounded-lg flex items-center justify-center text-xl"><i class="ph-bold ph-image"></i></div>
+            <div class="w-10 h-10 border border-gray-200 rounded-xl flex items-center justify-center text-xl text-navy-900 shadow-sm"><i class="ph-bold ph-image"></i></div>
             <h2 class="text-2xl font-extrabold text-navy-900">Galeri Kegiatan Program</h2>
           </div>
-          <a href="javascript:navigate('galeri')" class="text-accent font-bold text-sm border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50 flex items-center gap-2">Lihat Semua Galeri <i class="ph-bold ph-arrow-right"></i></a>
+          <a href="javascript:navigate('galeri')" class="text-accent font-bold text-sm border border-gray-200 px-5 py-2.5 rounded-xl hover:bg-gray-50 flex items-center gap-2">Lihat Semua Galeri <i class="ph-bold ph-arrow-right"></i></a>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=400&q=80" class="rounded-2xl aspect-[4/3] object-cover shadow-sm">
-          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80" class="rounded-2xl aspect-[4/3] object-cover shadow-sm">
-          <img src="https://images.unsplash.com/photo-1605333036495-2eb42a781b0f?auto=format&fit=crop&w=400&q=80" class="rounded-2xl aspect-[4/3] object-cover shadow-sm">
-          <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&q=80" class="rounded-2xl aspect-[4/3] object-cover shadow-sm">
+          <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=400&q=80" class="rounded-[2rem] aspect-[4/3] object-cover shadow-sm">
+          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80" class="rounded-[2rem] aspect-[4/3] object-cover shadow-sm">
+          <img src="https://images.unsplash.com/photo-1605333036495-2eb42a781b0f?auto=format&fit=crop&w=400&q=80" class="rounded-[2rem] aspect-[4/3] object-cover shadow-sm">
+          <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&q=80" class="rounded-[2rem] aspect-[4/3] object-cover shadow-sm">
         </div>
       </section>
     </div>
 
     <!-- 5. SPMB -->
     <div id="spmb" class="view-section">
-      <div class="bg-navy-900 mx-4 md:mx-8 mt-4 rounded-3xl p-8 md:p-14 relative overflow-hidden text-white flex flex-col md:flex-row items-center gap-8 max-w-7xl xl:mx-auto">
-        <div class="absolute right-0 top-0 w-full md:w-1/2 h-full opacity-30 md:opacity-100 bg-[url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80')] bg-cover bg-center [mask-image:linear-gradient(to_right,transparent,black)]"></div>
-        <div class="relative z-10 md:w-1/2">
+      <div class="bg-navy-900 mx-4 md:mx-8 mt-6 rounded-[2rem] overflow-hidden text-white flex flex-col md:flex-row relative max-w-7xl xl:mx-auto">
+        <div class="p-8 md:p-14 relative z-10 md:w-1/2 flex flex-col justify-center">
           <h1 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Penerimaan Peserta Didik Baru (SPMB)</h1>
-          <div class="inline-block bg-accent/30 border border-accent/50 rounded-lg px-4 py-2 mt-2">
-            <p class="text-blue-50 font-bold text-sm">Tahun Ajaran 2026/2027 <br><span class="text-white">Alhamdulillah, Kuota Sudah Terpenuhi.</span></p>
-          </div>
+          <p class="text-blue-200 font-medium mb-2">Tahun Ajaran 2026/2027</p>
+          <p class="text-white text-sm">Alhamdulillah, Kuota Sudah Terpenuhi.</p>
+        </div>
+        <div class="md:w-1/2 h-64 md:h-auto relative">
+          <div class="absolute inset-0 bg-gradient-to-r from-navy-900 to-transparent z-10 hidden md:block"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-navy-900 to-transparent z-10 block md:hidden"></div>
+          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
         </div>
       </div>
 
-      <section class="max-w-6xl mx-auto px-4 relative z-20 -mt-8 mb-16">
-        <div class="bg-white rounded-3xl shadow-lg p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 border border-gray-100">
-          <div class="flex items-center gap-4"><div class="w-12 h-12 bg-blue-50 text-accent rounded-full flex items-center justify-center text-xl shrink-0"><i class="ph-fill ph-users"></i></div><div><div class="font-bold text-sm text-navy-900">Kuota Terpenuhi</div><div class="text-[11px] text-gray-500 font-medium">Tahun Ajaran 2026/2027 sudah terpenuhi.</div></div></div>
-          <div class="flex items-center gap-4"><div class="w-12 h-12 bg-blue-50 text-accent rounded-full flex items-center justify-center text-xl shrink-0"><i class="ph-fill ph-calendar"></i></div><div><div class="font-bold text-sm text-navy-900">Tahun Ajaran 2026/2027</div><div class="text-[11px] text-gray-500 font-medium">Tahun ajaran baru dimulai Juli 2026.</div></div></div>
-          <div class="flex items-center gap-4"><div class="w-12 h-12 bg-blue-50 text-accent rounded-full flex items-center justify-center text-xl shrink-0"><i class="ph-fill ph-headset"></i></div><div><div class="font-bold text-sm text-navy-900">Informasi & Bantuan</div><div class="text-[11px] text-gray-500 font-medium">(0266) 123-4567<br>info@sdital-hasan.sch.id</div></div></div>
-          <div class="flex items-center gap-4"><div class="w-12 h-12 bg-blue-50 text-accent rounded-full flex items-center justify-center text-xl shrink-0"><i class="ph-fill ph-clock"></i></div><div><div class="font-bold text-sm text-navy-900">Waktu Layanan</div><div class="text-[11px] text-gray-500 font-medium">Senin - Jumat<br>07.00 - 15.00 WIB</div></div></div>
+      <section class="max-w-6xl mx-auto px-4 mt-10 mb-16">
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-xl shrink-0"><i class="ph-fill ph-users"></i></div>
+            <div><div class="font-bold text-sm text-navy-900 mb-1">Kuota Terpenuhi</div><div class="text-[11px] text-gray-500 font-medium">Alhamdulillah, kuota untuk Tahun Ajaran 2026/2027 sudah terpenuhi.</div></div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-xl shrink-0"><i class="ph-fill ph-calendar"></i></div>
+            <div><div class="font-bold text-sm text-navy-900 mb-1">Tahun Ajaran 2026/2027</div><div class="text-[11px] text-gray-500 font-medium">Tahun ajaran baru dimulai Juli 2026.</div></div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-xl shrink-0"><i class="ph-fill ph-headset"></i></div>
+            <div><div class="font-bold text-sm text-navy-900 mb-1">Informasi & Bantuan</div><div class="text-[11px] text-gray-500 font-medium">(0266) 123-4567<br>info@sdital-hasan.sch.id</div></div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-xl shrink-0"><i class="ph-fill ph-clock"></i></div>
+            <div><div class="font-bold text-sm text-navy-900 mb-1">Waktu Layanan</div><div class="text-[11px] text-gray-500 font-medium">Senin - Jumat<br>07.00 - 15.00 WIB</div></div>
+          </div>
         </div>
       </section>
 
       <section class="py-8 px-4 md:px-8 max-w-6xl mx-auto">
-        <h2 class="text-2xl font-extrabold text-navy-900 mb-8">Time Schedule SPMB 2026/2027</h2>
-        <div class="space-y-6" id="spmb-timeline"></div>
+        <h2 class="text-2xl font-extrabold text-navy-900 mb-8 border-b border-gray-100 pb-4">Time Schedule SPMB 2026/2027</h2>
+        <div class="space-y-4" id="spmb-timeline"></div>
 
-        <h2 class="text-2xl font-extrabold text-navy-900 mt-16 mb-6">Persyaratan</h2>
+        <h2 class="text-2xl font-extrabold text-navy-900 mt-16 mb-6 border-b border-gray-100 pb-4">Persyaratan</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-            <h3 class="font-bold text-navy-900 mb-4 border-b border-gray-100 pb-3">Usia & Akademik</h3>
-            <ul class="text-sm font-medium text-gray-600 space-y-3 list-disc pl-4 marker:text-gray-300">
-              <li>Usia minimal 6 tahun per 1 Juli 2026</li>
-              <li>Sudah/sedang di TK/PAUD</li>
-              <li>Mampu membaca huruf latin dasar</li>
-            </ul>
-            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=300&q=80" class="mt-6 rounded-xl w-full h-32 object-cover">
+          <div class="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm relative overflow-hidden h-full flex flex-col justify-between">
+            <div class="relative z-10">
+               <h3 class="font-bold text-navy-900 mb-4 border-b border-gray-100 pb-3">Usia & Akademik</h3>
+               <ul class="text-sm font-medium text-gray-600 space-y-3 list-none">
+                  <li class="flex gap-2"><div class="w-1.5 h-1.5 rounded-full bg-navy-900 mt-2 shrink-0"></div> Usia minimal 6 tahun per 1 Juli 2026</li>
+                  <li class="flex gap-2"><div class="w-1.5 h-1.5 rounded-full bg-navy-900 mt-2 shrink-0"></div> Sudah/sedang di TK/PAUD</li>
+                  <li class="flex gap-2"><div class="w-1.5 h-1.5 rounded-full bg-navy-900 mt-2 shrink-0"></div> Mampu membaca huruf latin dasar</li>
+               </ul>
+            </div>
+            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=300&q=80" class="mt-8 rounded-2xl w-full h-32 object-cover relative z-10">
           </div>
-          <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-            <h3 class="font-bold text-navy-900 mb-4 border-b border-gray-100 pb-3">Dokumen Wajib</h3>
-            <ul class="text-sm font-medium text-gray-600 space-y-3 list-disc pl-4 marker:text-gray-300">
-              <li>Fotokopi Akta Kelahiran (2 lembar)</li>
-              <li>Fotokopi Kartu Keluarga (2 lembar)</li>
-              <li>Pas foto 3x4 (4 lembar)</li>
-              <li>Surat Keterangan Lulus TK</li>
-            </ul>
-            <div class="mt-6 bg-gray-100 rounded-xl h-32 flex items-center justify-center text-gray-400 text-4xl"><i class="ph-fill ph-files"></i></div>
+
+          <div class="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm relative overflow-hidden h-full flex flex-col justify-between">
+            <div class="relative z-10">
+               <h3 class="font-bold text-navy-900 mb-4 border-b border-gray-100 pb-3">Dokumen Wajib</h3>
+               <ul class="text-sm font-medium text-gray-600 space-y-3 list-none">
+                  <li class="flex gap-2"><div class="w-1.5 h-1.5 rounded-full bg-navy-900 mt-2 shrink-0"></div> Fotokopi Akta Kelahiran (2 lembar)</li>
+                  <li class="flex gap-2"><div class="w-1.5 h-1.5 rounded-full bg-navy-900 mt-2 shrink-0"></div> Fotokopi Kartu Keluarga (2 lembar)</li>
+                  <li class="flex gap-2"><div class="w-1.5 h-1.5 rounded-full bg-navy-900 mt-2 shrink-0"></div> Pas foto 3x4 (4 lembar)</li>
+                  <li class="flex gap-2"><div class="w-1.5 h-1.5 rounded-full bg-navy-900 mt-2 shrink-0"></div> Surat Keterangan Lulus TK</li>
+               </ul>
+            </div>
+            <div class="mt-8 bg-gray-50 rounded-2xl h-32 flex items-center justify-center text-gray-300 text-6xl relative z-10"><i class="ph-fill ph-files"></i></div>
           </div>
-          <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-            <h3 class="font-bold text-navy-900 mb-4 border-b border-gray-100 pb-3">Catatan Penting</h3>
-            <ul class="text-sm font-medium text-gray-600 space-y-3 list-disc pl-4 marker:text-gray-300">
-              <li>Semua berkas dimasukkan ke dalam map berwarna kuning.</li>
-              <li>Berkas tidak dikembalikan.</li>
-            </ul>
-            <div class="mt-6 bg-yellow-50 rounded-xl h-32 flex items-center justify-center text-yellow-500 text-4xl"><i class="ph-fill ph-folder"></i></div>
+
+          <div class="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm relative overflow-hidden h-full flex flex-col justify-between">
+            <div class="relative z-10">
+               <h3 class="font-bold text-navy-900 mb-4 border-b border-gray-100 pb-3">Catatan Penting</h3>
+               <ul class="text-sm font-medium text-gray-600 space-y-3 list-none">
+                  <li class="flex gap-2"><div class="w-1.5 h-1.5 rounded-full bg-navy-900 mt-2 shrink-0"></div> Semua berkas dimasukkan ke dalam map berwarna kuning.</li>
+                  <li class="flex gap-2"><div class="w-1.5 h-1.5 rounded-full bg-navy-900 mt-2 shrink-0"></div> Berkas tidak dikembalikan.</li>
+               </ul>
+            </div>
+            <div class="mt-8 bg-yellow-50 rounded-2xl h-32 flex items-center justify-center text-yellow-500 text-6xl relative z-10"><i class="ph-fill ph-folder"></i></div>
           </div>
         </div>
 
         <h2 class="text-2xl font-extrabold text-navy-900 mb-2">Formulir Pendaftaran Online</h2>
-        <p class="text-gray-500 font-medium mb-6">Lengkapi data calon siswa pada formulir di bawah ini.</p>
-        <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm mb-16">
+        <p class="text-gray-500 text-sm font-medium mb-6">Lengkapi data calon siswa pada formulir di bawah ini.</p>
+        
+        <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm mb-16">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">Nama Lengkap Calon Siswa</label><input type="text" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:border-accent focus:ring-1 focus:ring-accent outline-none transition" placeholder="Sesuai akta lahir"></div>
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">Tanggal Lahir</label><input type="date" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:border-accent focus:ring-1 focus:ring-accent outline-none transition"></div>
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">Jenis Kelamin</label><select class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:border-accent outline-none"><option>Pilih jenis kelamin</option><option>Laki-laki</option><option>Perempuan</option></select></div>
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">Asal TK / PAUD</label><input type="text" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:border-accent outline-none" placeholder="Nama sekolah asal"></div>
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">Nama Orang Tua / Wali</label><input type="text" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:border-accent outline-none" placeholder="Nama lengkap"></div>
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">No. WhatsApp Aktif</label><input type="text" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:border-accent outline-none" placeholder="08xxxxxxxxxx"></div>
+            <div>
+               <label class="block text-xs font-bold text-navy-900 mb-2">Nama Lengkap Calon Siswa</label>
+               <input type="text" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition" placeholder="Nama sesuai akta lahir">
+            </div>
+            <div>
+               <label class="block text-xs font-bold text-navy-900 mb-2">Tanggal Lahir</label>
+               <input type="date" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition">
+            </div>
+            <div>
+               <label class="block text-xs font-bold text-navy-900 mb-2">Jenis Kelamin</label>
+               <select class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition text-gray-500">
+                  <option>Pilih jenis kelamin</option>
+                  <option>Laki-laki</option>
+                  <option>Perempuan</option>
+               </select>
+            </div>
+            <div>
+               <label class="block text-xs font-bold text-navy-900 mb-2">Asal TK / PAUD</label>
+               <input type="text" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition" placeholder="Nama sekolah asal">
+            </div>
+            <div>
+               <label class="block text-xs font-bold text-navy-900 mb-2">Nama Orang Tua / Wali</label>
+               <input type="text" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition" placeholder="Nama lengkap">
+            </div>
+            <div>
+               <label class="block text-xs font-bold text-navy-900 mb-2">No. WhatsApp Aktif</label>
+               <input type="text" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition" placeholder="08xxxxxxxxxx">
+            </div>
           </div>
-          <div class="mb-8"><label class="block text-xs font-bold text-navy-900 mb-2">Alamat Lengkap</label><input type="text" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:border-accent outline-none" placeholder="Jalan, RT/RW, Kelurahan, Kecamatan, Kabupaten/Kota"></div>
-          <button class="w-full bg-navy-900 text-white font-bold py-4 rounded-xl hover:bg-navy-800 transition">Kirim Formulir Pendaftaran</button>
+          <div class="mb-8">
+             <label class="block text-xs font-bold text-navy-900 mb-2">Alamat Lengkap</label>
+             <input type="text" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition" placeholder="Jalan, RT/RW, Kelurahan, Kecamatan, Kabupaten/Kota">
+          </div>
+          <button class="w-full bg-navy-900 text-white font-bold py-4 rounded-xl hover:bg-navy-800 transition shadow-md text-sm">Kirim Formulir Pendaftaran</button>
         </div>
 
-        <div class="bg-blue-50 border border-blue-100 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="bg-blue-50 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 border border-blue-100">
           <div class="flex items-center gap-4">
-            <div class="w-10 h-10 bg-accent text-white rounded-full flex items-center justify-center text-xl shrink-0"><i class="ph-bold ph-info"></i></div>
-            <div><h4 class="font-bold text-navy-900">Butuh bantuan atau informasi lebih lanjut?</h4><p class="text-sm text-gray-600 font-medium mt-0.5">Hubungi kami melalui WhatsApp atau datang langsung ke sekolah pada jam kerja.</p></div>
+            <div class="w-10 h-10 bg-white text-accent rounded-full flex items-center justify-center text-xl shrink-0 shadow-sm"><i class="ph-bold ph-info"></i></div>
+            <div><h4 class="font-bold text-navy-900 text-sm">Butuh bantuan atau informasi lebih lanjut?</h4><p class="text-[11px] text-gray-500 font-medium mt-0.5">Hubungi kami melalui WhatsApp atau datang langsung ke sekolah pada jam kerja.</p></div>
           </div>
-          <button class="bg-white border border-gray-200 text-navy-900 font-bold px-6 py-2.5 rounded-xl hover:bg-gray-50 flex items-center gap-2 whitespace-nowrap">Hubungi Kami <i class="ph-fill ph-whatsapp-logo text-green-500 text-lg"></i></button>
+          <button class="bg-white border border-gray-200 text-navy-900 text-xs font-bold px-5 py-2.5 rounded-xl hover:bg-gray-50 flex items-center gap-2 whitespace-nowrap shadow-sm">Hubungi Kami <i class="ph-fill ph-whatsapp-logo text-green-500 text-base"></i></button>
         </div>
       </section>
     </div>
 
     <!-- 6. GALERI -->
     <div id="galeri" class="view-section">
-      <div class="bg-navy-900 mx-4 md:mx-8 mt-4 rounded-3xl p-8 md:p-14 relative overflow-hidden text-white flex flex-col md:flex-row items-center gap-8 max-w-7xl xl:mx-auto">
-        <div class="absolute right-0 top-0 w-full md:w-1/2 h-full opacity-30 md:opacity-100 bg-[url('https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80')] bg-cover bg-center [mask-image:linear-gradient(to_right,transparent,black)]"></div>
-        <div class="relative z-10 md:w-1/2">
-          <span class="text-xs font-bold uppercase tracking-wider text-blue-200 mb-3 block">Beranda > Galeri</span>
+      <div class="bg-navy-900 mx-4 md:mx-8 mt-6 rounded-[2rem] overflow-hidden text-white flex flex-col md:flex-row relative max-w-7xl xl:mx-auto">
+        <div class="p-8 md:p-14 relative z-10 md:w-1/2 flex flex-col justify-center">
+          <div class="flex items-center gap-2 text-sm font-medium text-gray-400 mb-4">
+             <span>Beranda</span> <i class="ph-bold ph-caret-right text-[10px]"></i> <span class="text-white">Galeri</span>
+          </div>
           <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Galeri Kegiatan</h1>
-          <p class="text-blue-100 font-medium text-lg">Kumpulan dokumentasi kegiatan dan momen berharga di SD Islam Terpadu Al-Hasan.</p>
-          <button class="mt-6 bg-transparent border border-white/30 text-white px-6 py-3 rounded-xl font-bold hover:bg-white/10 transition flex items-center gap-2"><i class="ph-bold ph-squares-four"></i> Lihat Video Kegiatan</button>
+          <p class="text-gray-300 font-medium text-base mb-6">Kumpulan dokumentasi kegiatan dan momen berharga di SD Islam Terpadu Al-Hasan.</p>
+          <button class="bg-transparent border border-white/30 text-white px-6 py-3 rounded-xl text-sm font-bold hover:bg-white/10 transition flex items-center gap-2 w-max"><i class="ph-bold ph-squares-four"></i> Lihat Video Kegiatan</button>
+        </div>
+        <div class="md:w-1/2 h-64 md:h-auto relative">
+          <div class="absolute inset-0 bg-gradient-to-r from-navy-900 to-transparent z-10 hidden md:block"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-navy-900 to-transparent z-10 block md:hidden"></div>
+          <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
         </div>
       </div>
 
       <section class="py-12 px-4 md:px-8 max-w-7xl mx-auto">
         <div class="flex gap-3 overflow-x-auto hide-scrollbar pb-4 mb-8">
           <button class="bg-navy-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 flex items-center gap-2 shadow-md"><i class="ph-bold ph-squares-four"></i> Semua Kegiatan</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2"><i class="ph-bold ph-graduation-cap"></i> Akademik</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2"><i class="ph-bold ph-mosque"></i> Agama</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2"><i class="ph-bold ph-soccer-ball"></i> Olahraga</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2"><i class="ph-bold ph-palette"></i> Seni & Budaya</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2"><i class="ph-bold ph-users-three"></i> Ekstrakurikuler</button>
+          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm"><i class="ph-bold ph-graduation-cap"></i> Akademik</button>
+          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm"><i class="ph-bold ph-mosque"></i> Agama</button>
+          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm"><i class="ph-bold ph-soccer-ball"></i> Olahraga</button>
+          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm"><i class="ph-bold ph-palette"></i> Seni & Budaya</button>
+          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm"><i class="ph-bold ph-users-three"></i> Ekstrakurikuler</button>
+          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm"><i class="ph-bold ph-dots-three"></i> Kegiatan Lainnya</button>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12" id="galeri-grid"></div>
         
         <div class="text-center border-b border-gray-200 pb-16">
-          <button class="bg-white border border-accent text-accent px-6 py-3 rounded-xl font-bold text-sm hover:bg-blue-50 transition inline-flex items-center gap-2">Muat Lebih Banyak <i class="ph-bold ph-arrows-clockwise"></i></button>
+          <button class="bg-white border border-gray-200 text-accent px-6 py-3 rounded-xl font-bold text-sm hover:bg-gray-50 transition inline-flex items-center gap-2 shadow-sm">Muat Lebih Banyak <i class="ph-bold ph-arrows-clockwise"></i></button>
         </div>
 
         <div class="flex justify-between items-end mt-16 mb-8">
-          <h2 class="text-3xl font-extrabold text-navy-900">Video Kegiatan</h2>
-          <a href="#" class="text-accent font-bold text-sm border border-gray-200 px-5 py-2.5 rounded-xl hover:bg-gray-50 hidden sm:flex items-center gap-2">Lihat Semua Video <i class="ph-bold ph-arrow-right"></i></a>
+          <h2 class="text-2xl font-extrabold text-navy-900">Video Kegiatan</h2>
+          <a href="#" class="text-accent font-bold text-sm border border-blue-100 bg-blue-50 px-5 py-2.5 rounded-xl hover:bg-blue-100 hidden sm:flex items-center gap-2 transition">Lihat Semua Video <i class="ph-bold ph-arrow-right"></i></a>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6" id="video-grid"></div>
       </section>
@@ -531,180 +666,217 @@
 
     <!-- 7. BERITA -->
     <div id="berita" class="view-section">
-      <div class="bg-navy-900 mx-4 md:mx-8 mt-4 rounded-3xl p-8 md:p-14 relative overflow-hidden text-white flex flex-col md:flex-row items-center gap-8 max-w-7xl xl:mx-auto">
-        <div class="absolute right-0 top-0 w-full md:w-1/2 h-full opacity-30 md:opacity-100 bg-[url('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80')] bg-cover bg-center [mask-image:linear-gradient(to_right,transparent,black)]"></div>
-        <div class="relative z-10 md:w-1/2">
-          <span class="text-xs font-bold uppercase tracking-wider text-blue-200 mb-3 block">Beranda > Berita</span>
-          <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Berita & Informasi</h1>
-          <p class="text-blue-100 font-medium text-lg mb-8">Informasi terbaru seputar kegiatan, prestasi, dan pengumuman dari SD Islam Terpadu Al-Hasan.</p>
-          <div class="flex max-w-md bg-white rounded-xl overflow-hidden p-1 shadow-lg">
-            <input type="text" placeholder="Cari berita..." class="flex-1 px-4 py-2 text-gray-800 outline-none text-sm font-medium">
-            <button class="bg-accent text-white px-5 py-2.5 rounded-lg hover:bg-blue-700"><i class="ph-bold ph-magnifying-glass"></i></button>
+      <div class="bg-navy-900 mx-4 md:mx-8 mt-6 rounded-[2rem] overflow-hidden text-white flex flex-col md:flex-row relative max-w-7xl xl:mx-auto">
+        <div class="p-8 md:p-14 relative z-10 md:w-1/2 flex flex-col justify-center">
+          <div class="flex items-center gap-2 text-sm font-medium text-gray-400 mb-4">
+             <span>Beranda</span> <i class="ph-bold ph-caret-right text-[10px]"></i> <span class="text-white">Berita</span>
           </div>
+          <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Berita & Informasi</h1>
+          <p class="text-gray-300 font-medium text-base mb-8">Informasi terbaru seputar kegiatan, prestasi, dan pengumuman dari SD Islam Terpadu Al-Hasan.</p>
+          <div class="flex w-full max-w-md bg-white rounded-xl overflow-hidden p-1.5 shadow-lg border border-gray-100">
+            <input type="text" placeholder="Cari berita..." class="flex-1 px-4 py-2 text-gray-800 outline-none text-sm font-medium">
+            <button class="bg-accent text-white px-5 py-2.5 rounded-lg hover:bg-blue-700 transition"><i class="ph-bold ph-magnifying-glass"></i></button>
+          </div>
+        </div>
+        <div class="md:w-1/2 h-64 md:h-auto relative">
+          <div class="absolute inset-0 bg-gradient-to-r from-navy-900 to-transparent z-10 hidden md:block"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-navy-900 to-transparent z-10 block md:hidden"></div>
+          <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
         </div>
       </div>
 
       <section class="py-12 px-4 md:px-8 max-w-7xl mx-auto">
-        <div class="flex justify-between gap-3 overflow-x-auto hide-scrollbar pb-4 mb-8">
-          <div class="flex gap-2">
-            <button class="bg-navy-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm shrink-0">Semua Berita</button>
-            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50">Pengumuman</button>
-            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50">Kegiatan Sekolah</button>
-            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50">Prestasi</button>
-            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50">Artikel Pendidikan</button>
+        <div class="flex flex-col md:flex-row justify-between gap-4 mb-8">
+          <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-2">
+            <button class="bg-navy-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 shadow-sm">Semua Berita</button>
+            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm">Pengumuman</button>
+            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm">Kegiatan Sekolah</button>
+            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm">Prestasi</button>
+            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm">Artikel Pendidikan</button>
+            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm">Agenda</button>
           </div>
-          <select class="bg-white border border-gray-200 text-gray-800 px-4 py-2.5 rounded-xl font-bold text-sm outline-none"><option>Terbaru</option><option>Terlama</option></select>
+          <select class="bg-white border border-gray-200 text-gray-800 px-4 py-2.5 rounded-xl font-bold text-sm outline-none shadow-sm"><option>Terbaru</option><option>Terlama</option></select>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div class="lg:col-span-2 space-y-6" id="berita-list-main"></div>
           
-          <div class="lg:col-span-1 space-y-8">
+          <div class="lg:col-span-1 space-y-6">
             <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
               <h3 class="text-lg font-extrabold text-navy-900 mb-5 flex items-center gap-2"><i class="ph-fill ph-fire text-red-500"></i> Berita Populer</h3>
               <div class="space-y-4" id="berita-populer"></div>
             </div>
             
             <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-              <h3 class="text-lg font-extrabold text-navy-900 mb-5 flex items-center gap-2"><i class="ph-fill ph-folder-notch text-gray-400"></i> Kategori Berita</h3>
+              <h3 class="text-lg font-extrabold text-navy-900 mb-5 flex items-center gap-2"><i class="ph-fill ph-calendar-blank text-gray-400"></i> Kategori Berita</h3>
               <ul class="space-y-3 text-sm font-bold text-gray-600">
-                <li class="flex justify-between items-center"><a href="#" class="hover:text-accent flex items-center gap-2"><i class="ph-bold ph-link"></i> Kegiatan Sekolah</a> <span class="bg-gray-100 px-2 py-0.5 rounded text-xs">24</span></li>
-                <li class="flex justify-between items-center"><a href="#" class="hover:text-accent flex items-center gap-2"><i class="ph-bold ph-trophy"></i> Prestasi</a> <span class="bg-gray-100 px-2 py-0.5 rounded text-xs">18</span></li>
-                <li class="flex justify-between items-center"><a href="#" class="hover:text-accent flex items-center gap-2"><i class="ph-bold ph-megaphone"></i> Pengumuman</a> <span class="bg-gray-100 px-2 py-0.5 rounded text-xs">12</span></li>
-                <li class="flex justify-between items-center"><a href="#" class="hover:text-accent flex items-center gap-2"><i class="ph-bold ph-book-open"></i> Artikel Pendidikan</a> <span class="bg-gray-100 px-2 py-0.5 rounded text-xs">15</span></li>
+                <li class="flex justify-between items-center"><a href="#" class="hover:text-accent flex items-center gap-2"><i class="ph-bold ph-link text-gray-400"></i> Kegiatan Sekolah</a> <span class="text-gray-400 text-xs">24</span></li>
+                <li class="flex justify-between items-center"><a href="#" class="hover:text-accent flex items-center gap-2"><i class="ph-bold ph-trophy text-gray-400"></i> Prestasi</a> <span class="text-gray-400 text-xs">18</span></li>
+                <li class="flex justify-between items-center"><a href="#" class="hover:text-accent flex items-center gap-2"><i class="ph-bold ph-megaphone text-gray-400"></i> Pengumuman</a> <span class="text-gray-400 text-xs">12</span></li>
+                <li class="flex justify-between items-center"><a href="#" class="hover:text-accent flex items-center gap-2"><i class="ph-bold ph-book-open text-gray-400"></i> Artikel Pendidikan</a> <span class="text-gray-400 text-xs">15</span></li>
+                <li class="flex justify-between items-center"><a href="#" class="hover:text-accent flex items-center gap-2"><i class="ph-bold ph-calendar text-gray-400"></i> Agenda</a> <span class="text-gray-400 text-xs">9</span></li>
               </ul>
-              <button class="w-full mt-5 text-accent font-bold text-sm border border-gray-200 py-2.5 rounded-lg hover:bg-gray-50 flex justify-center items-center gap-2">Lihat Semua Kategori <i class="ph-bold ph-arrow-right"></i></button>
+              <button class="w-full mt-5 text-accent font-bold text-xs border border-gray-200 py-2.5 rounded-xl hover:bg-gray-50 flex justify-center items-center gap-2 transition">Lihat Semua Kategori <i class="ph-bold ph-arrow-right"></i></button>
             </div>
             
             <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
               <h3 class="text-lg font-extrabold text-navy-900 mb-2 flex items-center gap-2"><i class="ph-fill ph-envelope-simple text-gray-400"></i> Newsletter</h3>
-              <p class="text-xs text-gray-500 font-medium mb-4">Dapatkan informasi terbaru dari kami langsung di email Anda.</p>
-              <div class="flex bg-gray-50 rounded-xl p-1 border border-gray-200">
+              <p class="text-[11px] text-gray-500 font-medium mb-4">Dapatkan informasi terbaru dari kami langsung di email Anda.</p>
+              <div class="flex bg-white rounded-xl p-1 border border-gray-200">
                 <input type="email" placeholder="Masukkan email Anda" class="bg-transparent text-sm px-3 py-2 w-full text-navy-900 outline-none">
-                <button class="bg-accent text-white px-4 py-2 rounded-lg hover:bg-blue-600"><i class="ph-bold ph-paper-plane-right"></i></button>
+                <button class="bg-accent text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"><i class="ph-bold ph-paper-plane-right"></i></button>
               </div>
             </div>
 
-            <div class="bg-navy-900 p-6 rounded-2xl text-white shadow-xl">
-              <div class="w-12 h-12 bg-yellow-500/20 text-yellow-400 rounded-full flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-bell-ringing"></i></div>
-              <h3 class="text-lg font-extrabold mb-2">Jangan Lewatkan Informasi Terbaru!</h3>
-              <p class="text-xs text-blue-200 font-medium mb-6">Aktifkan notifikasi untuk mendapatkan update berita dan pengumuman terbaru dari SDIT Al-Hasan.</p>
-              <button class="w-full bg-white text-navy-900 font-bold py-3 rounded-xl hover:bg-gray-100 flex justify-center items-center gap-2">Aktifkan Notifikasi <i class="ph-bold ph-arrow-right"></i></button>
+            <div class="bg-navy-900 p-6 rounded-2xl text-white shadow-xl relative overflow-hidden">
+              <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-yellow-400 rounded-full opacity-20 blur-xl"></div>
+              <div class="w-12 h-12 bg-yellow-500/20 text-yellow-400 rounded-xl flex items-center justify-center text-2xl mb-4 relative z-10"><i class="ph-fill ph-bell-ringing"></i></div>
+              <h3 class="text-lg font-extrabold mb-2 relative z-10">Jangan Lewatkan Informasi Terbaru!</h3>
+              <p class="text-[11px] text-gray-300 font-medium mb-6 relative z-10">Aktifkan notifikasi untuk mendapatkan update berita dan pengumuman terbaru dari SDIT Al-Hasan.</p>
+              <button class="w-full bg-white text-accent font-bold text-sm py-3 rounded-xl hover:bg-gray-100 flex justify-center items-center gap-2 relative z-10 transition">Aktifkan Notifikasi <i class="ph-bold ph-arrow-right"></i></button>
             </div>
           </div>
         </div>
 
         <div class="flex justify-center mt-12 gap-2 text-sm font-bold">
-          <button class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-gray-50"><i class="ph-bold ph-caret-left"></i></button>
-          <button class="w-10 h-10 rounded-lg bg-navy-900 text-white flex items-center justify-center">1</button>
-          <button class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-gray-50">2</button>
-          <button class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-gray-50">3</button>
+          <button class="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-gray-50 bg-white"><i class="ph-bold ph-caret-left"></i></button>
+          <button class="w-10 h-10 rounded-xl bg-navy-900 text-white flex items-center justify-center shadow-sm">1</button>
+          <button class="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 bg-white">2</button>
+          <button class="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 bg-white">3</button>
           <div class="w-10 h-10 flex items-center justify-center text-gray-400">..</div>
-          <button class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-gray-50">8</button>
-          <button class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-gray-50"><i class="ph-bold ph-caret-right"></i></button>
+          <button class="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 bg-white">8</button>
+          <button class="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 bg-white"><i class="ph-bold ph-caret-right"></i></button>
         </div>
       </section>
     </div>
 
     <!-- 8. KONTAK -->
     <div id="kontak" class="view-section">
-      <div class="bg-navy-900 mx-4 md:mx-8 mt-4 rounded-3xl p-8 md:p-14 relative overflow-hidden text-white flex flex-col md:flex-row items-center gap-8 max-w-7xl xl:mx-auto">
-        <div class="absolute right-0 top-0 w-full md:w-1/2 h-full opacity-30 md:opacity-100 bg-[url('https://images.unsplash.com/photo-1546410531-bea5aadcb6ce?auto=format&fit=crop&w=800&q=80')] bg-cover bg-center [mask-image:linear-gradient(to_right,transparent,black)]"></div>
-        <div class="relative z-10 md:w-1/2">
-          <span class="text-xs font-bold uppercase tracking-wider text-blue-200 mb-3 block">Beranda > Kontak</span>
-          <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Hubungi Kami</h1>
-          <p class="text-blue-100 font-medium text-lg mb-8">Kami siap membantu Anda. Silakan hubungi kami melalui informasi di bawah ini atau kirim pesan melalui formulir.</p>
-          <div class="flex flex-col sm:flex-row gap-6">
-            <div class="flex items-center gap-3"><i class="ph-fill ph-chat-teardrop-dots text-3xl text-accent"></i> <div><div class="font-bold text-sm">Respon Cepat</div><div class="text-[10px] text-blue-200">Kami akan merespon dengan cepat</div></div></div>
-            <div class="flex items-center gap-3"><i class="ph-fill ph-users text-3xl text-accent"></i> <div><div class="font-bold text-sm">Layanan Ramah</div><div class="text-[10px] text-blue-200">Tim kami siap melayani dengan ramah</div></div></div>
-            <div class="flex items-center gap-3"><i class="ph-fill ph-shield-check text-3xl text-accent"></i> <div><div class="font-bold text-sm">Informasi Akurat</div><div class="text-[10px] text-blue-200">Informasi yang kami berikan jelas akurat</div></div></div>
+      <div class="bg-navy-900 mx-4 md:mx-8 mt-6 rounded-[2rem] overflow-hidden text-white flex flex-col md:flex-row relative max-w-7xl xl:mx-auto">
+        <div class="p-8 md:p-14 relative z-10 md:w-1/2 flex flex-col justify-center">
+          <div class="flex items-center gap-2 text-sm font-medium text-gray-400 mb-4">
+             <span>Beranda</span> <i class="ph-bold ph-caret-right text-[10px]"></i> <span class="text-white">Kontak</span>
           </div>
+          <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Hubungi Kami</h1>
+          <p class="text-gray-300 font-medium text-base mb-8">Kami siap membantu Anda. Silakan hubungi kami melalui informasi di bawah ini atau kirim pesan melalui formulir.</p>
+          <div class="flex flex-col sm:flex-row gap-6">
+            <div class="flex items-center gap-3"><div class="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center text-xl"><i class="ph-fill ph-chat-teardrop-dots"></i></div> <div><div class="font-bold text-sm">Respon Cepat</div><div class="text-[10px] text-gray-400">Kami akan merespon dengan cepat</div></div></div>
+            <div class="flex items-center gap-3"><div class="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center text-xl"><i class="ph-fill ph-users"></i></div> <div><div class="font-bold text-sm">Layanan Ramah</div><div class="text-[10px] text-gray-400">Tim kami siap melayani dengan ramah</div></div></div>
+            <div class="flex items-center gap-3"><div class="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center text-xl"><i class="ph-fill ph-shield-check"></i></div> <div><div class="font-bold text-sm">Informasi Akurat</div><div class="text-[10px] text-gray-400">Informasi yang kami berikan jelas akurat</div></div></div>
+          </div>
+        </div>
+        <div class="md:w-1/2 h-64 md:h-auto relative">
+          <div class="absolute inset-0 bg-gradient-to-r from-navy-900 to-transparent z-10 hidden md:block"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-navy-900 to-transparent z-10 block md:hidden"></div>
+          <img src="https://images.unsplash.com/photo-1546410531-bea5aadcb6ce?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
         </div>
       </div>
 
       <section class="max-w-6xl mx-auto px-4 relative z-20 mt-8 mb-12">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col items-center text-center">
-            <div class="w-14 h-14 bg-blue-50 text-accent rounded-full flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-map-pin"></i></div>
-            <h4 class="font-bold text-navy-900 mb-2">Alamat Sekolah</h4>
+          <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col items-center text-center group hover:-translate-y-1 transition duration-300">
+            <div class="w-12 h-12 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:bg-accent group-hover:text-white transition"><i class="ph-fill ph-map-pin"></i></div>
+            <h4 class="font-bold text-navy-900 mb-2 text-sm">Alamat Sekolah</h4>
             <p class="text-xs text-gray-500 font-medium mb-4">Jl. Raya Bojonggenteng, Sukabumi, Jawa Barat 43353</p>
-            <a href="#" class="text-accent text-xs font-bold mt-auto border-b border-accent pb-0.5">Lihat di Google Maps <i class="ph-bold ph-arrow-right"></i></a>
+            <a href="#" class="text-accent text-xs font-bold mt-auto flex items-center gap-1 hover:underline">Lihat di Google Maps <i class="ph-bold ph-arrow-right"></i></a>
           </div>
-          <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col items-center text-center">
-            <div class="w-14 h-14 bg-blue-50 text-accent rounded-full flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-phone"></i></div>
-            <h4 class="font-bold text-navy-900 mb-2">Telepon</h4>
+          <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col items-center text-center group hover:-translate-y-1 transition duration-300">
+            <div class="w-12 h-12 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:bg-accent group-hover:text-white transition"><i class="ph-fill ph-phone"></i></div>
+            <h4 class="font-bold text-navy-900 mb-2 text-sm">Telepon</h4>
             <p class="text-xs text-gray-500 font-medium mb-4">(0266) 123-4567<br>(0266) 123-8901</p>
-            <a href="#" class="text-accent text-xs font-bold mt-auto border-b border-accent pb-0.5"><i class="ph-fill ph-whatsapp-logo text-green-500 text-base align-middle"></i> Hubungi via WhatsApp <i class="ph-bold ph-arrow-right"></i></a>
+            <a href="#" class="text-accent text-xs font-bold mt-auto flex items-center gap-1 hover:underline"><i class="ph-fill ph-whatsapp-logo text-green-500 text-base"></i> Hubungi via WhatsApp <i class="ph-bold ph-arrow-right"></i></a>
           </div>
-          <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col items-center text-center">
-            <div class="w-14 h-14 bg-blue-50 text-accent rounded-full flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-envelope-simple"></i></div>
-            <h4 class="font-bold text-navy-900 mb-2">Email</h4>
+          <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col items-center text-center group hover:-translate-y-1 transition duration-300">
+            <div class="w-12 h-12 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:bg-accent group-hover:text-white transition"><i class="ph-fill ph-envelope-simple"></i></div>
+            <h4 class="font-bold text-navy-900 mb-2 text-sm">Email</h4>
             <p class="text-xs text-gray-500 font-medium mb-4 break-all">info@sdital-hasan.sch.id<br>ppdb@sdital-hasan.sch.id</p>
           </div>
-          <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col items-center text-center">
-            <div class="w-14 h-14 bg-blue-50 text-accent rounded-full flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-clock"></i></div>
-            <h4 class="font-bold text-navy-900 mb-2">Jam Operasional</h4>
-            <p class="text-xs text-gray-500 font-medium mb-4">Senin - Jum'at<br>07.00 - 15.00 WIB<br><br>Sabtu<br>07.00 - 12.00 WIB</p>
+          <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col items-center text-center group hover:-translate-y-1 transition duration-300">
+            <div class="w-12 h-12 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:bg-accent group-hover:text-white transition"><i class="ph-fill ph-clock"></i></div>
+            <h4 class="font-bold text-navy-900 mb-2 text-sm">Jam Operasional</h4>
+            <p class="text-xs text-gray-500 font-medium mb-4">Senin – Jum'at<br>07.00 – 15.00 WIB<br><br>Sabtu<br>07.00 – 12.00 WIB</p>
           </div>
         </div>
       </section>
 
-      <section class="max-w-6xl mx-auto px-4 mb-16">
-        <div class="bg-gray-200 w-full h-[400px] rounded-3xl overflow-hidden shadow-sm border border-gray-200">
-          <!-- Dummy Map -->
-          <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80" alt="Map" class="w-full h-full object-cover opacity-70 grayscale">
+      <section class="max-w-6xl mx-auto px-4 mb-12">
+        <div class="bg-gray-200 w-full h-[350px] rounded-3xl overflow-hidden shadow-sm border border-gray-200 relative">
+          <!-- Dummy Map Image to replicate Google Maps Embed -->
+          <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80" alt="Map" class="w-full h-full object-cover opacity-80">
+          <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+             <i class="ph-fill ph-map-pin text-5xl text-red-500 drop-shadow-md"></i>
+          </div>
         </div>
       </section>
 
-      <section class="max-w-6xl mx-auto px-4 mb-16 grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
+      <section class="max-w-6xl mx-auto px-4 mb-16 grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="bg-white p-8 md:p-10 rounded-[2rem] border border-gray-100 shadow-sm">
           <h2 class="text-2xl font-extrabold text-navy-900 mb-2">Kirim Pesan</h2>
           <p class="text-sm text-gray-500 font-medium mb-8">Isi formulir di bawah ini dan kami akan segera menghubungi Anda.</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">Nama Lengkap</label><input type="text" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm outline-none focus:border-accent" placeholder="Contoh: Ahmad Fauzan"></div>
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">Email</label><input type="email" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm outline-none focus:border-accent" placeholder="Contoh: email@anda.com"></div>
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">No. Telepon</label><input type="text" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm outline-none focus:border-accent" placeholder="Contoh: 0812-3456-7890"></div>
-            <div><label class="block text-xs font-bold text-navy-900 mb-2">Subjek</label><select class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm outline-none focus:border-accent"><option>Pilih subjek</option></select></div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+            <div>
+              <label class="block text-xs font-bold text-navy-900 mb-2">Nama Lengkap</label>
+              <input type="text" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3 text-sm outline-none focus:border-accent focus:bg-white" placeholder="Contoh: Ahmad Fauzan">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-navy-900 mb-2">Email</label>
+              <input type="email" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3 text-sm outline-none focus:border-accent focus:bg-white" placeholder="Contoh: email@anda.com">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-navy-900 mb-2">No. Telepon</label>
+              <input type="text" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3 text-sm outline-none focus:border-accent focus:bg-white" placeholder="Contoh: 0812-3456-7890">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-navy-900 mb-2">Subjek</label>
+              <select class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3 text-sm outline-none focus:border-accent focus:bg-white text-gray-500">
+                <option>Pilih subjek</option>
+              </select>
+            </div>
           </div>
-          <div class="mb-8"><label class="block text-xs font-bold text-navy-900 mb-2">Pesan</label><textarea class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm outline-none focus:border-accent min-h-[120px] resize-y" placeholder="Tulis pesan Anda di sini..."></textarea></div>
-          <button class="w-full bg-navy-900 text-white font-bold py-4 rounded-xl hover:bg-navy-800 transition flex items-center justify-center gap-2">Kirim Pesan <i class="ph-bold ph-paper-plane-right"></i></button>
+          <div class="mb-6">
+            <label class="block text-xs font-bold text-navy-900 mb-2">Pesan</label>
+            <textarea class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3 text-sm outline-none focus:border-accent focus:bg-white min-h-[120px] resize-y" placeholder="Tulis pesan Anda di sini..."></textarea>
+          </div>
+          <button class="w-full bg-navy-900 text-white font-bold py-4 rounded-xl hover:bg-navy-800 transition flex items-center justify-center gap-2 text-sm shadow-md">Kirim Pesan <i class="ph-bold ph-paper-plane-right text-lg"></i></button>
         </div>
 
-        <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
-          <h2 class="text-2xl font-extrabold text-navy-900 mb-8">Pertanyaan yang Sering Diajukan</h2>
-          <div class="space-y-4">
-            <div class="border-b border-gray-100 pb-4 flex gap-4 cursor-pointer group">
-              <div class="w-10 h-10 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-lg shrink-0 mt-1"><i class="ph-fill ph-envelope-open"></i></div>
-              <div class="flex-1">
-                <h4 class="font-bold text-navy-900 group-hover:text-accent transition">Bagaimana cara mendaftar di SDIT Al-Hasan?</h4>
-                <p class="text-xs text-gray-500 font-medium mt-1 leading-relaxed">Pendaftaran dapat dilakukan melalui halaman SPMB atau datang langsung ke sekolah pada jam operasional.</p>
+        <div class="bg-white p-8 md:p-10 rounded-[2rem] border border-gray-100 shadow-sm flex flex-col justify-between">
+          <div>
+            <h2 class="text-2xl font-extrabold text-navy-900 mb-6">Pertanyaan yang Sering Diajukan</h2>
+            <div class="space-y-4">
+              <div class="border border-gray-100 rounded-xl p-4 flex gap-4 cursor-pointer group hover:border-accent transition">
+                <div class="w-8 h-8 bg-blue-50 text-accent rounded-lg flex items-center justify-center text-lg shrink-0 mt-0.5"><i class="ph-bold ph-envelope-open"></i></div>
+                <div class="flex-1">
+                  <h4 class="font-bold text-navy-900 text-sm group-hover:text-accent transition">Bagaimana cara mendaftar di SDIT Al-Hasan?</h4>
+                  <p class="text-xs text-gray-500 font-medium mt-1">Pendaftaran dapat dilakukan melalui halaman SPMB atau datang langsung ke sekolah pada jam operasional.</p>
+                </div>
+                <i class="ph-bold ph-caret-right text-gray-400 mt-1"></i>
               </div>
-              <i class="ph-bold ph-caret-right text-gray-400 mt-2"></i>
-            </div>
-            <div class="border-b border-gray-100 pb-4 flex gap-4 cursor-pointer group">
-              <div class="w-10 h-10 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-lg shrink-0 mt-1"><i class="ph-fill ph-check-square-offset"></i></div>
-              <div class="flex-1">
-                <h4 class="font-bold text-navy-900 group-hover:text-accent transition">Apa saja persyaratan pendaftaran?</h4>
-                <p class="text-xs text-gray-500 font-medium mt-1 leading-relaxed">Persyaratan dapat dilihat di halaman SPMB pada bagian Persyaratan Pendaftaran.</p>
+              <div class="border border-gray-100 rounded-xl p-4 flex gap-4 cursor-pointer group hover:border-accent transition">
+                <div class="w-8 h-8 bg-blue-50 text-accent rounded-lg flex items-center justify-center text-lg shrink-0 mt-0.5"><i class="ph-bold ph-check-square-offset"></i></div>
+                <div class="flex-1">
+                  <h4 class="font-bold text-navy-900 text-sm group-hover:text-accent transition">Apa saja persyaratan pendaftaran?</h4>
+                  <p class="text-xs text-gray-500 font-medium mt-1">Persyaratan dapat dilihat di halaman SPMB pada bagian Persyaratan Pendaftaran.</p>
+                </div>
+                <i class="ph-bold ph-caret-right text-gray-400 mt-1"></i>
               </div>
-              <i class="ph-bold ph-caret-right text-gray-400 mt-2"></i>
-            </div>
-            <div class="border-b border-gray-100 pb-4 flex gap-4 cursor-pointer group">
-              <div class="w-10 h-10 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-lg shrink-0 mt-1"><i class="ph-fill ph-magnifying-glass"></i></div>
-              <div class="flex-1">
-                <h4 class="font-bold text-navy-900 group-hover:text-accent transition">Apakah ada program beasiswa?</h4>
-                <p class="text-xs text-gray-500 font-medium mt-1 leading-relaxed">Ya, kami memiliki program beasiswa untuk siswa berprestasi dan kurang mampu. Informasi lebih lanjut hubungi kami.</p>
+              <div class="border border-gray-100 rounded-xl p-4 flex gap-4 cursor-pointer group hover:border-accent transition">
+                <div class="w-8 h-8 bg-blue-50 text-accent rounded-lg flex items-center justify-center text-lg shrink-0 mt-0.5"><i class="ph-bold ph-magnifying-glass"></i></div>
+                <div class="flex-1">
+                  <h4 class="font-bold text-navy-900 text-sm group-hover:text-accent transition">Apakah ada program beasiswa?</h4>
+                  <p class="text-xs text-gray-500 font-medium mt-1">Ya, kami memiliki program beasiswa untuk siswa berprestasi dan kurang mampu.</p>
+                </div>
+                <i class="ph-bold ph-caret-right text-gray-400 mt-1"></i>
               </div>
-              <i class="ph-bold ph-caret-right text-gray-400 mt-2"></i>
             </div>
           </div>
           
-          <div class="mt-8 bg-yellow-50 border border-yellow-100 rounded-2xl p-6 flex items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-              <i class="ph-fill ph-headset text-3xl text-yellow-500"></i>
-              <div><h4 class="font-bold text-navy-900 text-sm">Butuh Bantuan Segera?</h4><p class="text-[10px] text-gray-600 font-medium">Hubungi kami langsung melalui WhatsApp.</p></div>
+          <div class="mt-8 bg-yellow-50 border border-yellow-100 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 bg-white text-yellow-500 rounded-full flex items-center justify-center text-xl shadow-sm shrink-0"><i class="ph-fill ph-bell-ringing"></i></div>
+              <div><h4 class="font-bold text-navy-900 text-sm">Butuh Bantuan Segera?</h4><p class="text-[11px] text-gray-500 font-medium">Hubungi kami langsung melalui WhatsApp.</p></div>
             </div>
-            <button class="bg-navy-900 text-white font-bold px-4 py-2 rounded-lg text-xs whitespace-nowrap flex items-center gap-1.5"><i class="ph-fill ph-whatsapp-logo text-green-400 text-base"></i> Chat WhatsApp</button>
+            <button class="bg-navy-900 text-white font-bold px-5 py-2.5 rounded-xl text-xs whitespace-nowrap flex items-center gap-2 shadow-sm"><i class="ph-bold ph-whatsapp-logo text-base"></i> Chat WhatsApp</button>
           </div>
         </div>
       </section>
@@ -712,62 +884,64 @@
 
     <!-- 9. PORTAL NILAI -->
     <div id="portal" class="view-section">
-      <div class="max-w-6xl mx-auto px-4 py-12 flex flex-col md:flex-row gap-8">
+      <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
         
         <!-- Sidebar Kiri -->
-        <div class="w-full md:w-64 bg-navy-900 text-white rounded-3xl p-6 flex flex-col min-h-[500px]">
-          <h3 class="text-[11px] font-bold tracking-widest text-blue-200 uppercase mb-6 pl-4">Portal Orang Tua</h3>
+        <div class="w-full md:w-64 bg-navy-900 text-white rounded-3xl p-6 flex flex-col min-h-[500px] shrink-0 sticky top-24 shadow-lg border border-navy-800">
+          <h3 class="text-[10px] font-bold tracking-widest text-gray-400 uppercase mb-6 pl-2">PORTAL ORANG TUA</h3>
           <nav class="space-y-2 flex-1">
-            <a href="#" class="flex items-center gap-3 bg-white/10 text-white font-bold px-4 py-3 rounded-xl"><i class="ph-fill ph-house text-xl"></i> Lihat Nilai</a>
-            <a href="#" class="flex items-center gap-3 text-blue-200 font-bold px-4 py-3 rounded-xl hover:bg-white/5 transition"><i class="ph-bold ph-clock-counter-clockwise text-xl"></i> Riwayat Nilai</a>
-            <a href="#" class="flex items-center gap-3 text-blue-200 font-bold px-4 py-3 rounded-xl hover:bg-white/5 transition"><i class="ph-bold ph-question text-xl"></i> Panduan</a>
+            <a href="#" class="flex items-center gap-3 bg-white/10 text-white font-bold px-4 py-3 rounded-xl border border-white/5"><i class="ph-fill ph-house text-xl"></i> Lihat Nilai</a>
+            <a href="#" class="flex items-center gap-3 text-gray-400 font-bold px-4 py-3 rounded-xl hover:bg-white/5 hover:text-white transition"><i class="ph-bold ph-clock-counter-clockwise text-xl"></i> Riwayat Nilai</a>
+            <a href="#" class="flex items-center gap-3 text-gray-400 font-bold px-4 py-3 rounded-xl hover:bg-white/5 hover:text-white transition"><i class="ph-bold ph-question text-xl"></i> Panduan</a>
           </nav>
           
           <div class="bg-white/5 border border-white/10 p-5 rounded-2xl mt-8">
-            <h4 class="font-bold text-sm mb-2">Butuh Bantuan?</h4>
-            <p class="text-[11px] text-blue-200 font-medium leading-relaxed mb-4">Jika ada pertanyaan terkait nilai, silakan hubungi wali kelas atau admin sekolah.</p>
-            <button class="w-full bg-transparent border border-white/30 px-4 py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-2 hover:bg-white/10"><i class="ph-fill ph-whatsapp-logo text-green-400 text-sm"></i> Hubungi Sekolah</button>
+            <h4 class="font-bold text-sm mb-2 text-white">Butuh Bantuan?</h4>
+            <p class="text-[11px] text-gray-400 font-medium leading-relaxed mb-4">Jika ada pertanyaan terkait nilai, silakan hubungi wali kelas atau admin sekolah.</p>
+            <button class="w-full bg-transparent border border-white/20 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 hover:bg-white/10 transition"><i class="ph-bold ph-whatsapp-logo text-sm"></i> Hubungi Sekolah</button>
           </div>
         </div>
 
         <!-- Konten Kanan -->
-        <div class="flex-1">
+        <div class="flex-1 w-full">
           <!-- Header Biru Dalam -->
-          <div class="bg-navy-900 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden mb-8 shadow-xl">
-            <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-accent rounded-full blur-[80px] opacity-60"></div>
-            <div class="relative z-10 flex justify-between items-center">
+          <div class="bg-navy-900 rounded-[2rem] p-8 md:p-12 text-white relative overflow-hidden mb-8 shadow-xl border border-navy-800">
+            <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6">
               <div class="max-w-md">
-                <h1 class="text-3xl md:text-4xl font-extrabold mb-3">Portal Nilai Siswa</h1>
-                <p class="text-blue-100 font-medium">Masukkan data siswa untuk melihat nilai terbaru.</p>
+                <h1 class="text-3xl md:text-4xl font-extrabold mb-3 leading-tight">Portal Nilai Siswa</h1>
+                <p class="text-gray-300 font-medium text-sm md:text-base">Masukkan data siswa untuk melihat nilai terbaru.</p>
               </div>
               <div class="hidden sm:block">
-                <div class="w-24 h-24 bg-white rounded-2xl flex items-center justify-center shadow-lg relative -rotate-6">
-                  <i class="ph-fill ph-file-text text-6xl text-blue-200"></i>
-                  <div class="absolute -bottom-3 -right-3 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white border-4 border-navy-900 shadow-md"><i class="ph-bold ph-check"></i></div>
-                  <div class="absolute top-4 right-4 font-extrabold text-accent text-xl">A+</div>
+                <div class="w-24 h-24 bg-accent rounded-full flex items-center justify-center shadow-lg relative border-4 border-navy-900">
+                  <i class="ph-fill ph-file-text text-5xl text-white"></i>
+                  <div class="absolute -bottom-2 -right-2 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white border-4 border-navy-900 shadow-md"><i class="ph-bold ph-check"></i></div>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Form Pencarian -->
-          <div class="bg-white rounded-3xl border border-gray-100 p-8 shadow-sm mb-8">
+          <div class="bg-white rounded-[2rem] border border-gray-100 p-8 shadow-sm mb-8">
             <h2 class="text-xl font-extrabold text-navy-900 mb-6">Masukkan Data Siswa</h2>
             
             <div class="space-y-5 mb-8">
               <div>
                 <label class="block text-xs font-bold text-navy-900 mb-2">NISN Siswa</label>
-                <input type="text" id="p-nisn" class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-sm outline-none focus:border-accent" placeholder="Contoh: 3177667971">
+                <input type="text" id="p-nisn" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm outline-none focus:border-accent focus:bg-white transition" placeholder="Contoh: 3177667971">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-navy-900 mb-2">Tanggal Lahir</label>
+                <input type="date" id="p-tgllahir" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm outline-none focus:border-accent focus:bg-white transition text-gray-700">
               </div>
               <div>
                 <label class="block text-xs font-bold text-navy-900 mb-2">Pilih Tahun Ajaran</label>
-                <select class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-sm outline-none focus:border-accent">
+                <select class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm outline-none focus:border-accent focus:bg-white transition text-gray-700">
                   <option>2025 / 2026</option>
                 </select>
               </div>
               <div>
                 <label class="block text-xs font-bold text-navy-900 mb-2">Pilih Ulangan / Penilaian</label>
-                <select id="p-ulangan" class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-sm outline-none focus:border-accent">
+                <select id="p-ulangan" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm outline-none focus:border-accent focus:bg-white transition text-gray-700">
                   <option value="sts2">STS 2 – Sumatif Tengah Semester 2</option>
                   <option value="sas2">SAS 2 – Sumatif Akhir Semester 2</option>
                   <option value="sts1">STS 1 – Sumatif Tengah Semester 1</option>
@@ -776,33 +950,33 @@
               </div>
             </div>
             
-            <button onclick="cariNilai()" class="w-full bg-navy-900 text-white font-bold py-4 rounded-xl hover:bg-navy-800 transition mb-6">Lihat Nilai</button>
+            <button onclick="cariNilai()" class="w-full bg-navy-900 text-white font-bold py-4 rounded-xl hover:bg-navy-800 transition mb-6 shadow-md text-sm">Lihat Nilai</button>
 
-            <div class="bg-gray-50 border border-gray-100 rounded-xl p-4 flex gap-4 text-sm font-medium text-gray-500">
+            <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 flex gap-4 text-[11px] font-medium text-navy-900">
               <i class="ph-fill ph-shield-check text-2xl text-accent shrink-0"></i>
               <p class="leading-relaxed">Data nilai bersifat rahasia dan hanya dapat diakses oleh orang tua/wali siswa. Pastikan data yang dimasukkan sesuai dengan dokumen resmi.</p>
             </div>
           </div>
           
-          <div id="hasil-nilai-container" class="hidden bg-white rounded-3xl border border-gray-100 p-8 shadow-sm mb-8 animate-fadeIn">
+          <div id="hasil-nilai-container" class="hidden bg-white rounded-[2rem] border border-gray-100 p-8 shadow-sm mb-8 animate-fadeIn">
              <!-- Diisi oleh JavaScript saat pencarian nilai -->
           </div>
 
           <!-- Cara Menggunakan -->
-          <div class="bg-white rounded-3xl border border-gray-100 p-8 shadow-sm">
-            <h3 class="text-lg font-extrabold text-navy-900 mb-6">Cara Menggunakan</h3>
+          <div class="bg-white rounded-[2rem] border border-gray-100 p-8 shadow-sm">
+            <h3 class="text-lg font-extrabold text-navy-900 mb-6 border-b border-gray-100 pb-4">Cara Menggunakan</h3>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
               <div class="flex gap-4">
-                <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center font-bold text-navy-900 shrink-0">1</div>
-                <div><h4 class="font-bold text-navy-900 text-sm mb-1">Masukkan NISN siswa</h4><p class="text-xs text-gray-500 font-medium leading-relaxed">Pastikan NISN sesuai dengan kartu identitas atau raport.</p></div>
+                <div class="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center font-bold text-accent shrink-0">1</div>
+                <div><h4 class="font-bold text-navy-900 text-sm mb-1">Masukkan NISN</h4><p class="text-[11px] text-gray-500 font-medium leading-relaxed">Sesuai dengan kartu identitas atau raport.</p></div>
               </div>
               <div class="flex gap-4">
-                <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center font-bold text-navy-900 shrink-0">2</div>
-                <div><h4 class="font-bold text-navy-900 text-sm mb-1">Pilih Tahun Ajaran</h4><p class="text-xs text-gray-500 font-medium leading-relaxed">Pilih tahun ajaran yang ingin dilihat nilainya.</p></div>
+                <div class="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center font-bold text-accent shrink-0">2</div>
+                <div><h4 class="font-bold text-navy-900 text-sm mb-1">Pilih Tahun Ajaran</h4><p class="text-[11px] text-gray-500 font-medium leading-relaxed">Pilih tahun ajaran yang ingin dilihat nilainya.</p></div>
               </div>
               <div class="flex gap-4">
-                <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center font-bold text-navy-900 shrink-0">3</div>
-                <div><h4 class="font-bold text-navy-900 text-sm mb-1">Pilih Ulangan</h4><p class="text-xs text-gray-500 font-medium leading-relaxed">Pilih jenis ulangan kemudian klik "Lihat Nilai".</p></div>
+                <div class="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center font-bold text-accent shrink-0">3</div>
+                <div><h4 class="font-bold text-navy-900 text-sm mb-1">Pilih Penilaian</h4><p class="text-[11px] text-gray-500 font-medium leading-relaxed">Pilih jenis penilaian kemudian klik "Lihat Nilai".</p></div>
               </div>
             </div>
           </div>
@@ -818,74 +992,85 @@
 
   </main>
 
+  <!-- CTA Sebelum Footer -->
+  <div id="cta-footer" class="max-w-7xl mx-auto px-4 md:px-8 mb-10 w-full z-10 relative">
+    <div class="bg-navy-900 rounded-[2rem] p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl border border-navy-800">
+      <div>
+        <h2 class="text-2xl font-extrabold text-white mb-2">Bergabunglah Bersama SDIT Al-Hasan</h2>
+        <p class="text-gray-300 text-sm font-medium">Tahun Ajaran 2025/2026 — Kuota terbatas, segera daftarkan putra-putri Anda sekarang!</p>
+      </div>
+      <a href="javascript:navigate('spmb')" class="bg-white text-navy-900 px-6 py-3.5 rounded-xl font-bold flex items-center gap-2 hover:bg-gray-100 transition whitespace-nowrap text-sm shadow-md">Daftar Sekarang <i class="ph-bold ph-arrow-right"></i></a>
+    </div>
+  </div>
+
   <!-- 10. FOOTER -->
-  <footer id="footer-section" class="bg-navy-900 text-gray-300 py-16 px-4 md:px-8 border-t-[6px] border-accent mt-auto">
+  <footer id="footer-section" class="bg-navy-900 text-gray-400 py-16 px-4 md:px-8 mt-auto border-t border-navy-800">
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 mb-12">
       
       <div class="lg:col-span-4 pr-4">
         <div class="flex items-center gap-3 mb-6">
-          <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-navy-900 text-2xl">
+          <div class="w-10 h-10 border border-white/20 rounded-lg flex items-center justify-center text-white text-xl">
             <i class="ph-fill ph-mosque"></i>
           </div>
           <div>
-            <div class="font-extrabold text-white leading-tight text-[17px]">SD ISLAM TERPADU<br>AL-HASAN</div>
+            <div class="font-extrabold text-white leading-tight text-base tracking-wide">SD ISLAM TERPADU<br>AL-HASAN</div>
           </div>
         </div>
-        <p class="text-sm text-gray-400 mb-8 leading-relaxed font-medium">Mewujudkan generasi islami yang cerdas, berakhlak mulia, dan berdaya saing global di era digital.</p>
+        <p class="text-[13px] mb-8 leading-relaxed font-medium text-gray-400">Mewujudkan generasi islami yang cerdas, berakhlak mulia, dan berdaya saing global di era digital.</p>
         <div class="flex gap-3">
-          <a href="#" class="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-accent transition text-white"><i class="ph-fill ph-facebook-logo"></i></a>
-          <a href="#" class="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-accent transition text-white"><i class="ph-fill ph-instagram-logo"></i></a>
-          <a href="#" class="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-accent transition text-white"><i class="ph-fill ph-youtube-logo"></i></a>
-          <a href="#" class="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-green-500 transition text-white"><i class="ph-fill ph-whatsapp-logo"></i></a>
+          <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition text-white"><i class="ph-fill ph-facebook-logo"></i></a>
+          <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition text-white"><i class="ph-fill ph-instagram-logo"></i></a>
+          <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition text-white"><i class="ph-fill ph-youtube-logo"></i></a>
+          <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-500 transition text-white"><i class="ph-fill ph-whatsapp-logo"></i></a>
         </div>
       </div>
       
       <div class="lg:col-span-2">
-        <h4 class="text-white font-extrabold tracking-wide mb-6 uppercase text-sm">Tautan Cepat</h4>
-        <ul class="space-y-3 text-sm font-medium text-gray-400">
-          <li><a href="javascript:navigate('beranda')" class="hover:text-accent transition">Beranda</a></li>
-          <li><a href="javascript:navigate('profil')" class="hover:text-accent transition">Profil Sekolah</a></li>
-          <li><a href="javascript:navigate('akademik')" class="hover:text-accent transition">Akademik</a></li>
-          <li><a href="javascript:navigate('program')" class="hover:text-accent transition">Program</a></li>
-          <li><a href="javascript:navigate('spmb')" class="hover:text-accent transition">SPMB</a></li>
+        <h4 class="text-white font-bold mb-6 text-sm">Tautan Cepat</h4>
+        <ul class="space-y-3 text-[13px] font-medium">
+          <li><a href="javascript:navigate('beranda')" class="hover:text-white transition">Beranda</a></li>
+          <li><a href="javascript:navigate('profil')" class="hover:text-white transition">Profil Sekolah</a></li>
+          <li><a href="javascript:navigate('akademik')" class="hover:text-white transition">Akademik</a></li>
+          <li><a href="javascript:navigate('program')" class="hover:text-white transition">Program</a></li>
+          <li><a href="javascript:navigate('spmb')" class="hover:text-white transition">SPMB</a></li>
         </ul>
       </div>
       
       <div class="lg:col-span-2">
-        <h4 class="text-white font-extrabold tracking-wide mb-6 uppercase text-sm">Informasi</h4>
-        <ul class="space-y-3 text-sm font-medium text-gray-400">
-          <li><a href="javascript:navigate('portal')" class="hover:text-accent transition">Portal Orang Tua</a></li>
-          <li><a href="javascript:navigate('portal')" class="hover:text-accent transition">Portal Siswa</a></li>
-          <li><a href="javascript:navigate('akademik')" class="hover:text-accent transition">Kurikulum</a></li>
-          <li><a href="javascript:navigate('program')" class="hover:text-accent transition">Ekstrakurikuler</a></li>
-          <li><a href="javascript:navigate('kontak')" class="hover:text-accent transition">Kontak</a></li>
+        <h4 class="text-white font-bold mb-6 text-sm">Informasi</h4>
+        <ul class="space-y-3 text-[13px] font-medium">
+          <li><a href="javascript:navigate('portal')" class="hover:text-white transition">Portal Orang Tua</a></li>
+          <li><a href="javascript:navigate('portal')" class="hover:text-white transition">Portal Siswa</a></li>
+          <li><a href="javascript:navigate('akademik')" class="hover:text-white transition">Kurikulum</a></li>
+          <li><a href="javascript:navigate('program')" class="hover:text-white transition">Ekstrakurikuler</a></li>
+          <li><a href="javascript:navigate('kontak')" class="hover:text-white transition">Kontak</a></li>
         </ul>
       </div>
       
       <div class="lg:col-span-4">
-        <h4 class="text-white font-extrabold tracking-wide mb-6 uppercase text-sm">Kontak Kami</h4>
-        <ul class="space-y-4 text-sm font-medium text-gray-400">
+        <h4 class="text-white font-bold mb-6 text-sm">Kontak Kami</h4>
+        <ul class="space-y-4 text-[13px] font-medium">
           <li class="flex items-start gap-3">
-            <i class="ph-fill ph-map-pin text-xl text-gray-400 shrink-0 mt-0.5"></i>
+            <i class="ph-fill ph-map-pin text-lg text-gray-500 shrink-0 mt-0.5"></i>
             <span>Jl. Raya Bojonggenteng,<br>Sukabumi, Jawa Barat</span>
           </li>
           <li class="flex items-center gap-3">
-            <i class="ph-fill ph-phone text-xl text-gray-400 shrink-0"></i>
+            <i class="ph-fill ph-phone text-lg text-gray-500 shrink-0"></i>
             <span>(0266) 123-4567</span>
           </li>
           <li class="flex items-center gap-3">
-            <i class="ph-fill ph-envelope-simple text-xl text-gray-400 shrink-0"></i>
+            <i class="ph-fill ph-envelope-simple text-lg text-gray-500 shrink-0"></i>
             <span>info@sdital-hasan.sch.id</span>
           </li>
           <li class="flex items-center gap-3">
-            <i class="ph-fill ph-clock text-xl text-gray-400 shrink-0"></i>
+            <i class="ph-fill ph-clock text-lg text-gray-500 shrink-0"></i>
             <span>Senin - Jumat: 07.00 - 15.00</span>
           </li>
         </ul>
       </div>
     </div>
     
-    <div class="max-w-7xl mx-auto pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium text-gray-500">
+    <div class="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] font-medium text-gray-500">
       <div>&copy; 2026 SD Islam Terpadu Al-Hasan. All rights reserved.</div>
       <div class="flex gap-6">
         <a href="#" class="hover:text-white transition">Kebijakan Privasi</a>
@@ -898,42 +1083,33 @@
   <!-- SCRIPT UNTUK MERENDER DATA & NAVIGASI      -->
   <!-- ========================================== -->
   
-  <!-- File data CMS asli jika ada -->
   <script src="data.js" onerror="console.warn('File data.js tidak ditemukan. Menggunakan data dummy.')"></script>
 
   <script>
-    // ── 1. FUNGSI NAVIGASI SPA (Single Page Application)
+    // ── 1. FUNGSI NAVIGASI SPA
     function navigate(viewId) {
-      // Sembunyikan semua view
-      document.querySelectorAll('.view-section').forEach(el => {
-        el.classList.remove('active');
-      });
-      // Tampilkan view yang dipilih
+      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
       document.getElementById(viewId).classList.add('active');
-      // Scroll ke atas
       window.scrollTo(0, 0);
 
-      // Perbarui style navbar
       document.querySelectorAll('.nav-link').forEach(el => {
-        el.classList.remove('active', 'text-accent', 'border-b-2', 'border-accent', 'pb-1');
-        if(el.getAttribute('data-target') === viewId) {
-           el.classList.add('active', 'text-accent', 'border-b-2', 'border-accent', 'pb-1');
-        }
+        el.classList.remove('active');
+        if(el.getAttribute('data-target') === viewId) el.classList.add('active');
       });
-      // Sembunyikan mobile menu jika terbuka
+      
       document.getElementById('mobile-menu').classList.add('hidden');
 
-      // Tampilkan/Sembunyikan Footer (Portal Nilai tidak pakai Footer gelap besar)
+      // Tampilkan/Sembunyikan CTA dan Footer untuk Portal Nilai (mengikuti desain Portal Nilai yang clean)
       if(viewId === 'portal') {
+        document.getElementById('cta-footer').style.display = 'none';
         document.getElementById('footer-section').style.display = 'none';
-        document.body.classList.add('bg-[#0B152A]'); // Latar portal lebih gelap
       } else {
+        document.getElementById('cta-footer').style.display = 'block';
         document.getElementById('footer-section').style.display = 'block';
-        document.body.classList.remove('bg-[#0B152A]');
       }
     }
 
-    // ── 2. DATA DUMMY (Render UI sesuai gambar screenshot)
+    // ── 2. DATA DUMMY
     const orgData = [
       { inisial: 'R', nama: 'Rahmatuloh, S.Pd.I', jab: 'Kepala Sekolah' },
       { inisial: 'AO', nama: 'Agisa Oktanadila, S.I.Pust', jab: 'Bendahara Sekolah' },
@@ -955,14 +1131,14 @@
     ];
 
     const programPendukung = [
-      { ic: 'ph-translate', judul: 'Bahasa Arab & Inggris', desc: 'Meningkatkan kemampuan bahasa asing sebagai bekal.' },
-      { ic: 'ph-book-open', judul: 'Literasi & Numerasi', desc: 'Program penguatan literasi dan numerasi dasar.' },
-      { ic: 'ph-desktop', judul: 'Kelas Digital', desc: 'Pemanfaatan teknologi digital dalam proses pembelajaran.' },
-      { ic: 'ph-circles-three', judul: 'Proyek Penguatan P5', desc: 'Proyek berbasis karakter sesuai Kurikulum Merdeka.' },
-      { ic: 'ph-basketball', judul: 'Ekstrakurikuler', desc: 'Beragam kegiatan sesuai minat dan bakat siswa.' },
-      { ic: 'ph-heart', judul: 'Pembiasaan Islami', desc: 'Pembiasaan ibadah dan akhlak dalam kehidupan sehari-hari.' },
-      { ic: 'ph-users', judul: 'Parenting Class', desc: 'Program edukasi untuk orang tua dalam mendukung anak.' },
-      { ic: 'ph-bus', judul: 'Kunjungan Edukatif', desc: 'Kegiatan belajar di luar kelas untuk pengalaman nyata.' }
+      { ic: 'ph-translate', judul: 'Bahasa Arab & Inggris', desc: 'Meningkatkan kemampuan bahasa asing sebagai bekal komunikasi global.' },
+      { ic: 'ph-book-open', judul: 'Literasi & Numerasi', desc: 'Program penguatan literasi dan numerasi untuk dasar akademik yang kuat.' },
+      { ic: 'ph-desktop', judul: 'Kelas Digital', desc: 'Pemanfaatan teknologi digital dalam proses pembelajaran yang interaktif.' },
+      { ic: 'ph-circles-three', judul: 'Proyek Penguatan P5', desc: 'Projek berbasis karakter dan kreativitas sesuai Kurikulum Merdeka.' },
+      { ic: 'ph-basketball', judul: 'Ekstrakurikuler', desc: 'Beragam kegiatan ekstrakurikuler sesuai minat dan bakat siswa.' },
+      { ic: 'ph-heart', judul: 'Pembiasaan Islami', desc: 'Pembiasaan ibadah dan akhlak mulia dalam kehidupan sehari-hari.' },
+      { ic: 'ph-users', judul: 'Parenting Class', desc: 'Program edukasi untuk orang tua dalam mendukung perkembangan anak.' },
+      { ic: 'ph-bus', judul: 'Kunjungan Edukatif', desc: 'Kegiatan belajar di luar kelas untuk pengalaman nyata dan bermakna.' }
     ];
 
     const spmbTimeline = [
@@ -993,167 +1169,216 @@
       { kat: 'Artikel Pendidikan', jdl: 'Tips Menumbuhkan Minat Baca pada Anak Usia Sekolah Dasar', desc: 'Membaca adalah jendela dunia. Berikut beberapa tips untuk menumbuhkan minat baca pada anak sejak dini.', tgl: '05 Mei 2026', l: '189', u: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80', b:'05', m:'Mei\n2026' }
     ];
 
+    // Dummy Rapor untuk test jika data.js tidak ada
+    if(typeof DATA_NILAI === 'undefined') {
+      var DATA_NILAI = [
+        {
+          nisn: "3177667971",
+          nama: "Ahmad Fauzan",
+          tglLahir: "2015-05-15",
+          kelas: "4A",
+          nilai: {
+            "sts2": [
+              {mapel: "Pendidikan Agama Islam", kkm: 75, nilai: 88},
+              {mapel: "Pendidikan Pancasila", kkm: 70, nilai: 85},
+              {mapel: "Bahasa Indonesia", kkm: 70, nilai: 90},
+              {mapel: "Matematika", kkm: 65, nilai: 78}
+            ]
+          }
+        }
+      ];
+    }
+
     // ── 3. RENDER FUNGSI
     document.addEventListener('DOMContentLoaded', () => {
       
-      // Render Keunggulan Beranda (diambil dari data statis HTML di atas)
+      // Keunggulan Beranda
       const kData = [
-        { i:'user-focus', t:'Guru Berkualitas', c:'purple' }, { i:'book-open-text', t:'Kurikulum Islami', c:'blue' },
-        { i:'trophy', t:'Akademik Unggul', c:'orange' }, { i:'shield-check', t:'Kegiatan Terstruktur', c:'green' },
-        { i:'plant', t:'Lingkungan Aman', c:'teal' }, { i:'chats-teardrop', t:'Komunikasi Aktif', c:'yellow' }
+        { i:'user-focus', t:'Guru Berkualitas', d:'Tenaga pendidik bersertifikat dengan metode pengajaran aktif dan inovatif sesuai Kurikulum Merdeka.' }, 
+        { i:'book-open-text', t:'Kurikulum Islami', d:'Integrasi nilai-nilai Islam dalam setiap mata pelajaran, hafalan Al-Qur\'an, dan pembiasaan akhlak mulia.' },
+        { i:'trophy', t:'Akademik Unggul', d:'Prestasi akademik dan non-akademik tingkat kecamatan hingga provinsi setiap tahunnya.' }, 
+        { i:'shield-check', t:'Kegiatan Terstruktur', d:'Ekstrakurikuler beragam: pramuka, seni, olahraga, dan program tahfidz intensif.' },
+        { i:'plant', t:'Lingkungan Aman', d:'Lingkungan sekolah bersih, kondusif dengan pengawasan keamanan penuh.' }, 
+        { i:'chats-teardrop', t:'Komunikasi Aktif', d:'Portal nilai online, grup kelas, dan pertemuan orang tua rutin setiap semester.' }
       ];
       document.getElementById('beranda-keunggulan').innerHTML = kData.map(k => `
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition flex gap-5">
-          <div class="w-12 h-12 bg-${k.c}-50 text-${k.c}-600 rounded-full flex items-center justify-center text-2xl shrink-0"><i class="ph-fill ph-${k.i}"></i></div>
-          <div><h3 class="font-bold text-navy-900 mb-1">${k.t}</h3><p class="text-sm text-gray-500 font-medium">Layanan dan fasilitas terbaik kami berikan untuk menunjang tumbuh kembang siswa.</p></div>
+        <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100 hover:shadow-md transition flex flex-col md:flex-row gap-5 items-start">
+          <div class="w-12 h-12 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-2xl shrink-0"><i class="ph ph-${k.i}"></i></div>
+          <div><h3 class="font-bold text-navy-900 mb-1.5">${k.t}</h3><p class="text-xs text-gray-500 font-medium leading-relaxed">${k.d}</p></div>
         </div>
       `).join('');
 
-      // Render Struktur Organisasi (Profil)
+      // Preview Berita Beranda
+      document.getElementById('beranda-berita-preview').innerHTML = beritaUtama.slice(0,3).map(b => `
+        <div class="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden group">
+          <div class="h-48 relative overflow-hidden">
+             <img src="${b.u}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+             <div class="absolute top-4 left-4 bg-white/90 backdrop-blur text-navy-900 text-[10px] font-bold px-3 py-1.5 rounded-lg">${b.kat}</div>
+          </div>
+          <div class="p-6">
+            <div class="text-[10px] text-gray-400 font-bold mb-2">${b.tgl}</div>
+            <h3 class="font-bold text-navy-900 text-base mb-2 group-hover:text-accent transition line-clamp-2">${b.jdl}</h3>
+            <p class="text-xs text-gray-500 font-medium mb-4 line-clamp-2">${b.desc}</p>
+            <a href="#" class="text-accent text-[11px] font-bold flex items-center gap-1">Baca Selengkapnya <i class="ph-bold ph-arrow-right"></i></a>
+          </div>
+        </div>
+      `).join('');
+
+      // Struktur Organisasi (Profil)
       document.getElementById('grid-org').innerHTML = orgData.map(o => `
-        <div class="bg-white p-5 rounded-2xl border border-gray-100 flex flex-col items-center text-center shadow-sm hover:shadow-md transition">
+        <div class="bg-white p-5 rounded-[2rem] border border-gray-100 flex flex-col items-center text-center shadow-sm hover:shadow-md transition">
           <div class="w-12 h-12 bg-blue-50 text-accent font-bold rounded-full flex items-center justify-center text-lg mb-3">${o.inisial}</div>
-          <h4 class="font-bold text-navy-900 text-sm mb-1 line-clamp-2">${o.nama}</h4>
-          <p class="text-[11px] text-gray-500 font-medium">${o.jab}</p>
+          <h4 class="font-bold text-navy-900 text-[13px] mb-1 line-clamp-2">${o.nama}</h4>
+          <p class="text-[10px] text-gray-500 font-medium">${o.jab}</p>
         </div>
       `).join('');
 
-      // Render Program Unggulan & Pendukung
+      // Program Unggulan
       document.getElementById('program-unggulan-grid').innerHTML = programUnggulan.map(p => `
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden group hover:shadow-lg transition">
-          <div class="h-40 overflow-hidden relative">
+        <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden group hover:shadow-md transition">
+          <div class="h-44 overflow-hidden relative">
             <img src="${p.img}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-            <div class="absolute -bottom-6 left-5 w-12 h-12 bg-white rounded-xl shadow-md flex items-center justify-center text-accent text-2xl"><i class="ph-fill ${p.ic}"></i></div>
+            <div class="absolute -bottom-6 left-6 w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center text-accent text-xl border-4 border-white"><i class="ph-fill ${p.ic}"></i></div>
           </div>
-          <div class="p-6 pt-8">
-            <h3 class="font-bold text-navy-900 text-lg mb-2">${p.judul}</h3>
-            <p class="text-sm text-gray-500 font-medium mb-4">${p.desc}</p>
-            <a href="#" class="text-accent text-sm font-bold flex items-center gap-1.5">Selengkapnya <i class="ph-bold ph-arrow-right"></i></a>
+          <div class="p-6 pt-10">
+            <h3 class="font-bold text-navy-900 text-base mb-2">${p.judul}</h3>
+            <p class="text-xs text-gray-500 font-medium mb-6 leading-relaxed line-clamp-3">${p.desc}</p>
+            <a href="#" class="text-accent text-xs font-bold flex items-center gap-1.5">Selengkapnya <i class="ph-bold ph-arrow-right"></i></a>
           </div>
         </div>
       `).join('');
 
+      // Program Pendukung
       document.getElementById('program-pendukung-grid').innerHTML = programPendukung.map(p => `
-        <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4">
-          <div class="w-10 h-10 bg-gray-50 text-gray-600 rounded-xl flex items-center justify-center text-xl shrink-0"><i class="ph-fill ${p.ic}"></i></div>
-          <div><h4 class="font-bold text-navy-900 text-sm mb-1">${p.judul}</h4><p class="text-xs text-gray-500 font-medium">${p.desc}</p></div>
+        <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-start gap-4">
+          <div class="w-10 h-10 bg-gray-50 text-gray-500 rounded-xl flex items-center justify-center text-xl shrink-0"><i class="ph-fill ${p.ic}"></i></div>
+          <div><h4 class="font-bold text-navy-900 text-sm mb-1.5">${p.judul}</h4><p class="text-[11px] text-gray-500 font-medium leading-relaxed">${p.desc}</p></div>
         </div>
       `).join('');
 
-      // Render Timeline SPMB
+      // Timeline SPMB
       document.getElementById('spmb-timeline').innerHTML = spmbTimeline.map(t => `
         <div class="flex gap-4 sm:gap-6 relative group">
-          <div class="absolute left-6 top-10 bottom-[-24px] w-px bg-gray-200 group-last:hidden"></div>
-          <div class="w-12 h-12 bg-navy-900 text-white rounded-full flex items-center justify-center font-bold shrink-0 shadow-md relative z-10">${t.step}</div>
-          <div class="bg-white border border-gray-100 rounded-2xl p-5 sm:p-6 flex-1 shadow-sm flex items-center justify-between gap-4">
+          <div class="absolute left-5 top-10 bottom-[-16px] w-0.5 bg-gray-100 group-last:hidden"></div>
+          <div class="w-10 h-10 bg-navy-900 text-white rounded-full flex items-center justify-center font-bold text-sm shrink-0 shadow-sm relative z-10">${t.step}</div>
+          <div class="bg-white border border-gray-100 rounded-[1.5rem] p-5 sm:p-6 flex-1 shadow-sm flex items-center justify-between gap-4">
             <div>
-              <h3 class="font-bold text-navy-900 mb-1">${t.judul}</h3>
-              <p class="text-xs font-bold text-accent mb-2">${t.tgl}</p>
-              <p class="text-sm text-gray-500 font-medium">${t.desc}</p>
+              <h3 class="font-bold text-navy-900 text-sm mb-1">${t.judul}</h3>
+              <p class="text-[11px] font-medium text-gray-400 mb-2">${t.tgl}</p>
+              <p class="text-[12px] text-gray-500 font-medium leading-relaxed">${t.desc}</p>
             </div>
-            <i class="ph-fill ${t.ic} text-4xl text-gray-200 hidden sm:block"></i>
+            <div class="w-12 h-12 border border-gray-100 rounded-xl flex items-center justify-center text-accent text-xl shrink-0 hidden sm:flex bg-blue-50/50"><i class="ph-fill ${t.ic}"></i></div>
           </div>
         </div>
       `).join('');
 
-      // Render Galeri
+      // Galeri
       document.getElementById('galeri-grid').innerHTML = galeriImg.map(g => `
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden group cursor-pointer">
-          <div class="aspect-[4/3] relative overflow-hidden">
+        <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden group cursor-pointer p-2">
+          <div class="aspect-[4/3] relative overflow-hidden rounded-[1.5rem]">
             <img src="${g.u}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-            <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1.5 rounded flex items-center gap-1.5"><i class="ph-bold ph-image"></i> ${g.f} Foto</div>
+            <div class="absolute bottom-3 left-3 bg-black/50 backdrop-blur text-white text-[10px] font-bold px-2 py-1 rounded flex items-center gap-1.5"><i class="ph-bold ph-image"></i> ${g.f} Foto</div>
           </div>
-          <div class="p-4">
-            <h3 class="font-bold text-navy-900 mb-2 truncate">${g.t}</h3>
-            <span class="inline-block bg-blue-50 text-accent text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">${g.c}</span>
+          <div class="p-4 pb-2">
+            <h3 class="font-bold text-navy-900 text-sm mb-2 truncate">${g.t}</h3>
+            <span class="inline-block bg-blue-50 text-accent text-[10px] font-bold px-2.5 py-1 rounded-lg tracking-wide">${g.c}</span>
           </div>
         </div>
       `).join('');
 
+      // Video
       document.getElementById('video-grid').innerHTML = [
         {t:'Profil SD Islam Terpadu Al-Hasan', d:'12 Jan 2026', dur:'02:45', u:'https://images.unsplash.com/photo-1546410531-bea5aadcb6ce?auto=format&fit=crop&w=400&q=80'},
         {t:'Kegiatan Tahfidz Al-Qur\'an', d:'08 Jan 2026', dur:'03:18', u:'https://images.unsplash.com/photo-1605333036495-2eb42a781b0f?auto=format&fit=crop&w=400&q=80'},
         {t:'Praktikum IPA di Laboratorium', d:'05 Jan 2026', dur:'04:02', u:'https://images.unsplash.com/photo-1564069114553-7215e1ff1890?auto=format&fit=crop&w=400&q=80'},
         {t:'Pertandingan Persahabatan Futsal', d:'02 Jan 2026', dur:'01:56', u:'https://images.unsplash.com/photo-1526232761682-d26e03ac148e?auto=format&fit=crop&w=400&q=80'}
       ].map(v => `
-        <div class="group cursor-pointer">
-          <div class="aspect-video bg-gray-200 rounded-2xl relative overflow-hidden mb-3">
+        <div class="group cursor-pointer bg-white p-2 rounded-[2rem] border border-gray-100 shadow-sm">
+          <div class="aspect-video rounded-[1.5rem] relative overflow-hidden mb-3">
             <img src="${v.u}" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/40 transition">
-              <div class="w-12 h-12 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white text-2xl border border-white/50"><i class="ph-fill ph-play"></i></div>
+            <div class="absolute inset-0 bg-black/20 flex items-center justify-center group-hover:bg-black/40 transition">
+              <div class="w-12 h-12 border-2 border-white rounded-full flex items-center justify-center text-white text-xl"><i class="ph-fill ph-play"></i></div>
             </div>
-            <div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-2 py-1 rounded">${v.dur}</div>
+            <div class="absolute bottom-2 right-2 bg-black/70 text-white text-[10px] font-bold px-2 py-1 rounded">${v.dur}</div>
           </div>
-          <h4 class="font-bold text-navy-900 text-sm line-clamp-2 mb-1">${v.t}</h4>
-          <p class="text-xs text-gray-500 font-medium">${v.d}</p>
+          <div class="px-2 pb-2">
+             <h4 class="font-bold text-navy-900 text-sm line-clamp-2 mb-1">${v.t}</h4>
+             <p class="text-[11px] text-gray-500 font-medium">${v.d}</p>
+          </div>
         </div>
       `).join('');
 
-      // Render Berita List Main
+      // Berita List Main
       document.getElementById('berita-list-main').innerHTML = beritaUtama.map(b => `
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col sm:flex-row group hover:shadow-md transition">
-          <div class="w-full sm:w-56 h-48 sm:h-auto relative overflow-hidden shrink-0">
+        <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden flex flex-col sm:flex-row group hover:shadow-md transition p-2">
+          <div class="w-full sm:w-64 h-48 sm:h-auto relative overflow-hidden shrink-0 rounded-[1.5rem]">
             <img src="${b.u}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-            <div class="absolute top-3 left-3 bg-navy-900 text-white text-center rounded-lg overflow-hidden shadow-lg border border-white/20">
-              <div class="bg-accent text-sm font-black px-3 py-1">${b.b}</div>
+            <div class="absolute top-3 left-3 bg-navy-900 text-white text-center rounded-xl overflow-hidden shadow-sm">
+              <div class="bg-navy-800 text-sm font-black px-3 py-1.5">${b.b}</div>
               <div class="text-[9px] font-bold px-3 py-1 whitespace-pre-wrap leading-tight bg-navy-900">${b.m}</div>
             </div>
           </div>
-          <div class="p-6 flex flex-col justify-center">
-            <div class="flex items-center justify-between mb-3">
-              <span class="bg-blue-50 text-accent text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">${b.kat}</span>
+          <div class="p-6 flex flex-col justify-center flex-1">
+            <div class="mb-3">
+              <span class="bg-blue-50 text-accent text-[10px] font-bold px-2.5 py-1 rounded-lg">${b.kat}</span>
             </div>
-            <h3 class="font-bold text-navy-900 text-lg sm:text-xl mb-2 group-hover:text-accent transition">${b.jdl}</h3>
-            <p class="text-sm text-gray-500 font-medium mb-4 line-clamp-2">${b.desc}</p>
-            <div class="flex items-center justify-between mt-auto">
-              <div class="flex items-center gap-4 text-xs text-gray-400 font-medium">
+            <h3 class="font-bold text-navy-900 text-lg mb-2 group-hover:text-accent transition line-clamp-2 leading-snug">${b.jdl}</h3>
+            <p class="text-xs text-gray-500 font-medium mb-4 line-clamp-2 leading-relaxed">${b.desc}</p>
+            <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
+              <div class="flex items-center gap-4 text-[11px] text-gray-400 font-medium">
                 <span class="flex items-center gap-1.5"><i class="ph-bold ph-calendar-blank"></i> ${b.tgl}</span>
                 <span class="flex items-center gap-1.5"><i class="ph-bold ph-eye"></i> ${b.l} Dilihat</span>
               </div>
-              <a href="#" class="text-accent text-xs font-bold flex items-center gap-1">Baca Selengkapnya <i class="ph-bold ph-arrow-right"></i></a>
+              <a href="#" class="text-accent text-xs font-bold flex items-center gap-1 hover:underline">Baca <i class="ph-bold ph-arrow-right"></i></a>
             </div>
           </div>
         </div>
       `).join('');
 
-      // Render Berita Populer (Sidebar)
+      // Berita Populer
       document.getElementById('berita-populer').innerHTML = [
         { n:1, j:'SDIT Al-Hasan Borong Piala di Olimpiade Sains', d:'12 Mei 2026', u:'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=100' },
         { n:2, j:'Kegiatan Pesantren Kilat Bulan Ramadan', d:'18 Mar 2026', u:'https://images.unsplash.com/photo-1605333036495-2eb42a781b0f?w=100' },
         { n:3, j:'Upacara Hardiknas 2026 Berlangsung Khidmat', d:'02 Mei 2026', u:'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=100' },
         { n:4, j:'Siswa SDIT Al-Hasan Lolos Seleksi O2SN', d:'22 Apr 2026', u:'https://images.unsplash.com/photo-1526232761682-d26e03ac148e?w=100' }
       ].map(b => `
-        <div class="flex items-center gap-4 group cursor-pointer">
-          <div class="text-xl font-black text-gray-200 group-hover:text-accent transition w-4 text-center">${b.n}</div>
-          <img src="${b.u}" class="w-16 h-16 rounded-xl object-cover shadow-sm">
-          <div><h4 class="font-bold text-navy-900 text-xs mb-1 line-clamp-2 group-hover:text-accent transition">${b.j}</h4><p class="text-[10px] text-gray-400 font-medium">${b.d}</p></div>
+        <div class="flex items-center gap-4 group cursor-pointer border-b border-gray-50 pb-3 last:border-0 last:pb-0">
+          <div class="text-base font-black text-gray-300 group-hover:text-accent transition w-4 text-center">${b.n}</div>
+          <img src="${b.u}" class="w-14 h-14 rounded-xl object-cover shadow-sm">
+          <div class="flex-1"><h4 class="font-bold text-navy-900 text-xs mb-1 line-clamp-2 group-hover:text-accent transition leading-tight">${b.j}</h4><p class="text-[10px] text-gray-400 font-medium">${b.d}</p></div>
         </div>
       `).join('');
 
     });
 
-    // ── 4. LOGIKA PENCARIAN NILAI (PORTAL NILAI)
+    // ── 4. LOGIKA PENCARIAN NILAI (PORTAL NILAI) ──
     function cariNilai() {
       const container = document.getElementById('hasil-nilai-container');
       const nisnInput = document.getElementById('p-nisn').value.trim();
+      const tglLahirInput = document.getElementById('p-tgllahir').value;
       
-      if(!nisnInput) {
-        alert("Silakan masukkan NISN terlebih dahulu.");
+      // Validasi Input (Menambahkan validasi Tanggal Lahir)
+      if(!nisnInput || !tglLahirInput) {
+        alert("Silakan masukkan NISN dan Tanggal Lahir terlebih dahulu.");
         return;
       }
 
-      // Ambil data nilai dari DATA_NILAI (dari data.js)
-      let dataSiswa = typeof DATA_NILAI !== 'undefined' ? DATA_NILAI.find(s => s.nisn === nisnInput) : null;
+      // Ambil data nilai dari DATA_NILAI
+      let dataSiswa = null;
+      if (typeof DATA_NILAI !== 'undefined') {
+        // Cek NISN dan Tanggal Lahir (Jika dummy tidak memiliki tglLahir, anggap benar untuk keperluan demo, tapi kita sudah set di mock data)
+        dataSiswa = DATA_NILAI.find(s => s.nisn === nisnInput && (!s.tglLahir || s.tglLahir === tglLahirInput));
+      }
       
-      // Tampilkan kontainer
+      // Tampilkan kontainer dengan animasi
       container.classList.remove('hidden');
 
       if (!dataSiswa) {
         container.innerHTML = `
-          <div class="text-center py-6">
-            <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-4"><i class="ph-fill ph-warning-circle"></i></div>
+          <div class="text-center py-8">
+            <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 border border-red-100"><i class="ph-fill ph-warning-circle"></i></div>
             <h3 class="font-bold text-navy-900 text-lg mb-2">Data Tidak Ditemukan</h3>
-            <p class="text-sm text-gray-500 font-medium">Siswa dengan NISN <strong>${nisnInput}</strong> tidak ditemukan di sistem kami. Pastikan NISN diketik dengan benar.</p>
+            <p class="text-sm text-gray-500 font-medium max-w-md mx-auto leading-relaxed">Siswa dengan NISN <strong>${nisnInput}</strong> dan Tanggal Lahir yang dimasukkan tidak ditemukan. Pastikan data diketik dengan benar.</p>
           </div>
         `;
         return;
@@ -1166,89 +1391,92 @@
 
       if (nilaiList.length === 0) {
         container.innerHTML = `
-          <div class="flex items-center gap-4 mb-6 pb-4 border-b border-gray-100">
+          <div class="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">
             <div class="w-12 h-12 bg-navy-900 text-white rounded-xl flex items-center justify-center text-xl font-bold"><i class="ph-fill ph-student"></i></div>
             <div>
-              <div class="text-xs text-gray-500 font-medium tracking-wider mb-1">Nama Siswa</div>
-              <div class="font-extrabold text-navy-900 text-lg">${dataSiswa.nama} <span class="text-sm font-bold text-accent bg-blue-50 px-2 py-0.5 rounded ml-2">Kelas ${dataSiswa.kelas}</span></div>
+              <div class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Data Siswa</div>
+              <div class="font-extrabold text-navy-900 text-base">${dataSiswa.nama} <span class="text-[10px] font-bold text-accent bg-blue-50 px-2 py-0.5 rounded ml-2">Kelas ${dataSiswa.kelas}</span></div>
             </div>
           </div>
-          <div class="text-center py-6">
-            <i class="ph-fill ph-file-dashed text-4xl text-gray-300 mb-2"></i>
+          <div class="text-center py-8">
+            <i class="ph-fill ph-file-dashed text-5xl text-gray-200 mb-3 block"></i>
             <h3 class="font-bold text-navy-900 text-sm mb-1">Nilai Belum Tersedia</h3>
-            <p class="text-xs text-gray-500">Nilai untuk ${ulanganLabel} belum diinput oleh guru kelas.</p>
+            <p class="text-xs text-gray-500 font-medium">Nilai untuk ${ulanganLabel} belum diinput oleh guru kelas.</p>
           </div>
         `;
         return;
       }
 
-      // Jika nilai ada
+      // Render Tabel Nilai
       let tableHtml = `
-        <table class="w-full text-left">
-          <thead>
-            <tr class="text-xs text-gray-500 uppercase tracking-wider border-b border-gray-100">
-              <th class="pb-3 font-bold">Mata Pelajaran</th>
-              <th class="pb-3 font-bold text-center">KKM</th>
-              <th class="pb-3 font-bold text-center">Nilai</th>
-              <th class="pb-3 font-bold text-right">Keterangan</th>
-            </tr>
-          </thead>
-          <tbody class="text-sm font-medium text-navy-900">
+        <div class="overflow-x-auto rounded-xl border border-gray-100">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-gray-50 text-[11px] text-gray-500 uppercase tracking-wider">
+                <th class="py-4 px-4 font-bold border-b border-gray-100">Mata Pelajaran</th>
+                <th class="py-4 px-4 font-bold text-center border-b border-gray-100">KKM</th>
+                <th class="py-4 px-4 font-bold text-center border-b border-gray-100">Nilai</th>
+                <th class="py-4 px-4 font-bold text-right border-b border-gray-100">Keterangan</th>
+              </tr>
+            </thead>
+            <tbody class="text-sm font-medium text-navy-900">
       `;
 
       let totalNilai = 0;
-      nilaiList.forEach(n => {
+      nilaiList.forEach((n, idx) => {
         totalNilai += n.nilai;
         let colorClass = n.nilai >= 85 ? 'text-green-600' : (n.nilai >= n.kkm ? 'text-accent' : 'text-red-600');
         let badgeClass = n.nilai >= n.kkm ? 'bg-green-50 text-green-600 border border-green-200' : 'bg-red-50 text-red-600 border border-red-200';
         let ketText = n.nilai >= n.kkm ? 'Tuntas' : 'Perlu Bimbingan';
+        let isLast = idx === nilaiList.length - 1;
         
         tableHtml += `
-          <tr class="border-b border-gray-50">
-            <td class="py-4">${n.mapel}</td>
-            <td class="py-4 text-center text-gray-400">${n.kkm}</td>
-            <td class="py-4 text-center font-extrabold ${colorClass}">${n.nilai}</td>
-            <td class="py-4 text-right"><span class="text-[10px] font-bold px-2 py-1 rounded ${badgeClass}">${ketText}</span></td>
+          <tr class="${isLast ? '' : 'border-b border-gray-50'} hover:bg-gray-50/50 transition">
+            <td class="py-3.5 px-4">${n.mapel}</td>
+            <td class="py-3.5 px-4 text-center text-gray-400 font-bold">${n.kkm}</td>
+            <td class="py-3.5 px-4 text-center font-extrabold ${colorClass}">${n.nilai}</td>
+            <td class="py-3.5 px-4 text-right"><span class="text-[10px] font-bold px-2.5 py-1 rounded-md ${badgeClass}">${ketText}</span></td>
           </tr>
         `;
       });
 
       let rataRata = Math.round(totalNilai / nilaiList.length);
       tableHtml += `
-          </tbody>
-          <tfoot>
-            <tr class="bg-gray-50">
-              <td class="py-3 px-4 font-bold text-navy-900 rounded-l-lg">Rata-rata</td>
-              <td class="py-3 text-center"></td>
-              <td class="py-3 text-center font-extrabold text-navy-900 text-lg">${rataRata}</td>
-              <td class="py-3 rounded-r-lg"></td>
-            </tr>
-          </tfoot>
-        </table>
+            </tbody>
+            <tfoot>
+              <tr class="bg-navy-900 text-white">
+                <td colspan="2" class="py-4 px-4 font-bold text-right text-sm">Rata-rata Nilai</td>
+                <td class="py-4 px-4 text-center font-black text-lg">${rataRata}</td>
+                <td class="py-4 px-4"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
       `;
 
       container.innerHTML = `
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-gray-100">
           <div class="flex items-center gap-4">
-            <div class="w-14 h-14 bg-navy-900 text-white rounded-xl flex items-center justify-center text-2xl font-bold">${dataSiswa.nama.charAt(0)}</div>
+            <div class="w-14 h-14 bg-blue-50 text-accent rounded-2xl flex items-center justify-center text-2xl font-black border border-blue-100">${dataSiswa.nama.charAt(0)}</div>
             <div>
               <div class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Rapor Elektronik</div>
               <div class="font-extrabold text-navy-900 text-lg leading-tight">${dataSiswa.nama}</div>
-              <div class="text-xs font-bold text-accent mt-0.5">NISN: ${dataSiswa.nisn} • Kelas ${dataSiswa.kelas}</div>
+              <div class="text-[11px] font-bold text-gray-500 mt-1">NISN: ${dataSiswa.nisn} <span class="mx-1">•</span> Kelas ${dataSiswa.kelas}</div>
             </div>
           </div>
-          <button class="bg-white border border-gray-200 text-navy-900 px-4 py-2 rounded-lg text-xs font-bold hover:bg-gray-50 flex items-center justify-center gap-2"><i class="ph-bold ph-printer"></i> Cetak Nilai</button>
+          <button class="bg-white border border-gray-200 text-navy-900 px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-gray-50 flex items-center justify-center gap-2 shadow-sm"><i class="ph-bold ph-printer"></i> Cetak PDF</button>
         </div>
-        <div class="mb-6">
-          <h4 class="font-bold text-navy-900 text-sm mb-1">${ulanganLabel}</h4>
-          <p class="text-xs text-gray-500 font-medium">Tahun Ajaran 2025/2026</p>
+        <div class="mb-5 flex justify-between items-end">
+          <div>
+             <h4 class="font-bold text-navy-900 text-sm mb-1">${ulanganLabel}</h4>
+             <p class="text-xs text-gray-500 font-medium">Tahun Ajaran 2025/2026</p>
+          </div>
         </div>
         ${tableHtml}
       `;
     }
-
   </script>
- <script type="module" src="cms-integration-firebase.js">
-</script>
+  
+  <script type="module" src="cms-integration-firebase.js"></script>
 </body>
 </html>
