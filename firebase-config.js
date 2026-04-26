@@ -12,12 +12,13 @@
 
 // ✏️ GANTI NILAI DI BAWAH INI DENGAN CONFIG FIREBASE ANDA
 export const firebaseConfig = {
-  apiKey            : "GANTI_DENGAN_API_KEY_ANDA",
-  authDomain        : "GANTI.firebaseapp.com",
-  projectId         : "GANTI_PROJECT_ID",
-  storageBucket     : "GANTI.appspot.com",
-  messagingSenderId : "GANTI_SENDER_ID",
-  appId             : "GANTI_APP_ID"
+  apiKey: "AIzaSyBc6Xx8f2Y0NsZ3eMphEzadbDP4K4rFt1w",
+  authDomain: "sdital-hasan.firebaseapp.com",
+  projectId: "sdital-hasan",
+  storageBucket: "sdital-hasan.firebasestorage.app",
+  messagingSenderId: "499840534324",
+  appId: "1:499840534324:web:78b53daa11443fc258c761",
+  measurementId: "G-81YC02102W"
 };
 
 /**
