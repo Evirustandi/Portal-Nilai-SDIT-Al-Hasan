@@ -1350,7 +1350,14 @@
       `).join('');
 
       // Struktur Organisasi (Profil)
-      document.getElementById('grid-org').innerHTML = orgData.map(o => `
+      const orgSource = (typeof CMS_GURU !== 'undefined' && CMS_GURU.length)
+        ? CMS_GURU.filter(g => g.status !== 'Tidak Aktif').map(g => ({
+            inisial: g.inisial || (g.nama || '?').split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase(),
+            nama: g.nama || '-',
+            jab: g.jabatan || '-'
+          }))
+        : orgData;
+      document.getElementById('grid-org').innerHTML = orgSource.map(o => `
         <div class="bg-white p-5 rounded-[2rem] border border-gray-100 flex flex-col items-center text-center shadow-sm hover:shadow-md transition">
           <div class="w-12 h-12 bg-blue-50 text-accent font-bold rounded-full flex items-center justify-center text-lg mb-3">${o.inisial}</div>
           <h4 class="font-bold text-navy-900 text-[13px] mb-1 line-clamp-2">${o.nama}</h4>
