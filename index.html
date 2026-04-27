@@ -1169,8 +1169,12 @@
       { kat: 'Artikel Pendidikan', jdl: 'Tips Menumbuhkan Minat Baca pada Anak Usia Sekolah Dasar', desc: 'Membaca adalah jendela dunia. Berikut beberapa tips untuk menumbuhkan minat baca pada anak sejak dini.', tgl: '05 Mei 2026', l: '189', u: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80', b:'05', m:'Mei\n2026' }
     ];
 
+    // Penanda mode fallback lokal (saat DATA_NILAI belum tersedia dari Firebase/data.js)
+    let IS_LOCAL_FALLBACK_DATA = false;
+
     // Dummy Rapor untuk test jika data.js tidak ada
     if(typeof DATA_NILAI === 'undefined') {
+      IS_LOCAL_FALLBACK_DATA = true;
       var DATA_NILAI = [
         {
           nisn: "3177667971",
@@ -1373,8 +1377,15 @@
       // Tampilkan kontainer dengan animasi
       container.classList.remove('hidden');
 
+      const fallbackWarn = IS_LOCAL_FALLBACK_DATA
+        ? `<div class="mb-4 bg-amber-50 border border-amber-200 text-amber-800 text-xs font-medium px-4 py-3 rounded-xl">
+             ⚠️ Portal sedang memakai data fallback lokal (demo). Pastikan Firestore aktif untuk data nilai terbaru.
+           </div>`
+        : '';
+
       if (!dataSiswa) {
         container.innerHTML = `
+          ${fallbackWarn}
           <div class="text-center py-8">
             <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 border border-red-100"><i class="ph-fill ph-warning-circle"></i></div>
             <h3 class="font-bold text-navy-900 text-lg mb-2">Data Tidak Ditemukan</h3>
@@ -1391,6 +1402,7 @@
 
       if (nilaiList.length === 0) {
         container.innerHTML = `
+          ${fallbackWarn}
           <div class="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">
             <div class="w-12 h-12 bg-navy-900 text-white rounded-xl flex items-center justify-center text-xl font-bold"><i class="ph-fill ph-student"></i></div>
             <div>
@@ -1455,6 +1467,7 @@
       `;
 
       container.innerHTML = `
+        ${fallbackWarn}
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-gray-100">
           <div class="flex items-center gap-4">
             <div class="w-14 h-14 bg-blue-50 text-accent rounded-2xl flex items-center justify-center text-2xl font-black border border-blue-100">${dataSiswa.nama.charAt(0)}</div>
