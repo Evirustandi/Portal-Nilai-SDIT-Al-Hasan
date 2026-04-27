@@ -165,11 +165,15 @@ window.P = function(page) {
     ERR('Akses ditolak untuk akun Guru.'); return;
   }
 
-  document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden'));
-  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active-nav'));
+  // Sembunyikan semua halaman dengan menghapus class 'active', bukan pakai 'hidden'
+  // karena Tailwind .hidden pakai !important yang mengalahkan CSS custom .page-view.active
+  document.querySelectorAll('.page-view').forEach(el => el.classList.remove('active'));
+  // Perbaiki selector: nav-btn (bukan nav-item)
+  document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
   const pageEl = document.getElementById('page-' + page);
-  if (pageEl) pageEl.classList.remove('hidden');
-  document.querySelectorAll(`[data-page="${page}"]`).forEach(el => el.classList.add('active-nav'));
+  if (pageEl) pageEl.classList.add('active');
+  // Tambahkan highlight ke tombol nav yang sesuai (data-target, bukan data-page)
+  document.querySelectorAll(`.nav-btn[data-target="${page}"]`).forEach(el => el.classList.add('active'));
 
   renderPage(page);
 };
@@ -773,30 +777,23 @@ window.exportNilai = function() {
 // Data profil (nama, role) disimpan di Firestore users/{uid}
 // ══════════════════════════════════════════════════════════
 async function renderUsers() {
-  const el = document.getElementById('tbl-users');
+  // Perbaikan: ID di HTML adalah 'tbl-users-body', bukan 'tbl-users'
+  const el = document.getElementById('tbl-users-body');
   if (!el) return;
   try {
     const snap = await getDocs(collection(db, 'users'));
     const users = snap.docs.map(d => ({ id:d.id, ...d.data() }));
     const badge = r => r==='admin' ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700';
     const active = a => a!==false ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500';
-    el.innerHTML = `<table class="w-full text-sm">
-      <thead><tr class="text-left text-xs text-gray-400 uppercase border-b border-gray-100">
-        <th class="pb-3 pl-4">Nama</th><th class="pb-3">Email</th><th class="pb-3">Peran</th>
-        <th class="pb-3">Status</th><th class="pb-3">Aksi</th></tr></thead>
-      <tbody>${users.map(u=>`<tr class="border-b border-gray-50 hover:bg-gray-50">
+    // Render hanya <tr> rows karena <table> sudah ada di HTML
+    el.innerHTML = users.map(u=>`<tr class="border-b border-gray-50 hover:bg-gray-50">
         <td class="py-3 pl-4 font-medium">${u.nama||'-'}</td>
         <td class="py-3 text-gray-400">${u.email||'-'}</td>
         <td class="py-3"><span class="text-xs font-semibold px-2 py-0.5 rounded-full ${badge(u.role)}">${u.role==='admin'?'Admin':'Guru'}</span></td>
         <td class="py-3"><span class="text-xs font-semibold px-2 py-0.5 rounded-full ${active(u.aktif)}">${u.aktif!==false?'Aktif':'Nonaktif'}</span></td>
         <td class="py-3 flex gap-2">
           <button onclick="toggleUser('${u.id}',${u.aktif!==false})" class="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 font-medium">${u.aktif!==false?'Nonaktifkan':'Aktifkan'}</button>
-        </td></tr>`).join('')}
-      </tbody></table>
-      <div class="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-700">
-        💡 Untuk menambah user baru: buka <strong>Firebase Console → Authentication → Add User</strong> dengan email dan password, 
-        lalu tambahkan dokumen di <strong>Firestore → users → {uid}</strong> dengan field: <code>nama, role (admin/guru), aktif: true, email</code>
-      </div>`;
+        </td></tr>`).join('');
   } catch(e) { el.innerHTML = '<div class="text-red-500 p-4 text-sm">Gagal memuat users: ' + e.message + '</div>'; }
 }
 
