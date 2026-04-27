@@ -55,7 +55,7 @@ function ERR(m) {
   n.textContent = m; document.body.appendChild(n);
   setTimeout(() => n.remove(), 4000);
 }
-function closeForm(id)  { const el = document.getElementById(id); if (el) { el.innerHTML = ''; el.classList.add('hidden'); } }
+function closeForm(id)  { const el = document.getElementById(id); if (el) { el.innerHTML = ''; el.style.display = 'none'; } }
 function openForm(id)   { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
 
 // ── AUTH FIREBASE ─────────────────────────────────────────
@@ -140,7 +140,7 @@ function setupListeners() {
     const unsub = onSnapshot(q, (snap) => {
       window['CMS_' + col.toUpperCase()] = snap.docs.map(d => ({ id: d.id, ...d.data() }));
       // Re-render halaman yang sedang aktif
-      const activePage = document.querySelector('.page-view:not(.hidden)')?.id?.replace('page-', '');
+      const activePage = document.querySelector('.page-view.active')?.id?.replace('page-', '');
       if (activePage === col) renderPage(col);
       if (activePage === 'beranda') renderStat();
     }, err => console.error('Listener error:', col, err));
@@ -151,7 +151,7 @@ function setupListeners() {
   const siswaUnsub = onSnapshot(collection(db, 'siswa'), (snap) => {
     DATA_NILAI = snap.docs.map(d => ({ nisn: d.id, ...d.data() }));
     window.DATA_NILAI = DATA_NILAI;
-    const activePage = document.querySelector('.page-view:not(.hidden)')?.id?.replace('page-', '');
+    const activePage = document.querySelector('.page-view.active')?.id?.replace('page-', '');
     if (activePage === 'nilai') loadNilaiDropdown();
     if (activePage === 'beranda') renderStat();
   }, err => console.error('Listener error: siswa', err));
@@ -224,7 +224,7 @@ window.formBerita = function(id) {
   const emojis= ['📋','🏆','📝','📣','🎉','📚','🌟','⚠️'];
   const el = document.getElementById('form-berita-area');
   if (!el) return;
-  el.classList.remove('hidden');
+  el.style.display = 'block';
   el.innerHTML = `
     <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5 mb-5">
       <h4 class="text-sm font-bold text-navy-900 mb-4">${id?'Edit':'Tambah'} Berita</h4>
@@ -305,7 +305,7 @@ window.formGaleri = function(id) {
   const item = id ? (window.CMS_GALERI||[]).find(x => x.id === id) : null;
   const el = document.getElementById('form-galeri-area');
   if (!el) return;
-  el.classList.remove('hidden');
+  el.style.display = 'block';
   el.innerHTML = `
     <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5 mb-5">
       <h4 class="text-sm font-bold text-navy-900 mb-4">${id?'Edit':'Tambah'} Foto Galeri</h4>
@@ -368,7 +368,7 @@ window.formGuru = function(id) {
   const item = id ? (window.CMS_GURU||[]).find(x => x.id === id) : null;
   const el = document.getElementById('form-guru-area');
   if (!el) return;
-  el.classList.remove('hidden');
+  el.style.display = 'block';
   el.innerHTML = `
     <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5 mb-5">
       <h4 class="text-sm font-bold text-navy-900 mb-4">${id?'Edit':'Tambah'} Guru / Staf</h4>
@@ -441,7 +441,7 @@ window.formProgram = function(id) {
   const item = id ? (window.CMS_PROGRAM||[]).find(x => x.id === id) : null;
   const el = document.getElementById('form-program-area');
   if (!el) return;
-  el.classList.remove('hidden');
+  el.style.display = 'block';
   const ikonList = ['📚','🏆','🎨','🏃','🔬','🎵','🌱','🕌','💻','⚽','🎭','🌍'];
   el.innerHTML = `
     <div class="bg-purple-50 border border-purple-200 rounded-2xl p-5 mb-5">
@@ -491,7 +491,7 @@ window.formSpmb = function(id) {
   const item = id ? (window.CMS_SPMB||[]).find(x => x.id === id) : null;
   const el = document.getElementById('form-spmb-area');
   if (!el) return;
-  el.classList.remove('hidden');
+  el.style.display = 'block';
   const noPend = item?.noPendaftaran || ('SPMB-' + Date.now().toString().slice(-6));
   el.innerHTML = `
     <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5 mb-5">
@@ -554,7 +554,7 @@ window.delSpmb = async function(id) {
 window.formTambahUser = function() {
   const el = document.getElementById('form-users-area');
   if (!el) return;
-  el.classList.remove('hidden');
+  el.style.display = 'block';
   el.innerHTML = `
     <h3 class="text-base font-extrabold text-navy-900 mb-5">Tambah User Baru</h3>
     <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-700 mb-5">
