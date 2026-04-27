@@ -189,6 +189,17 @@ function renderGuru() {
   const el = document.getElementById('cms-guru');
   if (el) el.innerHTML = data.map(makeKartu).join('');
 
+  // Sinkronkan juga struktur organisasi di halaman Profil (jika ada)
+  const elOrg = document.getElementById('grid-org');
+  if (elOrg) {
+    elOrg.innerHTML = data.map(g => `
+      <div class="bg-white p-5 rounded-[2rem] border border-gray-100 flex flex-col items-center text-center shadow-sm hover:shadow-md transition">
+        <div class="w-12 h-12 bg-blue-50 text-accent font-bold rounded-full flex items-center justify-center text-lg mb-3">${escapeHtml(g.inisial||g.nama?.[0]||'?')}</div>
+        <h4 class="font-bold text-navy-900 text-[13px] mb-1 line-clamp-2">${escapeHtml(g.nama||'')}</h4>
+        <p class="text-[10px] text-gray-500 font-medium">${escapeHtml(g.jabatan||'')}</p>
+      </div>`).join('');
+  }
+
   // Update stat guru di beranda
   const statEl = document.getElementById('stat-guru');
   if (statEl) statEl.textContent = data.length;
