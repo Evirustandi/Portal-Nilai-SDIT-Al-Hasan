@@ -143,6 +143,7 @@ function renderBerita() {
 }
 
 // Galeri
+// Galeri
 function renderGaleri() {
   const data = window.CMS_GALERI || [];
   if (!data.length) return;
@@ -154,9 +155,15 @@ function renderGaleri() {
       <div class="galeri-caption-overlay">${escapeHtml(g.caption||'')}</div>
     </div>`;
 
+  const makeBerandaItem = g => `
+    <div class="rounded-[2rem] aspect-[4/3] overflow-hidden shadow-sm bg-gray-100">
+      <img src="${fixGDriveUrl(g.url)}" alt="${escapeHtml(g.caption||'')}" class="w-full h-full object-cover"
+        onerror="this.closest('div').style.display='none'">
+    </div>`;
+
   // Beranda galeri (4 foto)
   const elBeranda = document.getElementById('cms-galeri-beranda');
-  if (elBeranda) elBeranda.innerHTML = data.slice(0,4).map(makeItem).join('');
+  if (elBeranda) elBeranda.innerHTML = data.slice(0,4).map(makeBerandaItem).join('');
 
   // Halaman galeri — semua
   const elFull = document.getElementById('cms-galeri-full');
@@ -166,7 +173,7 @@ function renderGaleri() {
   const elLama = document.getElementById('cms-galeri');
   if (elLama) elLama.innerHTML = data.map(makeItem).join('');
 }
-
+   
 // Guru / Staf
 function renderGuru() {
   const data = (window.CMS_GURU || []).filter(g => g.status === 'Aktif');

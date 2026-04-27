@@ -212,12 +212,7 @@
           </div>
           <a href="javascript:navigate('galeri')" class="text-navy-900 font-bold text-sm border border-gray-200 px-5 py-2.5 rounded-xl hover:bg-gray-50 flex items-center gap-2">Lihat Semua Galeri <i class="ph-bold ph-arrow-right"></i></a>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <img src="https://drive.google.com/uc?export=view&id=1uLX4d7MsnFfxJ0QI3Rk6tE1VIbkGWf-1" class="rounded-[2rem] aspect-[4/3] object-cover shadow-sm w-full">
-          <img src="https://drive.google.com/uc?export=view&id=15xjJXMqh9Ga0lTdy-pDZnfosL3MXXE2I" class="rounded-[2rem] aspect-[4/3] object-cover shadow-sm w-full">
-          <img src="https://drive.google.com/uc?export=view&id=15VSEBklhVAox3wSf2HdQ6YkwVkSvqL2A" class="rounded-[2rem] aspect-[4/3] object-cover shadow-sm w-full">
-          <img src="https://drive.google.com/uc?export=view&id=1OdEwGx8nyuVpNU_y-Uak5ybLtXnR7kTW" class="rounded-[2rem] aspect-[4/3] object-cover shadow-sm w-full">
-        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="cms-galeri-beranda"></div>
       </section>
 
       <!-- Berita & Pengumuman Preview -->
@@ -346,14 +341,15 @@
 
       <div class="max-w-6xl mx-auto px-4 md:px-8 mt-8">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-2 flex flex-wrap gap-2 text-sm font-bold">
-          <button class="px-6 py-3 bg-accent text-white rounded-xl shadow-md">Kurikulum</button>
-          <button class="px-6 py-3 text-gray-500 hover:bg-gray-50 rounded-xl transition">Mata Pelajaran</button>
-          <button class="px-6 py-3 text-gray-500 hover:bg-gray-50 rounded-xl transition">Sistem Penilaian</button>
-          <button class="px-6 py-3 text-gray-500 hover:bg-gray-50 rounded-xl transition">Kalender Akademik</button>
+          <button class="px-6 py-3 bg-accent text-white rounded-xl shadow-md akademik-tab-btn" data-akademik-tab="kurikulum" onclick="switchAkademikTab('kurikulum')">Kurikulum</button>
+          <button class="px-6 py-3 text-gray-500 hover:bg-gray-50 rounded-xl transition akademik-tab-btn" data-akademik-tab="mapel" onclick="switchAkademikTab('mapel')">Mata Pelajaran</button>
+          <button class="px-6 py-3 text-gray-500 hover:bg-gray-50 rounded-xl transition akademik-tab-btn" data-akademik-tab="penilaian" onclick="switchAkademikTab('penilaian')">Sistem Penilaian</button>
+          <button class="px-6 py-3 text-gray-500 hover:bg-gray-50 rounded-xl transition akademik-tab-btn" data-akademik-tab="kalender" onclick="switchAkademikTab('kalender')">Kalender Akademik</button>
         </div>
       </div>
 
       <section class="py-12 px-4 md:px-8 max-w-6xl mx-auto">
+        <div class="akademik-panel" id="akademik-panel-kurikulum">
         <div class="flex flex-col lg:flex-row gap-12 items-center mb-16">
           <div class="lg:w-1/2">
             <h2 class="text-2xl font-extrabold text-navy-900 mb-4">Kurikulum Merdeka</h2>
@@ -440,6 +436,33 @@
             <div class="w-14 h-14 mx-auto bg-orange-50 text-orange-500 rounded-xl flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-chart-line-up"></i></div>
             <h4 class="font-bold text-navy-900 mb-2 text-sm">Evaluasi Berkala</h4>
             <p class="text-xs text-gray-500 font-medium">Evaluasi rutin untuk memantau kemajuan belajar dan memberikan umpan balik yang konstruktif.</p>
+          </div>
+        </div>
+        </div>
+
+        <div class="akademik-panel hidden" id="akademik-panel-mapel">
+          <h2 class="text-2xl font-extrabold text-navy-900 mb-6">Mata Pelajaran Inti</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm"><h3 class="font-bold text-navy-900 mb-2">Kelompok Umum</h3><p class="text-sm text-gray-500">Bahasa Indonesia, Matematika, IPAS, Pendidikan Pancasila, dan Bahasa Inggris.</p></div>
+            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm"><h3 class="font-bold text-navy-900 mb-2">Kelompok Keislaman</h3><p class="text-sm text-gray-500">Pendidikan Agama Islam, Al-Qur'an, Akhlak, dan pembiasaan ibadah harian.</p></div>
+            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm"><h3 class="font-bold text-navy-900 mb-2">Kelompok Penguatan</h3><p class="text-sm text-gray-500">Seni Budaya, PJOK, Bahasa Sunda, dan Projek Penguatan Profil Pelajar Pancasila.</p></div>
+          </div>
+        </div>
+
+        <div class="akademik-panel hidden" id="akademik-panel-penilaian">
+          <h2 class="text-2xl font-extrabold text-navy-900 mb-6">Sistem Penilaian</h2>
+          <div class="space-y-4">
+            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm"><h3 class="font-bold text-navy-900 mb-1">STS (Sumatif Tengah Semester)</h3><p class="text-sm text-gray-500">Evaluasi capaian kompetensi di pertengahan semester untuk memetakan progres belajar siswa.</p></div>
+            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm"><h3 class="font-bold text-navy-900 mb-1">SAS (Sumatif Akhir Semester)</h3><p class="text-sm text-gray-500">Penilaian menyeluruh di akhir semester sebagai dasar laporan hasil belajar.</p></div>
+            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm"><h3 class="font-bold text-navy-900 mb-1">Penilaian Harian & Projek</h3><p class="text-sm text-gray-500">Penilaian formatif, tugas, praktik, dan projek untuk memonitor perkembangan karakter dan kompetensi.</p></div>
+          </div>
+        </div>
+
+        <div class="akademik-panel hidden" id="akademik-panel-kalender">
+          <h2 class="text-2xl font-extrabold text-navy-900 mb-6">Kalender Akademik</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm"><h3 class="font-bold text-navy-900 mb-2">Semester Ganjil</h3><ul class="text-sm text-gray-500 space-y-2 list-disc pl-5"><li>Awal tahun ajaran: Juli</li><li>STS 1: September/Oktober</li><li>SAS 1: Desember</li></ul></div>
+            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm"><h3 class="font-bold text-navy-900 mb-2">Semester Genap</h3><ul class="text-sm text-gray-500 space-y-2 list-disc pl-5"><li>Mulai semester: Januari</li><li>STS 2: Maret/April</li><li>SAS 2 & pembagian rapor: Juni</li></ul></div>
           </div>
         </div>
       </section>
@@ -641,15 +664,16 @@
 
       <section class="py-12 px-4 md:px-8 max-w-7xl mx-auto">
         <div class="flex gap-3 overflow-x-auto hide-scrollbar pb-4 mb-8">
-          <button class="bg-navy-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 flex items-center gap-2 shadow-md"><i class="ph-bold ph-squares-four"></i> Semua Kegiatan</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm"><i class="ph-bold ph-graduation-cap"></i> Akademik</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm"><i class="ph-bold ph-mosque"></i> Agama</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm"><i class="ph-bold ph-soccer-ball"></i> Olahraga</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm"><i class="ph-bold ph-palette"></i> Seni & Budaya</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm"><i class="ph-bold ph-users-three"></i> Ekstrakurikuler</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm"><i class="ph-bold ph-dots-three"></i> Kegiatan Lainnya</button>
+          <button class="galeri-tab-btn bg-navy-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 flex items-center gap-2 shadow-md" data-galeri-tab="Semua Kegiatan" onclick="setGaleriTab('Semua Kegiatan')"><i class="ph-bold ph-squares-four"></i> Semua Kegiatan</button>
+          <button class="galeri-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm" data-galeri-tab="Akademik" onclick="setGaleriTab('Akademik')"><i class="ph-bold ph-graduation-cap"></i> Akademik</button>
+          <button class="galeri-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm" data-galeri-tab="Agama" onclick="setGaleriTab('Agama')"><i class="ph-bold ph-mosque"></i> Agama</button>
+          <button class="galeri-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm" data-galeri-tab="Olahraga" onclick="setGaleriTab('Olahraga')"><i class="ph-bold ph-soccer-ball"></i> Olahraga</button>
+          <button class="galeri-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm" data-galeri-tab="Seni & Budaya" onclick="setGaleriTab('Seni & Budaya')"><i class="ph-bold ph-palette"></i> Seni & Budaya</button>
+          <button class="galeri-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm" data-galeri-tab="Ekstrakurikuler" onclick="setGaleriTab('Ekstrakurikuler')"><i class="ph-bold ph-users-three"></i> Ekstrakurikuler</button>
+          <button class="galeri-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm" data-galeri-tab="Kegiatan Lainnya" onclick="setGaleriTab('Kegiatan Lainnya')"><i class="ph-bold ph-dots-three"></i> Kegiatan Lainnya</button>
         </div>
 
+        <h3 class="text-lg font-extrabold text-navy-900 mb-4" id="galeri-tab-title">Semua Kegiatan</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12" id="galeri-grid"></div>
         
         <div class="text-center border-b border-gray-200 pb-16">
@@ -688,12 +712,12 @@
       <section class="py-12 px-4 md:px-8 max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row justify-between gap-4 mb-8">
           <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-2">
-            <button class="bg-navy-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 shadow-sm">Semua Berita</button>
-            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm">Pengumuman</button>
-            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm">Kegiatan Sekolah</button>
-            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm">Prestasi</button>
-            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm">Artikel Pendidikan</button>
-            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm">Agenda</button>
+            <button class="berita-tab-btn bg-navy-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 shadow-sm" data-berita-tab="Semua Berita" onclick="setBeritaTab('Semua Berita')">Semua Berita</button>
+            <button class="berita-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm" data-berita-tab="Pengumuman" onclick="setBeritaTab('Pengumuman')">Pengumuman</button>
+            <button class="berita-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm" data-berita-tab="Kegiatan Sekolah" onclick="setBeritaTab('Kegiatan Sekolah')">Kegiatan Sekolah</button>
+            <button class="berita-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm" data-berita-tab="Prestasi" onclick="setBeritaTab('Prestasi')">Prestasi</button>
+            <button class="berita-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm" data-berita-tab="Artikel Pendidikan" onclick="setBeritaTab('Artikel Pendidikan')">Artikel Pendidikan</button>
+            <button class="berita-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm" data-berita-tab="Agenda" onclick="setBeritaTab('Agenda')">Agenda</button>
           </div>
           <select class="bg-white border border-gray-200 text-gray-800 px-4 py-2.5 rounded-xl font-bold text-sm outline-none shadow-sm"><option>Terbaru</option><option>Terlama</option></select>
         </div>
@@ -1195,6 +1219,18 @@
 
     // ── 3. RENDER FUNGSI
     document.addEventListener('DOMContentLoaded', () => {
+      window.switchAkademikTab = function(tab) {
+        document.querySelectorAll('.akademik-tab-btn').forEach(btn => {
+          const active = btn.dataset.akademikTab === tab;
+          btn.classList.toggle('bg-accent', active);
+          btn.classList.toggle('text-white', active);
+          btn.classList.toggle('shadow-md', active);
+          btn.classList.toggle('text-gray-500', !active);
+        });
+        document.querySelectorAll('.akademik-panel').forEach(panel => panel.classList.add('hidden'));
+        document.getElementById('akademik-panel-' + tab)?.classList.remove('hidden');
+      };
+      window.switchAkademikTab('kurikulum');
       
       // Keunggulan Beranda
       const kData = [
@@ -1276,19 +1312,36 @@
         </div>
       `).join('');
 
-      // Galeri
-      document.getElementById('galeri-grid').innerHTML = galeriImg.map(g => `
-        <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden group cursor-pointer p-2">
-          <div class="aspect-[4/3] relative overflow-hidden rounded-[1.5rem]">
-            <img src="${g.u}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-            <div class="absolute bottom-3 left-3 bg-black/50 backdrop-blur text-white text-[10px] font-bold px-2 py-1 rounded flex items-center gap-1.5"><i class="ph-bold ph-image"></i> ${g.f} Foto</div>
+      function renderGaleriSection(activeTab = 'Semua Kegiatan') {
+        const list = activeTab === 'Semua Kegiatan' ? galeriImg : galeriImg.filter(g => g.c === activeTab);
+        const title = document.getElementById('galeri-tab-title');
+        if (title) title.textContent = activeTab;
+        document.getElementById('galeri-grid').innerHTML = list.length ? list.map(g => `
+          <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden group cursor-pointer p-2">
+            <div class="aspect-[4/3] relative overflow-hidden rounded-[1.5rem]">
+              <img src="${g.u}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+              <div class="absolute bottom-3 left-3 bg-black/50 backdrop-blur text-white text-[10px] font-bold px-2 py-1 rounded flex items-center gap-1.5"><i class="ph-bold ph-image"></i> ${g.f} Foto</div>
+            </div>
+            <div class="p-4 pb-2">
+              <h3 class="font-bold text-navy-900 text-sm mb-2 truncate">${g.t}</h3>
+              <span class="inline-block bg-blue-50 text-accent text-[10px] font-bold px-2.5 py-1 rounded-lg tracking-wide">${g.c}</span>
+            </div>
           </div>
-          <div class="p-4 pb-2">
-            <h3 class="font-bold text-navy-900 text-sm mb-2 truncate">${g.t}</h3>
-            <span class="inline-block bg-blue-50 text-accent text-[10px] font-bold px-2.5 py-1 rounded-lg tracking-wide">${g.c}</span>
-          </div>
-        </div>
-      `).join('');
+        `).join('') : `<div class="col-span-full bg-white p-8 rounded-2xl border border-gray-100 text-center text-gray-500 text-sm font-medium">Belum ada konten pada tab ${activeTab}.</div>`;
+      }
+      window.setGaleriTab = function(tab) {
+        document.querySelectorAll('.galeri-tab-btn').forEach(btn => {
+          const active = btn.dataset.galeriTab === tab;
+          btn.classList.toggle('bg-navy-900', active);
+          btn.classList.toggle('text-white', active);
+          btn.classList.toggle('border', !active);
+          btn.classList.toggle('border-gray-200', !active);
+          btn.classList.toggle('bg-white', !active);
+          btn.classList.toggle('text-gray-600', !active);
+        });
+        renderGaleriSection(tab);
+      };
+      window.setGaleriTab('Semua Kegiatan');
 
       // Video
       document.getElementById('video-grid').innerHTML = [
@@ -1312,32 +1365,47 @@
         </div>
       `).join('');
 
-      // Berita List Main
-      document.getElementById('berita-list-main').innerHTML = beritaUtama.map(b => `
-        <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden flex flex-col sm:flex-row group hover:shadow-md transition p-2">
-          <div class="w-full sm:w-64 h-48 sm:h-auto relative overflow-hidden shrink-0 rounded-[1.5rem]">
-            <img src="${b.u}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-            <div class="absolute top-3 left-3 bg-navy-900 text-white text-center rounded-xl overflow-hidden shadow-sm">
-              <div class="bg-navy-800 text-sm font-black px-3 py-1.5">${b.b}</div>
-              <div class="text-[9px] font-bold px-3 py-1 whitespace-pre-wrap leading-tight bg-navy-900">${b.m}</div>
-            </div>
-          </div>
-          <div class="p-6 flex flex-col justify-center flex-1">
-            <div class="mb-3">
-              <span class="bg-blue-50 text-accent text-[10px] font-bold px-2.5 py-1 rounded-lg">${b.kat}</span>
-            </div>
-            <h3 class="font-bold text-navy-900 text-lg mb-2 group-hover:text-accent transition line-clamp-2 leading-snug">${b.jdl}</h3>
-            <p class="text-xs text-gray-500 font-medium mb-4 line-clamp-2 leading-relaxed">${b.desc}</p>
-            <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
-              <div class="flex items-center gap-4 text-[11px] text-gray-400 font-medium">
-                <span class="flex items-center gap-1.5"><i class="ph-bold ph-calendar-blank"></i> ${b.tgl}</span>
-                <span class="flex items-center gap-1.5"><i class="ph-bold ph-eye"></i> ${b.l} Dilihat</span>
+      function renderBeritaSection(activeTab = 'Semua Berita') {
+        const list = activeTab === 'Semua Berita' ? beritaUtama : beritaUtama.filter(b => b.kat === activeTab);
+        document.getElementById('berita-list-main').innerHTML = list.length ? list.map(b => `
+          <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden flex flex-col sm:flex-row group hover:shadow-md transition p-2">
+            <div class="w-full sm:w-64 h-48 sm:h-auto relative overflow-hidden shrink-0 rounded-[1.5rem]">
+              <img src="${b.u}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+              <div class="absolute top-3 left-3 bg-navy-900 text-white text-center rounded-xl overflow-hidden shadow-sm">
+                <div class="bg-navy-800 text-sm font-black px-3 py-1.5">${b.b}</div>
+                <div class="text-[9px] font-bold px-3 py-1 whitespace-pre-wrap leading-tight bg-navy-900">${b.m}</div>
               </div>
-              <a href="#" class="text-accent text-xs font-bold flex items-center gap-1 hover:underline">Baca <i class="ph-bold ph-arrow-right"></i></a>
+            </div>
+            <div class="p-6 flex flex-col justify-center flex-1">
+              <div class="mb-3">
+                <span class="bg-blue-50 text-accent text-[10px] font-bold px-2.5 py-1 rounded-lg">${b.kat}</span>
+              </div>
+              <h3 class="font-bold text-navy-900 text-lg mb-2 group-hover:text-accent transition line-clamp-2 leading-snug">${b.jdl}</h3>
+              <p class="text-xs text-gray-500 font-medium mb-4 line-clamp-2 leading-relaxed">${b.desc}</p>
+              <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
+                <div class="flex items-center gap-4 text-[11px] text-gray-400 font-medium">
+                  <span class="flex items-center gap-1.5"><i class="ph-bold ph-calendar-blank"></i> ${b.tgl}</span>
+                  <span class="flex items-center gap-1.5"><i class="ph-bold ph-eye"></i> ${b.l} Dilihat</span>
+                </div>
+                <a href="#" class="text-accent text-xs font-bold flex items-center gap-1 hover:underline">Baca <i class="ph-bold ph-arrow-right"></i></a>
+              </div>
             </div>
           </div>
-        </div>
-      `).join('');
+        `).join('') : `<div class="bg-white rounded-2xl border border-gray-100 p-10 text-center text-sm font-medium text-gray-500">Belum ada artikel untuk kategori ${activeTab}.</div>`;
+      }
+      window.setBeritaTab = function(tab) {
+        document.querySelectorAll('.berita-tab-btn').forEach(btn => {
+          const active = btn.dataset.beritaTab === tab;
+          btn.classList.toggle('bg-navy-900', active);
+          btn.classList.toggle('text-white', active);
+          btn.classList.toggle('border', !active);
+          btn.classList.toggle('border-gray-200', !active);
+          btn.classList.toggle('bg-white', !active);
+          btn.classList.toggle('text-gray-600', !active);
+        });
+        renderBeritaSection(tab);
+      };
+      window.setBeritaTab('Semua Berita');
 
       // Berita Populer
       document.getElementById('berita-populer').innerHTML = [
