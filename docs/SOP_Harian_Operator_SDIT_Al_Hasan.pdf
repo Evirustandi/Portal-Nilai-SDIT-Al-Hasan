@@ -1,0 +1,207 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [4 0 R 6 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 5 0 R /Resources << /Font << /F1 3 0 R >> >> >>
+endobj
+5 0 obj
+<< /Length 1596 >>
+stream
+BT
+/F1 11 Tf
+50 790 Td
+14 TL
+(SOP HARIAN OPERATOR WEBSITE SDIT AL-HASAN) Tj
+T*
+() Tj
+T*
+(**Dokumen:** SOP Harian Operasional Website) Tj
+T*
+(**Versi:** 1.0) Tj
+T*
+(**Tanggal Efektif:** 27 April 2026) Tj
+T*
+(**Pemilik Dokumen:** Tim Operator Sekolah) Tj
+T*
+() Tj
+T*
+(---) Tj
+T*
+() Tj
+T*
+(1\) Tujuan) Tj
+T*
+(SOP ini digunakan untuk memastikan website sekolah selalu terbarui, akurat, aman, dan rapi setiap hari.) Tj
+T*
+() Tj
+T*
+(2\) Ruang Lingkup) Tj
+T*
+(Mencakup pengelolaan konten di panel admin:) Tj
+T*
+(- Berita) Tj
+T*
+(- Galeri Foto) Tj
+T*
+(- Data Guru/Staf) Tj
+T*
+(- Program) Tj
+T*
+(- SPMB) Tj
+T*
+(- Nilai Siswa \(jika diperlukan\)) Tj
+T*
+() Tj
+T*
+(3\) Peran) Tj
+T*
+(- **Operator Harian:** input/update konten harian.) Tj
+T*
+(- **Validator/Kepala TU:** cek final sebelum konten penting dipublikasikan.) Tj
+T*
+(- **Admin Sistem:** menangani akun user, akses, dan kendala teknis.) Tj
+T*
+() Tj
+T*
+(4\) Jadwal Harian \(Checklist\)) Tj
+T*
+() Tj
+T*
+(### A. Pagi \(07.00 - 08.00\)) Tj
+T*
+(- [ ] Login panel admin.) Tj
+T*
+(- [ ] Cek pengumuman/agenda yang harus tayang hari ini.) Tj
+T*
+(- [ ] Cek berita paling atas \(apakah masih relevan\).) Tj
+T*
+(- [ ] Cek galeri beranda \(gambar tampil normal\).) Tj
+T*
+() Tj
+T*
+(### B. Siang \(12.00 - 13.00\)) Tj
+T*
+(- [ ] Upload dokumentasi kegiatan pagi \(jika ada\).) Tj
+T*
+(- [ ] Update status SPMB \(jika ada pendaftar baru\).) Tj
+T*
+(- [ ] Koreksi salah ketik/judul/tanggal konten.) Tj
+T*
+() Tj
+T*
+(### C. Sore \(15.00 - 16.00\)) Tj
+T*
+(- [ ] Final cek tampilan website publik \(desktop + HP\).) Tj
+T*
+(- [ ] Catat perubahan hari ini ke log audit.) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 7 0 R /Resources << /Font << /F1 3 0 R >> >> >>
+endobj
+7 0 obj
+<< /Length 1718 >>
+stream
+BT
+/F1 11 Tf
+50 790 Td
+14 TL
+(- [ ] Backup/export data \(minimal 1x per minggu atau setelah perubahan besar\).) Tj
+T*
+() Tj
+T*
+(5\) Standar Penulisan Konten) Tj
+T*
+(- Judul jelas, singkat, dan informatif.) Tj
+T*
+(- Gunakan tanggal yang benar \(format konsisten\).) Tj
+T*
+(- Hindari singkatan internal yang tidak dipahami orang tua.) Tj
+T*
+(- Gunakan bahasa sopan, resmi, dan mudah dipahami.) Tj
+T*
+(- Untuk berita: isi minimal 2 paragraf ringkas.) Tj
+T*
+() Tj
+T*
+(6\) Standar Foto) Tj
+T*
+(- Foto harus relevan dengan kegiatan.) Tj
+T*
+(- Pastikan foto tidak blur/gelap.) Tj
+T*
+(- Hindari foto yang menampilkan data sensitif siswa.) Tj
+T*
+(- Isi caption yang deskriptif \(contoh: "Kegiatan Literasi Kelas 3A"\).) Tj
+T*
+() Tj
+T*
+(7\) Prosedur Publikasi Cepat) Tj
+T*
+(1. Input/edit data di menu terkait.) Tj
+T*
+(2. Klik simpan.) Tj
+T*
+(3. Reload website publik.) Tj
+T*
+(4. Pastikan konten tampil benar.) Tj
+T*
+(5. Catat di log audit \(siapa, jam, dan perubahan\).) Tj
+T*
+() Tj
+T*
+(8\) Penanganan Error Umum) Tj
+T*
+(- **Konten tidak muncul:** refresh keras \(Ctrl+Shift+R\), cek ulang data di admin.) Tj
+T*
+(- **Foto tidak tampil:** cek URL foto dan izin akses file.) Tj
+T*
+(- **Jumlah data tidak sinkron:** cek status data \(aktif/nonaktif\) dan ulang simpan.) Tj
+T*
+(- **Tidak bisa login:** laporkan ke admin sistem untuk reset akun.) Tj
+T*
+() Tj
+T*
+(9\) Kontrol Kualitas \(Wajib\)) Tj
+T*
+(Sebelum selesai shift:) Tj
+T*
+(- [ ] Tidak ada typo berat.) Tj
+T*
+(- [ ] Tidak ada tanggal salah.) Tj
+T*
+(- [ ] Tautan/WA/nomor kontak valid.) Tj
+T*
+(- [ ] Semua perubahan hari ini tercatat di log audit.) Tj
+T*
+() Tj
+T*
+(10\) Persetujuan) Tj
+T*
+(Dokumen ini ditinjau setiap 3 bulan sekali atau saat ada perubahan alur kerja.) Tj
+ET
+endstream
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000121 00000 n 
+0000000191 00000 n 
+0000000317 00000 n 
+0000001965 00000 n 
+0000002091 00000 n 
+trailer
+<< /Size 8 /Root 1 0 R >>
+startxref
+3861
+%%EOF
