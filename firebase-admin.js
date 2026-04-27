@@ -55,7 +55,7 @@ function ERR(m) {
   n.textContent = m; document.body.appendChild(n);
   setTimeout(() => n.remove(), 4000);
 }
-function closeForm(id)  { const el = document.getElementById(id); if (el) el.innerHTML = ''; }
+function closeForm(id)  { const el = document.getElementById(id); if (el) { el.innerHTML = ''; el.classList.add('hidden'); } }
 function openForm(id)   { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
 
 // ── AUTH FIREBASE ─────────────────────────────────────────
@@ -222,8 +222,9 @@ window.formBerita = function(id) {
   const item = id ? (window.CMS_BERITA||[]).find(x => x.id === id) : null;
   const cats  = ['Pengumuman','Prestasi','Penting','Kegiatan'];
   const emojis= ['📋','🏆','📝','📣','🎉','📚','🌟','⚠️'];
-  const el = document.getElementById('form-berita');
+  const el = document.getElementById('form-berita-area');
   if (!el) return;
+  el.classList.remove('hidden');
   el.innerHTML = `
     <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5 mb-5">
       <h4 class="text-sm font-bold text-navy-900 mb-4">${id?'Edit':'Tambah'} Berita</h4>
@@ -248,7 +249,7 @@ window.formBerita = function(id) {
       </div>
       <div class="flex gap-2">
         <button onclick="saveBerita('${id||''}')" class="bg-navy-900 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-navy-800">${id?'Simpan Perubahan':'Simpan'}</button>
-        <button onclick="closeForm('form-berita')" class="border border-gray-200 text-gray-500 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-50">Batal</button>
+        <button onclick="closeForm('form-berita-area')" class="border border-gray-200 text-gray-500 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-50">Batal</button>
       </div>
     </div>`;
 };
@@ -269,7 +270,7 @@ window.saveBerita = async function(id) {
     } else {
       await addDoc(collection(db, 'berita'), { ...data, createdAt: serverTimestamp() });
     }
-    closeForm('form-berita');
+    closeForm('form-berita-area');
     OK('Berita disimpan!');
   } catch(e) { ERR('Gagal menyimpan: ' + e.message); }
 };
@@ -281,24 +282,20 @@ window.delBerita = async function(id) {
 };
 
 function renderBerita() {
-  const el = document.getElementById('tbl-berita');
+  const el = document.getElementById('tbl-berita-body');
   if (!el) return;
   const data = window.CMS_BERITA || [];
-  if (!data.length) { el.innerHTML = '<div class="text-center text-gray-400 py-10">Belum ada berita. Klik + Tambah Berita.</div>'; return; }
-  el.innerHTML = `<table class="w-full text-sm">
-    <thead><tr class="text-left text-xs text-gray-400 uppercase border-b border-gray-100">
-      <th class="pb-3 pl-4">Emoji</th><th class="pb-3">Judul</th><th class="pb-3">Tanggal</th>
-      <th class="pb-3">Kategori</th><th class="pb-3">Aksi</th></tr></thead>
-    <tbody>${data.map(b => `<tr class="border-b border-gray-50 hover:bg-gray-50">
-      <td class="py-3 pl-4 text-xl">${b.emoji||'📋'}</td>
-      <td class="py-3 font-medium text-navy-900">${b.judul}<div class="text-xs text-gray-400 mt-0.5">${(b.isi||'').substring(0,60)}...</div></td>
-      <td class="py-3 text-gray-400">${b.tgl||''}</td>
-      <td class="py-3"><span class="bg-blue-50 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded-full">${b.kategori||''}</span></td>
-      <td class="py-3 flex gap-2">
-        <button onclick="formBerita('${b.id}')" class="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 font-medium">Edit</button>
-        <button onclick="delBerita('${b.id}')" class="text-xs px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-medium">Hapus</button>
-      </td></tr>`).join('')}
-    </tbody></table>`;
+  if (!data.length) { el.innerHTML = '<tr><td colspan="6" class="text-center text-gray-400 py-10">Belum ada berita. Klik + Tambah Berita.</td></tr>'; return; }
+  el.innerHTML = data.map((b, i) => `<tr>
+    <td>${i+1}</td>
+    <td><span class="text-xl mr-2">${b.emoji||'📋'}</span><span class="font-medium text-navy-900">${b.judul}</span><div class="text-xs text-gray-400 mt-0.5">${(b.isi||'').substring(0,60)}...</div></td>
+    <td><span class="badge badge-blue">${b.kategori||''}</span></td>
+    <td class="text-gray-400">${b.tgl||''}</td>
+    <td><span class="badge badge-green">Aktif</span></td>
+    <td class="text-right"><div class="flex gap-2 justify-end">
+      <button onclick="formBerita('${b.id}')" class="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 font-medium">Edit</button>
+      <button onclick="delBerita('${b.id}')" class="text-xs px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-medium">Hapus</button>
+    </div></td></tr>`).join('');
 }
 
 // ══════════════════════════════════════════════════════════
@@ -306,8 +303,9 @@ function renderBerita() {
 // ══════════════════════════════════════════════════════════
 window.formGaleri = function(id) {
   const item = id ? (window.CMS_GALERI||[]).find(x => x.id === id) : null;
-  const el = document.getElementById('form-galeri');
+  const el = document.getElementById('form-galeri-area');
   if (!el) return;
+  el.classList.remove('hidden');
   el.innerHTML = `
     <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5 mb-5">
       <h4 class="text-sm font-bold text-navy-900 mb-4">${id?'Edit':'Tambah'} Foto Galeri</h4>
@@ -320,7 +318,7 @@ window.formGaleri = function(id) {
       <img id="gf-p" src="${item?fixGDriveUrl(item.url||''):''}" class="${item?'':'hidden'} w-full max-h-40 object-cover rounded-xl mb-3" onerror="this.classList.add('hidden')">
       <div class="flex gap-2">
         <button onclick="saveGaleri('${id||''}')" class="bg-navy-900 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-navy-800">${id?'Simpan':'Simpan'}</button>
-        <button onclick="closeForm('form-galeri')" class="border border-gray-200 text-gray-500 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-50">Batal</button>
+        <button onclick="closeForm('form-galeri-area')" class="border border-gray-200 text-gray-500 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-50">Batal</button>
       </div>
     </div>`;
 };
@@ -333,7 +331,7 @@ window.saveGaleri = async function(id) {
   try {
     if (id) { await updateDoc(doc(db, 'galeri', id), data); }
     else { await addDoc(collection(db, 'galeri'), { ...data, createdAt: serverTimestamp() }); }
-    closeForm('form-galeri'); OK('Foto disimpan!');
+    closeForm('form-galeri-area'); OK('Foto disimpan!');
   } catch(e) { ERR('Gagal: ' + e.message); }
 };
 
@@ -344,22 +342,23 @@ window.delGaleri = async function(id) {
 };
 
 function renderGaleri() {
-  const el = document.getElementById('tbl-galeri');
+  const el = document.getElementById('grid-galeri');
   if (!el) return;
   const data = window.CMS_GALERI || [];
-  if (!data.length) { el.innerHTML = '<div class="text-center text-gray-400 py-10">Belum ada foto galeri.</div>'; return; }
-  el.innerHTML = `<table class="w-full text-sm">
-    <thead><tr class="text-left text-xs text-gray-400 uppercase border-b border-gray-100">
-      <th class="pb-3 pl-4">Preview</th><th class="pb-3">Keterangan</th><th class="pb-3">URL</th><th class="pb-3">Aksi</th></tr></thead>
-    <tbody>${data.map(g => `<tr class="border-b border-gray-50 hover:bg-gray-50">
-      <td class="py-3 pl-4"><img src="${fixGDriveUrl(g.url)}" class="w-20 h-14 object-cover rounded-lg bg-gray-100" onerror="this.style.background='#f3f4f6'"></td>
-      <td class="py-3 font-medium">${g.caption}</td>
-      <td class="py-3"><code class="text-xs bg-gray-100 px-2 py-0.5 rounded">${(g.url||'').substring(0,40)}...</code></td>
-      <td class="py-3 flex gap-2">
-        <button onclick="formGaleri('${g.id}')" class="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 font-medium">Edit</button>
-        <button onclick="delGaleri('${g.id}')" class="text-xs px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-medium">Hapus</button>
-      </td></tr>`).join('')}
-    </tbody></table>`;
+  if (!data.length) { el.innerHTML = '<div class="col-span-4 text-center text-gray-400 py-10">Belum ada foto galeri.</div>'; return; }
+  el.innerHTML = data.map(g => `
+    <div class="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition group">
+      <div class="relative h-40 bg-gray-100 overflow-hidden">
+        <img src="${fixGDriveUrl(g.url)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.style.background='#f3f4f6'">
+      </div>
+      <div class="p-3">
+        <p class="text-sm font-medium text-navy-900 truncate mb-2">${g.caption}</p>
+        <div class="flex gap-2">
+          <button onclick="formGaleri('${g.id}')" class="flex-1 text-xs px-2 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 font-medium">Edit</button>
+          <button onclick="delGaleri('${g.id}')" class="flex-1 text-xs px-2 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-medium">Hapus</button>
+        </div>
+      </div>
+    </div>`).join('');
 }
 
 // ══════════════════════════════════════════════════════════
@@ -367,8 +366,9 @@ function renderGaleri() {
 // ══════════════════════════════════════════════════════════
 window.formGuru = function(id) {
   const item = id ? (window.CMS_GURU||[]).find(x => x.id === id) : null;
-  const el = document.getElementById('form-guru');
+  const el = document.getElementById('form-guru-area');
   if (!el) return;
+  el.classList.remove('hidden');
   el.innerHTML = `
     <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5 mb-5">
       <h4 class="text-sm font-bold text-navy-900 mb-4">${id?'Edit':'Tambah'} Guru / Staf</h4>
@@ -390,7 +390,7 @@ window.formGuru = function(id) {
         <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="gg-m" value="${item?.mapel||''}" placeholder="Matematika, B. Indonesia, dll"></div>
       <div class="flex gap-2">
         <button onclick="saveGuru('${id||''}')" class="bg-navy-900 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-navy-800">${id?'Simpan':'Simpan'}</button>
-        <button onclick="closeForm('form-guru')" class="border border-gray-200 text-gray-500 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-50">Batal</button>
+        <button onclick="closeForm('form-guru-area')" class="border border-gray-200 text-gray-500 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-50">Batal</button>
       </div>
     </div>`;
 };
@@ -404,7 +404,7 @@ window.saveGuru = async function(id) {
   try {
     if (id) { await updateDoc(doc(db, 'guru', id), data); }
     else { await addDoc(collection(db, 'guru'), { ...data, createdAt:serverTimestamp() }); }
-    closeForm('form-guru'); OK('Data guru disimpan!');
+    closeForm('form-guru-area'); OK('Data guru disimpan!');
   } catch(e) { ERR('Gagal: ' + e.message); }
 };
 
@@ -415,26 +415,23 @@ window.delGuru = async function(id) {
 };
 
 function renderGuru() {
-  const el = document.getElementById('tbl-guru');
+  const el = document.getElementById('grid-guru');
   if (!el) return;
   const data = window.CMS_GURU || [];
-  if (!data.length) { el.innerHTML = '<div class="text-center text-gray-400 py-10">Belum ada data guru.</div>'; return; }
+  if (!data.length) { el.innerHTML = '<div class="col-span-4 text-center text-gray-400 py-10">Belum ada data guru.</div>'; return; }
   const badge = s => s==='Aktif'?'bg-green-100 text-green-700':s==='Cuti'?'bg-yellow-100 text-yellow-700':'bg-red-100 text-red-700';
-  el.innerHTML = `<table class="w-full text-sm">
-    <thead><tr class="text-left text-xs text-gray-400 uppercase border-b border-gray-100">
-      <th class="pb-3 pl-4">Av</th><th class="pb-3">Nama</th><th class="pb-3">Jabatan</th>
-      <th class="pb-3">Mapel</th><th class="pb-3">Status</th><th class="pb-3">Aksi</th></tr></thead>
-    <tbody>${data.map(g => `<tr class="border-b border-gray-50 hover:bg-gray-50">
-      <td class="py-3 pl-4"><div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-xs font-bold text-navy-900">${g.inisial||'?'}</div></td>
-      <td class="py-3 font-medium">${g.nama}</td>
-      <td class="py-3 text-gray-500">${g.jabatan}</td>
-      <td class="py-3 text-gray-400">${g.mapel||'-'}</td>
-      <td class="py-3"><span class="text-xs font-semibold px-2 py-0.5 rounded-full ${badge(g.status)}">${g.status}</span></td>
-      <td class="py-3 flex gap-2">
-        <button onclick="formGuru('${g.id}')" class="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 font-medium">Edit</button>
-        <button onclick="delGuru('${g.id}')" class="text-xs px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-medium">Hapus</button>
-      </td></tr>`).join('')}
-    </tbody></table>`;
+  el.innerHTML = data.map(g => `
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col items-center text-center hover:shadow-md transition">
+      <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-xl font-extrabold text-navy-900 mb-3">${g.inisial||'?'}</div>
+      <h3 class="font-bold text-navy-900 text-sm leading-tight">${g.nama}</h3>
+      <p class="text-xs text-gray-400 mt-1 mb-1">${g.jabatan}</p>
+      <p class="text-xs text-gray-400 mb-3">${g.mapel||''}</p>
+      <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${badge(g.status)}">${g.status}</span>
+      <div class="flex gap-2 mt-4 w-full">
+        <button onclick="formGuru('${g.id}')" class="flex-1 text-xs px-2 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 font-medium">Edit</button>
+        <button onclick="delGuru('${g.id}')" class="flex-1 text-xs px-2 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-medium">Hapus</button>
+      </div>
+    </div>`).join('');
 }
 
 // ══════════════════════════════════════════════════════════
@@ -442,142 +439,194 @@ function renderGuru() {
 // ══════════════════════════════════════════════════════════
 window.formProgram = function(id) {
   const item = id ? (window.CMS_PROGRAM||[]).find(x => x.id === id) : null;
-  const el = document.getElementById('form-program');
+  const el = document.getElementById('form-program-area');
   if (!el) return;
-  const emojis = ['📖','⚽','🎨','💻','🌱','🏅','🎵','🔬','🎭','🏊'];
+  el.classList.remove('hidden');
+  const ikonList = ['📚','🏆','🎨','🏃','🔬','🎵','🌱','🕌','💻','⚽','🎭','🌍'];
   el.innerHTML = `
-    <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5 mb-5">
+    <div class="bg-purple-50 border border-purple-200 rounded-2xl p-5 mb-5">
       <h4 class="text-sm font-bold text-navy-900 mb-4">${id?'Edit':'Tambah'} Program</h4>
       <div class="grid grid-cols-2 gap-3 mb-3">
         <div><label class="block text-xs font-semibold text-gray-500 mb-1">Nama Program</label>
-          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pp-n" value="${item?.nama||''}" placeholder="Tahfidz Al-Quran"></div>
-        <div><label class="block text-xs font-semibold text-gray-500 mb-1">Emoji</label>
-          <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pp-e">
-            ${emojis.map(e=>`<option value="${e}"${item?.emoji===e?' selected':''}>${e}</option>`).join('')}
+          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-n" value="${item?.nama||''}" placeholder="Nama program sekolah"></div>
+        <div><label class="block text-xs font-semibold text-gray-500 mb-1">Ikon</label>
+          <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-i">
+            ${ikonList.map(k=>`<option value="${k}"${item?.ikon===k?' selected':''}>${k}</option>`).join('')}
           </select></div>
       </div>
       <div class="mb-3"><label class="block text-xs font-semibold text-gray-500 mb-1">Deskripsi</label>
-        <textarea class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none min-h-16 resize-y" id="pp-d">${item?.desc||''}</textarea></div>
-      <div class="mb-4"><label class="block text-xs font-semibold text-gray-500 mb-1">Tag (pisah koma)</label>
-        <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pp-t" value="${(item?.tags||[]).join(', ')}" placeholder="Hafalan Juz 30, Sertifikat"></div>
+        <textarea class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none min-h-16 resize-y" id="pf-d">${item?.deskripsi||''}</textarea>
+      </div>
+      <div class="mb-4"><label class="block text-xs font-semibold text-gray-500 mb-1">Tags (pisahkan dengan koma)</label>
+        <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-t" value="${(item?.tags||[]).join(', ')}" placeholder="Akademik, Seni, Olahraga"></div>
       <div class="flex gap-2">
-        <button onclick="saveProgram('${id||''}')" class="bg-navy-900 text-white px-4 py-2 rounded-xl text-sm font-semibold">${id?'Simpan':'Simpan'}</button>
-        <button onclick="closeForm('form-program')" class="border border-gray-200 text-gray-500 px-4 py-2 rounded-xl text-sm font-semibold">Batal</button>
+        <button onclick="saveProgram('${id||''}')" class="bg-navy-900 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-navy-800">Simpan</button>
+        <button onclick="closeForm('form-program-area')" class="border border-gray-200 text-gray-500 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-50">Batal</button>
       </div>
     </div>`;
 };
 
 window.saveProgram = async function(id) {
-  const n = document.getElementById('pp-n')?.value.trim();
-  if (!n) { ERR('Nama program wajib!'); return; }
-  const tags = document.getElementById('pp-t').value.split(',').map(t=>t.trim()).filter(Boolean);
-  const data = { nama:n, emoji:document.getElementById('pp-e').value, desc:document.getElementById('pp-d').value, tags, updatedAt:serverTimestamp() };
+  const nama = document.getElementById('pf-n')?.value.trim();
+  if (!nama) { ERR('Nama program wajib!'); return; }
+  const tags = (document.getElementById('pf-t')?.value||'').split(',').map(t=>t.trim()).filter(Boolean);
+  const data = { nama, ikon: document.getElementById('pf-i').value, deskripsi: document.getElementById('pf-d').value, tags, updatedAt: serverTimestamp() };
   try {
     if (id) { await updateDoc(doc(db, 'program', id), data); }
-    else { await addDoc(collection(db, 'program'), { ...data, createdAt:serverTimestamp() }); }
-    closeForm('form-program'); OK('Program disimpan!');
+    else { await addDoc(collection(db, 'program'), { ...data, createdAt: serverTimestamp() }); }
+    closeForm('form-program-area'); OK('Program disimpan!');
   } catch(e) { ERR('Gagal: ' + e.message); }
 };
 
 window.delProgram = async function(id) {
-  if (!confirm('Hapus program?')) return;
+  if (!confirm('Hapus program ini?')) return;
   try { await deleteDoc(doc(db, 'program', id)); OK('Program dihapus.'); }
-  catch(e) { ERR('Gagal.'); }
+  catch(e) { ERR('Gagal menghapus.'); }
 };
-
-function renderProgram() {
-  const el = document.getElementById('tbl-program');
-  if (!el) return;
-  const data = window.CMS_PROGRAM || [];
-  if (!data.length) { el.innerHTML = '<div class="text-center text-gray-400 py-10">Belum ada program.</div>'; return; }
-  el.innerHTML = `<table class="w-full text-sm">
-    <thead><tr class="text-left text-xs text-gray-400 uppercase border-b border-gray-100">
-      <th class="pb-3 pl-4">Ikon</th><th class="pb-3">Nama</th><th class="pb-3">Deskripsi</th><th class="pb-3">Aksi</th></tr></thead>
-    <tbody>${data.map(p => `<tr class="border-b border-gray-50 hover:bg-gray-50">
-      <td class="py-3 pl-4 text-2xl">${p.emoji||'📖'}</td>
-      <td class="py-3 font-medium">${p.nama}</td>
-      <td class="py-3 text-gray-400 max-w-48 truncate">${(p.desc||'').substring(0,60)}</td>
-      <td class="py-3 flex gap-2">
-        <button onclick="formProgram('${p.id}')" class="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 font-medium">Edit</button>
-        <button onclick="delProgram('${p.id}')" class="text-xs px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-medium">Hapus</button>
-      </td></tr>`).join('')}
-    </tbody></table>`;
-}
 
 // ══════════════════════════════════════════════════════════
 // SPMB — Firestore CRUD
 // ══════════════════════════════════════════════════════════
 window.formSpmb = function(id) {
   const item = id ? (window.CMS_SPMB||[]).find(x => x.id === id) : null;
-  const el = document.getElementById('form-spmb');
+  const el = document.getElementById('form-spmb-area');
   if (!el) return;
+  el.classList.remove('hidden');
+  const noPend = item?.noPendaftaran || ('SPMB-' + Date.now().toString().slice(-6));
   el.innerHTML = `
     <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5 mb-5">
-      <h4 class="text-sm font-bold text-navy-900 mb-4">${id?'Edit':'Tambah'} Pendaftar</h4>
+      <h4 class="text-sm font-bold text-navy-900 mb-4">${id?'Edit':'Tambah'} Data Pendaftar</h4>
       <div class="grid grid-cols-2 gap-3 mb-3">
-        <div><label class="block text-xs font-semibold text-gray-500 mb-1">Nama Calon Siswa</label>
-          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="sp-n" value="${item?.nama||''}" placeholder="Nama lengkap"></div>
-        <div><label class="block text-xs font-semibold text-gray-500 mb-1">Tanggal Lahir</label>
-          <input type="date" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="sp-t" value="${item?.tgl||''}"></div>
+        <div><label class="block text-xs font-semibold text-gray-500 mb-1">No. Pendaftaran</label>
+          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none bg-gray-50" id="sf-no" value="${noPend}" readonly></div>
+        <div><label class="block text-xs font-semibold text-gray-500 mb-1">Tanggal Daftar</label>
+          <input type="date" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="sf-tgl" value="${item?.tglDaftar||new Date().toISOString().split('T')[0]}"></div>
       </div>
       <div class="grid grid-cols-2 gap-3 mb-3">
-        <div><label class="block text-xs font-semibold text-gray-500 mb-1">Nama Orang Tua</label>
-          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="sp-o" value="${item?.ortu||''}"></div>
+        <div><label class="block text-xs font-semibold text-gray-500 mb-1">Nama Anak</label>
+          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="sf-na" value="${item?.namaAnak||''}" placeholder="Nama lengkap calon siswa"></div>
+        <div><label class="block text-xs font-semibold text-gray-500 mb-1">Nama Orang Tua / Wali</label>
+          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="sf-no2" value="${item?.namaOrtu||''}" placeholder="Nama orang tua"></div>
+      </div>
+      <div class="grid grid-cols-2 gap-3 mb-3">
         <div><label class="block text-xs font-semibold text-gray-500 mb-1">No. WhatsApp</label>
-          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="sp-w" value="${item?.wa||''}"></div>
-      </div>
-      <div class="grid grid-cols-2 gap-3 mb-4">
-        <div><label class="block text-xs font-semibold text-gray-500 mb-1">Asal TK/PAUD</label>
-          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="sp-a" value="${item?.asal||''}"></div>
+          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="sf-wa" value="${item?.noWa||''}" placeholder="08123456789"></div>
         <div><label class="block text-xs font-semibold text-gray-500 mb-1">Status</label>
-          <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="sp-s">
+          <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="sf-st">
             ${['Menunggu','Diterima','Ditolak'].map(s=>`<option${item?.status===s?' selected':''}>${s}</option>`).join('')}
           </select></div>
       </div>
       <div class="flex gap-2">
-        <button onclick="saveSpmb('${id||''}')" class="bg-navy-900 text-white px-4 py-2 rounded-xl text-sm font-semibold">Simpan</button>
-        <button onclick="closeForm('form-spmb')" class="border border-gray-200 text-gray-500 px-4 py-2 rounded-xl text-sm font-semibold">Batal</button>
+        <button onclick="saveSpmb('${id||''}')" class="bg-navy-900 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-navy-800">Simpan</button>
+        <button onclick="closeForm('form-spmb-area')" class="border border-gray-200 text-gray-500 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-50">Batal</button>
       </div>
     </div>`;
 };
 
 window.saveSpmb = async function(id) {
-  const n = document.getElementById('sp-n')?.value.trim();
-  if (!n) { ERR('Nama wajib!'); return; }
-  const data = { nama:n, tgl:document.getElementById('sp-t').value, ortu:document.getElementById('sp-o').value, wa:document.getElementById('sp-w').value, asal:document.getElementById('sp-a').value, status:document.getElementById('sp-s').value, updatedAt:serverTimestamp() };
+  const namaAnak = document.getElementById('sf-na')?.value.trim();
+  if (!namaAnak) { ERR('Nama anak wajib diisi!'); return; }
+  const data = {
+    noPendaftaran: document.getElementById('sf-no').value,
+    namaAnak,
+    namaOrtu: document.getElementById('sf-no2').value,
+    noWa: document.getElementById('sf-wa').value,
+    status: document.getElementById('sf-st').value,
+    tglDaftar: document.getElementById('sf-tgl').value,
+    updatedAt: serverTimestamp()
+  };
   try {
     if (id) { await updateDoc(doc(db, 'spmb', id), data); }
-    else { await addDoc(collection(db, 'spmb'), { ...data, createdAt:serverTimestamp() }); }
-    closeForm('form-spmb'); OK('Data SPMB disimpan!');
+    else { await addDoc(collection(db, 'spmb'), { ...data, createdAt: serverTimestamp() }); }
+    closeForm('form-spmb-area'); OK('Data pendaftar disimpan!');
   } catch(e) { ERR('Gagal: ' + e.message); }
 };
 
 window.delSpmb = async function(id) {
-  if (!confirm('Hapus pendaftar?')) return;
+  if (!confirm('Hapus data pendaftar ini?')) return;
   try { await deleteDoc(doc(db, 'spmb', id)); OK('Data dihapus.'); }
-  catch(e) { ERR('Gagal.'); }
+  catch(e) { ERR('Gagal menghapus.'); }
 };
 
+// ══════════════════════════════════════════════════════════
+// KELOLA USER — Tambah User
+// ══════════════════════════════════════════════════════════
+window.formTambahUser = function() {
+  const el = document.getElementById('form-users-area');
+  if (!el) return;
+  el.classList.remove('hidden');
+  el.innerHTML = `
+    <h3 class="text-base font-extrabold text-navy-900 mb-5">Tambah User Baru</h3>
+    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-700 mb-5">
+      💡 User dibuat melalui <strong>Firebase Console → Authentication → Add User</strong>. 
+      Isi form ini untuk menyimpan profil user di database.
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+      <div><label class="block text-xs font-semibold text-gray-500 mb-1">Nama Lengkap</label>
+        <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="uf-nama" placeholder="Nama lengkap user"></div>
+      <div><label class="block text-xs font-semibold text-gray-500 mb-1">Email (sesuai Firebase Auth)</label>
+        <input type="email" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="uf-email" placeholder="guru@sdit-alhasan.sch.id"></div>
+      <div><label class="block text-xs font-semibold text-gray-500 mb-1">UID (dari Firebase Auth)</label>
+        <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none font-mono text-xs" id="uf-uid" placeholder="UID dari Firebase Console"></div>
+      <div><label class="block text-xs font-semibold text-gray-500 mb-1">Peran</label>
+        <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="uf-role">
+          <option value="guru">Guru</option>
+          <option value="admin">Admin</option>
+        </select></div>
+    </div>
+    <div class="flex gap-2">
+      <button onclick="saveTambahUser()" class="bg-navy-900 text-white px-5 py-2 rounded-xl text-sm font-semibold hover:bg-navy-800">Simpan User</button>
+      <button onclick="closeForm('form-users-area')" class="border border-gray-200 text-gray-500 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-50">Batal</button>
+    </div>`;
+};
+
+window.saveTambahUser = async function() {
+  const uid   = document.getElementById('uf-uid')?.value.trim();
+  const nama  = document.getElementById('uf-nama')?.value.trim();
+  const email = document.getElementById('uf-email')?.value.trim();
+  const role  = document.getElementById('uf-role')?.value;
+  if (!uid || !nama || !email) { ERR('UID, Nama, dan Email wajib diisi!'); return; }
+  try {
+    await setDoc(doc(db, 'users', uid), { nama, email, role, aktif: true, createdAt: serverTimestamp() });
+    closeForm('form-users-area');
+    renderUsers();
+    OK('User berhasil ditambahkan!');
+  } catch(e) { ERR('Gagal: ' + e.message); }
+};
+
+function renderProgram() {
+  const el = document.getElementById('tbl-program-body');
+  if (!el) return;
+  const data = window.CMS_PROGRAM || [];
+  const tot = document.getElementById('s-prog-tot'); if (tot) tot.textContent = data.length;
+  if (!data.length) { el.innerHTML = '<tr><td colspan="4" class="text-center text-gray-400 py-10">Belum ada program.</td></tr>'; return; }
+  el.innerHTML = data.map(p => `<tr>
+    <td><span class="text-2xl mr-2">${p.ikon||'📚'}</span><span class="font-medium text-navy-900">${p.nama}</span></td>
+    <td class="text-gray-500">${(p.tags||[]).map(t=>`<span class="badge badge-blue mr-1">${t}</span>`).join('')}</td>
+    <td><span class="badge badge-green">Aktif</span></td>
+    <td class="text-right"><div class="flex gap-2 justify-end">
+      <button onclick="formProgram('${p.id}')" class="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 font-medium">Edit</button>
+      <button onclick="delProgram('${p.id}')" class="text-xs px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-medium">Hapus</button>
+    </div></td></tr>`).join('');
+}
+
 function renderSpmb() {
-  const el = document.getElementById('tbl-spmb');
+  const el = document.getElementById('tbl-spmb-body');
   if (!el) return;
   const data = window.CMS_SPMB || [];
-  if (!data.length) { el.innerHTML = '<div class="text-center text-gray-400 py-10">Belum ada pendaftar.</div>'; return; }
-  const badge = s => s==='Diterima'?'bg-green-100 text-green-700':s==='Ditolak'?'bg-red-100 text-red-700':'bg-yellow-100 text-yellow-700';
-  el.innerHTML = `<table class="w-full text-sm">
-    <thead><tr class="text-left text-xs text-gray-400 uppercase border-b border-gray-100">
-      <th class="pb-3 pl-4">Nama Siswa</th><th class="pb-3">Orang Tua</th><th class="pb-3">WA</th>
-      <th class="pb-3">Status</th><th class="pb-3">Aksi</th></tr></thead>
-    <tbody>${data.map(s => `<tr class="border-b border-gray-50 hover:bg-gray-50">
-      <td class="py-3 pl-4 font-medium">${s.nama}</td>
-      <td class="py-3 text-gray-500">${s.ortu||'-'}</td>
-      <td class="py-3 text-gray-400">${s.wa||'-'}</td>
-      <td class="py-3"><span class="text-xs font-semibold px-2 py-0.5 rounded-full ${badge(s.status)}">${s.status}</span></td>
-      <td class="py-3 flex gap-2">
-        <button onclick="formSpmb('${s.id}')" class="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 font-medium">Edit</button>
-        <button onclick="delSpmb('${s.id}')" class="text-xs px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-medium">Hapus</button>
-      </td></tr>`).join('')}
-    </tbody></table>`;
+  if (!data.length) { el.innerHTML = '<tr><td colspan="7" class="text-center text-gray-400 py-10">Belum ada data pendaftar.</td></tr>'; return; }
+  const badge = s => s==='Diterima'?'badge-green':s==='Menunggu'?'badge-yellow':'badge-red';
+  el.innerHTML = data.map(s => `<tr>
+    <td class="font-mono text-xs">${s.noPendaftaran||'-'}</td>
+    <td class="font-medium text-navy-900">${s.namaAnak||''}</td>
+    <td class="text-gray-500">${s.namaOrtu||''}</td>
+    <td><a href="https://wa.me/${(s.noWa||'').replace(/\D/g,'')}" target="_blank" class="text-accent hover:underline">${s.noWa||''}</a></td>
+    <td><span class="badge ${badge(s.status)}">${s.status||'Menunggu'}</span></td>
+    <td class="text-gray-400">${s.tglDaftar||''}</td>
+    <td class="text-right"><div class="flex gap-2 justify-end">
+      <button onclick="formSpmb('${s.id}')" class="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 font-medium">Edit</button>
+      <button onclick="delSpmb('${s.id}')" class="text-xs px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-medium">Hapus</button>
+    </div></td></tr>`).join('');
 }
 
 // ══════════════════════════════════════════════════════════
