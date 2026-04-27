@@ -63,8 +63,11 @@ function ERR(m) {
   n.textContent = m; document.body.appendChild(n);
   setTimeout(() => n.remove(), 4000);
 }
-function closeForm(id)  { const el = document.getElementById(id); if (el) { el.innerHTML = ''; el.style.display = 'none'; } }
-function openForm(id)   { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+window.closeForm = function(id)  {
+  const el = document.getElementById(id);
+  if (el) { el.innerHTML = ''; el.style.display = 'none'; }
+};
+window.openForm = function(id)   { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
 
 // ── AUTH FIREBASE ─────────────────────────────────────────
 // Login menggunakan Firebase Authentication (Email/Password)
@@ -265,11 +268,13 @@ window.formBerita = function(id) {
 window.saveBerita = async function(id) {
   const judul = document.getElementById('bf-j')?.value.trim();
   if (!judul) { ERR('Judul wajib diisi!'); return; }
+  const isi = document.getElementById('bf-i').value;
   const data = {
     judul, tgl: document.getElementById('bf-t').value,
     kategori: document.getElementById('bf-k').value,
     emoji: document.getElementById('bf-e').value,
-    isi: document.getElementById('bf-i').value,
+    isi,
+    ringkasan: isi.substring(0, 160),
     updatedAt: serverTimestamp()
   };
   try {
@@ -447,6 +452,8 @@ function renderGuru() {
 // ══════════════════════════════════════════════════════════
 window.formProgram = function(id) {
   const item = id ? (window.CMS_PROGRAM||[]).find(x => x.id === id) : null;
+  const selectedIkon = item?.ikon || item?.emoji || '📚';
+  const selectedDesc = item?.deskripsi || item?.desc || '';
   const el = document.getElementById('form-program-area');
   if (!el) return;
   el.style.display = 'block';
@@ -459,11 +466,11 @@ window.formProgram = function(id) {
           <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-n" value="${item?.nama||''}" placeholder="Nama program sekolah"></div>
         <div><label class="block text-xs font-semibold text-gray-500 mb-1">Ikon</label>
           <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-i">
-            ${ikonList.map(k=>`<option value="${k}"${item?.ikon===k?' selected':''}>${k}</option>`).join('')}
+            ${ikonList.map(k=>`<option value="${k}"${selectedIkon===k?' selected':''}>${k}</option>`).join('')}
           </select></div>
       </div>
       <div class="mb-3"><label class="block text-xs font-semibold text-gray-500 mb-1">Deskripsi</label>
-        <textarea class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none min-h-16 resize-y" id="pf-d">${item?.deskripsi||''}</textarea>
+        <textarea class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none min-h-16 resize-y" id="pf-d">${selectedDesc}</textarea>
       </div>
       <div class="mb-4"><label class="block text-xs font-semibold text-gray-500 mb-1">Tags (pisahkan dengan koma)</label>
         <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-t" value="${(item?.tags||[]).join(', ')}" placeholder="Akademik, Seni, Olahraga"></div>
