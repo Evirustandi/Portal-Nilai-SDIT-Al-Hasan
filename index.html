@@ -1197,7 +1197,12 @@
     // ── 1. FUNGSI NAVIGASI SPA
     function navigate(viewId) {
       document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-      document.getElementById(viewId).classList.add('active');
+      const targetSection = document.getElementById(viewId);
+      if (!targetSection) {
+        console.warn('Section tidak ditemukan:', viewId);
+        return;
+      }
+      targetSection.classList.add('active');
       window.scrollTo(0, 0);
 
       document.querySelectorAll('.nav-link').forEach(el => {
@@ -1205,15 +1210,15 @@
         if(el.getAttribute('data-target') === viewId) el.classList.add('active');
       });
       
-      document.getElementById('mobile-menu').classList.add('hidden');
+      document.getElementById('mobile-menu')?.classList.add('hidden');
 
       // Tampilkan/Sembunyikan CTA dan Footer untuk Portal Nilai (mengikuti desain Portal Nilai yang clean)
       if(viewId === 'portal') {
-        document.getElementById('cta-footer').style.display = 'none';
-        document.getElementById('footer-section').style.display = 'none';
+        if (document.getElementById('cta-footer')) document.getElementById('cta-footer').style.display = 'none';
+        if (document.getElementById('footer-section')) document.getElementById('footer-section').style.display = 'none';
       } else {
-        document.getElementById('cta-footer').style.display = 'block';
-        document.getElementById('footer-section').style.display = 'block';
+        if (document.getElementById('cta-footer')) document.getElementById('cta-footer').style.display = 'block';
+        if (document.getElementById('footer-section')) document.getElementById('footer-section').style.display = 'block';
       }
     }
 
@@ -1229,9 +1234,6 @@
       { step: 7, judul: 'Hari Pertama Sekolah', tgl: '12 Juli 2026', desc: 'Seluruh Siswa SD Islam Terpadu Al-Hasan', ic: 'ph-buildings' }
     ];
 
-
-    // Penanda mode fallback lokal (saat DATA_NILAI belum tersedia dari Firebase/data.js)
-    let IS_LOCAL_FALLBACK_DATA = false;
 
     // Penanda mode fallback lokal (saat DATA_NILAI belum tersedia dari Firebase/data.js)
     let IS_LOCAL_FALLBACK_DATA = false;
