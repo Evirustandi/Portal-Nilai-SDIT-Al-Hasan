@@ -1234,6 +1234,17 @@
       { step: 7, judul: 'Hari Pertama Sekolah', tgl: '12 Juli 2026', desc: 'Seluruh Siswa SD Islam Terpadu Al-Hasan', ic: 'ph-buildings' }
     ];
 
+    const programPendukung = [
+      { ic: 'ph-translate', judul: 'Bahasa Arab & Inggris', desc: 'Meningkatkan kemampuan bahasa asing sebagai bekal komunikasi global.' },
+      { ic: 'ph-book-open', judul: 'Literasi & Numerasi', desc: 'Program penguatan literasi dan numerasi untuk dasar akademik yang kuat.' },
+      { ic: 'ph-desktop', judul: 'Kelas Digital', desc: 'Pemanfaatan teknologi digital dalam proses pembelajaran yang interaktif.' },
+      { ic: 'ph-circles-three', judul: 'Proyek Penguatan P5', desc: 'Projek berbasis karakter dan kreativitas sesuai Kurikulum Merdeka.' },
+      { ic: 'ph-basketball', judul: 'Ekstrakurikuler', desc: 'Beragam kegiatan ekstrakurikuler sesuai minat dan bakat siswa.' },
+      { ic: 'ph-heart', judul: 'Pembiasaan Islami', desc: 'Pembiasaan ibadah dan akhlak mulia dalam kehidupan sehari-hari.' },
+      { ic: 'ph-users', judul: 'Parenting Class', desc: 'Program edukasi untuk orang tua dalam mendukung perkembangan anak.' },
+      { ic: 'ph-bus', judul: 'Kunjungan Edukatif', desc: 'Kegiatan belajar di luar kelas untuk pengalaman nyata dan bermakna.' }
+    ];
+
 
     // Penanda mode fallback lokal (saat DATA_NILAI belum tersedia dari Firebase/data.js)
     let IS_LOCAL_FALLBACK_DATA = false;
@@ -1305,6 +1316,17 @@
           <p class="text-[10px] text-gray-500 font-medium">${o.jab}</p>
         </div>
       `).join('') || `<div class="col-span-full bg-white p-8 rounded-2xl border border-gray-100 text-center text-sm font-medium text-gray-500">Data guru/staf belum tersedia di database.</div>`;
+
+      // Program Pendukung (tetap statis seperti versi sebelumnya)
+      const elProgramPendukung = document.getElementById('program-pendukung-grid');
+      if (elProgramPendukung) {
+        elProgramPendukung.innerHTML = programPendukung.map(p => `
+          <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-start gap-4">
+            <div class="w-10 h-10 bg-gray-50 text-gray-500 rounded-xl flex items-center justify-center text-xl shrink-0"><i class="ph-fill ${p.ic}"></i></div>
+            <div><h4 class="font-bold text-navy-900 text-sm mb-1.5">${p.judul}</h4><p class="text-[11px] text-gray-500 font-medium leading-relaxed">${p.desc}</p></div>
+          </div>
+        `).join('');
+      }
 
       // Timeline SPMB
       document.getElementById('spmb-timeline').innerHTML = spmbTimeline.map(t => `
