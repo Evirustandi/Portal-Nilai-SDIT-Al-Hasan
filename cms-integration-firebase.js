@@ -85,6 +85,15 @@ function fixGDriveUrl(url) {
   return m ? `https://drive.google.com/thumbnail?id=${m[1]}&sz=w600` : url;
 }
 
+function escapeHtml(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function formatTgl(str) {
   if (!str) return '';
   const bln = ['','Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
@@ -102,12 +111,18 @@ function renderBerita() {
 
   const makeCard = b => `
     <div class="berita-kartu">
-      <div class="berita-img" style="background:${bgMap[b.kategori]||'#E8F5EC'}">${b.emoji||'📋'}</div>
+      <div class="berita-img" style="background:${bgMap[b.kategori]||'#E8F5EC'};overflow:hidden">
+        ${(b.thumbnailType === 'foto' && b.imageUrl)
+          ? `<img src="${escapeHtml(b.imageUrl)}" alt="${escapeHtml(b.judul||'')}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';this.parentNode.textContent='${escapeHtml(b.emoji||'📋')}'">`
+          : `${escapeHtml(b.emoji||'📋')}`
+        }
+      </div>
       <div class="berita-body">
-        <span class="berita-badge ${badgeMap[b.kategori]||'badge-info'}">${b.kategori||''}</span>
-        <div class="berita-tgl">${formatTgl(b.tgl)}</div>
-        <div class="berita-judul">${b.judul}</div>
-        ${b.isi?`<div class="berita-isi">${b.isi.substring(0,90)}${b.isi.length>90?'...':''}</div>`:''}
+        <span class="berita-badge ${badgeMap[b.kategori]||'badge-info'}">${escapeHtml(b.kategori||'')}</span>
+        <div class="berita-tgl">${escapeHtml(formatTgl(b.tgl))}</div>
+        <div class="berita-judul">${escapeHtml(b.judul||'')}</div>
+        ${b.isi?`<div class="berita-isi">${escapeHtml(b.isi.substring(0,90))}${b.isi.length>90?'...':''}</div>`:''}
+        ${b.fileUrl?`<a href="${escapeHtml(b.fileUrl)}" target="_blank" style="display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:#1D4ED8">Lihat File</a>`:''}
       </div>
     </div>`;
 
@@ -124,10 +139,29 @@ function renderBerita() {
   if (elPreview) {
     elPreview.innerHTML = data.slice(0,3).map(b => `
       <div style="background:white;border:1px solid var(--border,#DDE4F0);border-radius:12px;overflow:hidden;cursor:pointer">
-        <div style="height:80px;background:${bgMap[b.kategori]||'#E8F5EC'};display:flex;align-items:center;justify-content:center;font-size:28px">${b.emoji||'📋'}</div>
+        <div style="height:80px;background:${bgMap[b.kategori]||'#E8F5EC'};display:flex;align-items:center;justify-content:center;font-size:28px">${escapeHtml(b.emoji||'📋')}</div>
         <div style="padding:.7rem .9rem">
           <div style="font-size:10px;color:#8A9BB5;margin-bottom:3px">${formatTgl(b.tgl)}</div>
-          <div style="font-size:13px;font-weight:600;line-height:1.4">${b.judul}</div>
+          <div style="font-size:13px;font-weight:600;line-height:1.4">${escapeHtml(b.judul||'')}</div>
+        </div>
+      </div>`).join('');
+  }
+
+  // Kompatibilitas untuk layout berita index versi baru
+  const elMain = document.getElementById('berita-list-main');
+  if (elMain) {
+    elMain.innerHTML = data.map(b => `
+      <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden flex flex-col sm:flex-row group hover:shadow-md transition p-2">
+        <div class="w-full sm:w-64 h-48 sm:h-auto relative overflow-hidden shrink-0 rounded-[1.5rem] bg-gray-100">
+          ${(b.thumbnailType === 'foto' && b.imageUrl)
+            ? `<img src="${escapeHtml(b.imageUrl)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.style.display='none'">`
+            : `<div class="w-full h-full flex items-center justify-center text-5xl">${escapeHtml(b.emoji||'📋')}</div>`}
+        </div>
+        <div class="p-6 flex flex-col justify-center flex-1">
+          <div class="mb-3"><span class="bg-blue-50 text-accent text-[10px] font-bold px-2.5 py-1 rounded-lg">${escapeHtml(b.kategori||'')}</span></div>
+          <h3 class="font-bold text-navy-900 text-lg mb-2 line-clamp-2 leading-snug">${escapeHtml(b.judul||'')}</h3>
+          <p class="text-xs text-gray-500 font-medium mb-4 line-clamp-2 leading-relaxed">${escapeHtml((b.ringkasan||b.isi||'').substring(0,180))}</p>
+          ${b.fileUrl?`<a href="${escapeHtml(b.fileUrl)}" target="_blank" class="text-accent text-xs font-bold">Buka Lampiran</a>`:''}
         </div>
       </div>`).join('');
   }
@@ -140,14 +174,20 @@ function renderGaleri() {
 
   const makeItem = g => `
     <div class="galeri-item">
-      <img src="${fixGDriveUrl(g.url)}" alt="${g.caption}" loading="lazy"
+      <img src="${fixGDriveUrl(g.url)}" alt="${escapeHtml(g.caption)}" loading="lazy"
         onerror="this.closest('.galeri-item').style.display='none'">
-      <div class="galeri-caption-overlay">${g.caption}</div>
+      <div class="galeri-caption-overlay">${escapeHtml(g.caption||'')}</div>
+    </div>`;
+
+  const makeBerandaItem = g => `
+    <div class="rounded-[2rem] aspect-[4/3] overflow-hidden shadow-sm bg-gray-100">
+      <img src="${fixGDriveUrl(g.url)}" alt="${escapeHtml(g.caption||'')}" class="w-full h-full object-cover"
+        onerror="this.closest('div').style.display='none'">
     </div>`;
 
   // Beranda galeri (4 foto)
   const elBeranda = document.getElementById('cms-galeri-beranda');
-  if (elBeranda) elBeranda.innerHTML = data.slice(0,4).map(makeItem).join('');
+  if (elBeranda) elBeranda.innerHTML = data.slice(0,4).map(makeBerandaItem).join('');
 
   // Halaman galeri — semua
   const elFull = document.getElementById('cms-galeri-full');
@@ -165,13 +205,24 @@ function renderGuru() {
 
   const makeKartu = g => `
     <div class="staf-kartu">
-      <div class="staf-avatar">${g.inisial||g.nama[0]}</div>
-      <div class="staf-nama">${g.nama}</div>
-      <div class="staf-jabatan">${g.jabatan}</div>
+      <div class="staf-avatar">${escapeHtml(g.inisial||g.nama?.[0]||'?')}</div>
+      <div class="staf-nama">${escapeHtml(g.nama||'')}</div>
+      <div class="staf-jabatan">${escapeHtml(g.jabatan||'')}</div>
     </div>`;
 
   const el = document.getElementById('cms-guru');
   if (el) el.innerHTML = data.map(makeKartu).join('');
+
+  // Sinkronkan juga struktur organisasi di halaman Profil (jika ada)
+  const elOrg = document.getElementById('grid-org');
+  if (elOrg) {
+    elOrg.innerHTML = data.map(g => `
+      <div class="bg-white p-5 rounded-[2rem] border border-gray-100 flex flex-col items-center text-center shadow-sm hover:shadow-md transition">
+        <div class="w-12 h-12 bg-blue-50 text-accent font-bold rounded-full flex items-center justify-center text-lg mb-3">${escapeHtml(g.inisial||g.nama?.[0]||'?')}</div>
+        <h4 class="font-bold text-navy-900 text-[13px] mb-1 line-clamp-2">${escapeHtml(g.nama||'')}</h4>
+        <p class="text-[10px] text-gray-500 font-medium">${escapeHtml(g.jabatan||'')}</p>
+      </div>`).join('');
+  }
 
   // Update stat guru di beranda
   const statEl = document.getElementById('stat-guru');
@@ -188,12 +239,14 @@ function renderProgram() {
 
   const makeKartu = (p, i) => `
     <div class="prog-kartu" style="background:${bgColors[i%bgColors.length]};border-color:${borderColors[i%borderColors.length]}">
+      ${(p.thumbnailType === 'foto' && p.imageUrl) ? `<div style="height:120px;border-radius:12px;overflow:hidden;margin-bottom:10px"><img src="${escapeHtml(p.imageUrl)}" alt="${escapeHtml(p.nama||'')}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'"></div>` : ''}
       <div class="prog-header">
-        <span class="prog-emoji">${p.emoji||'📖'}</span>
-        <div><div class="prog-nama">${p.nama}</div></div>
+        <span class="prog-emoji">${escapeHtml(p.ikon || p.emoji || '📖')}</span>
+        <div><div class="prog-nama">${escapeHtml(p.nama || '')}</div></div>
       </div>
-      <div class="prog-desc">${p.desc||''}</div>
-      <div class="prog-pills">${(p.tags||[]).map(t=>`<span class="prog-pill">${t}</span>`).join('')}</div>
+      <div class="prog-desc">${escapeHtml(p.deskripsi || p.desc || '')}</div>
+      <div class="prog-pills">${(p.tags||[]).map(t=>`<span class="prog-pill">${escapeHtml(t)}</span>`).join('')}</div>
+      ${p.fileUrl ? `<a href="${escapeHtml(p.fileUrl)}" target="_blank" style="display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:#1D4ED8">Lihat File Program</a>` : ''}
     </div>`;
 
   const el = document.getElementById('cms-program');
@@ -202,5 +255,23 @@ function renderProgram() {
   const elList = document.getElementById('cms-program-list');
   if (elList) {
     elList.innerHTML = `<div class="program-grid">${data.map(makeKartu).join('')}</div>`;
+  }
+
+  // Kompatibilitas untuk layout program index versi baru
+  const elProgramUnggulan = document.getElementById('program-unggulan-grid');
+  if (elProgramUnggulan) {
+    elProgramUnggulan.innerHTML = data.slice(0, 4).map(p => `
+      <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden group hover:shadow-md transition">
+        <div class="h-44 overflow-hidden relative bg-gray-100">
+          ${(p.thumbnailType === 'foto' && p.imageUrl)
+            ? `<img src="${escapeHtml(p.imageUrl)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.style.display='none'">`
+            : `<div class="w-full h-full flex items-center justify-center text-5xl">${escapeHtml(p.ikon || p.emoji || '📖')}</div>`}
+        </div>
+        <div class="p-6">
+          <h3 class="font-bold text-navy-900 text-base mb-2">${escapeHtml(p.nama || '')}</h3>
+          <p class="text-xs text-gray-500 font-medium mb-3 line-clamp-3">${escapeHtml((p.deskripsi || p.desc || '').substring(0, 180))}</p>
+          ${p.fileUrl ? `<a href="${escapeHtml(p.fileUrl)}" target="_blank" class="text-accent text-xs font-bold">Buka Lampiran</a>` : ''}
+        </div>
+      </div>`).join('');
   }
 }
