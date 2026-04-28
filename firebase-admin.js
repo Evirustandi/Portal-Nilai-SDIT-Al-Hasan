@@ -258,6 +258,16 @@ window.formBerita = function(id) {
       <div class="mb-4"><label class="block text-xs font-semibold text-gray-500 mb-1">Isi / Deskripsi</label>
         <textarea class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none min-h-20 resize-y" id="bf-i">${item?.isi||''}</textarea>
       </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">URL Gambar (opsional)</label>
+          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="bf-img" value="${item?.imageUrl||''}" placeholder="https://...jpg / png">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">URL File (opsional)</label>
+          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="bf-file" value="${item?.fileUrl||''}" placeholder="https://...pdf / dokumen">
+        </div>
+      </div>
       <div class="flex gap-2">
         <button onclick="saveBerita('${id||''}')" class="bg-navy-900 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-navy-800">${id?'Simpan Perubahan':'Simpan'}</button>
         <button onclick="closeForm('form-berita-area')" class="border border-gray-200 text-gray-500 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-50">Batal</button>
@@ -275,6 +285,8 @@ window.saveBerita = async function(id) {
     emoji: document.getElementById('bf-e').value,
     isi,
     ringkasan: isi.substring(0, 160),
+    imageUrl: document.getElementById('bf-img')?.value.trim() || '',
+    fileUrl: document.getElementById('bf-file')?.value.trim() || '',
     updatedAt: serverTimestamp()
   };
   try {
@@ -472,6 +484,12 @@ window.formProgram = function(id) {
       <div class="mb-3"><label class="block text-xs font-semibold text-gray-500 mb-1">Deskripsi</label>
         <textarea class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none min-h-16 resize-y" id="pf-d">${selectedDesc}</textarea>
       </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+        <div><label class="block text-xs font-semibold text-gray-500 mb-1">URL Gambar (opsional)</label>
+          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-img" value="${item?.imageUrl||''}" placeholder="https://...jpg / png"></div>
+        <div><label class="block text-xs font-semibold text-gray-500 mb-1">URL File (opsional)</label>
+          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-file" value="${item?.fileUrl||''}" placeholder="https://...pdf / dokumen"></div>
+      </div>
       <div class="mb-4"><label class="block text-xs font-semibold text-gray-500 mb-1">Tags (pisahkan dengan koma)</label>
         <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-t" value="${(item?.tags||[]).join(', ')}" placeholder="Akademik, Seni, Olahraga"></div>
       <div class="flex gap-2">
@@ -493,6 +511,8 @@ window.saveProgram = async function(id) {
     emoji: ikon, // kompatibilitas data lama
     deskripsi,
     desc: deskripsi, // kompatibilitas data lama
+    imageUrl: document.getElementById('pf-img')?.value.trim() || '',
+    fileUrl: document.getElementById('pf-file')?.value.trim() || '',
     tags,
     updatedAt: serverTimestamp()
   };
