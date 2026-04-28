@@ -344,6 +344,7 @@ function renderBerita() {
 // ══════════════════════════════════════════════════════════
 window.formGaleri = function(id) {
   const item = id ? (window.CMS_GALERI||[]).find(x => x.id === id) : null;
+  const galeriCats = ['Akademik','Agama','Olahraga','Seni & Budaya','Ekstrakurikuler','Kegiatan Lainnya'];
   const el = document.getElementById('form-galeri-area');
   if (!el) return;
   el.style.display = 'block';
@@ -352,6 +353,11 @@ window.formGaleri = function(id) {
       <h4 class="text-sm font-bold text-navy-900 mb-4">${id?'Edit':'Tambah'} Foto Galeri</h4>
       <div class="mb-3"><label class="block text-xs font-semibold text-gray-500 mb-1">Keterangan Foto</label>
         <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="gf-c" value="${item?.caption||''}" placeholder="Keterangan foto kegiatan"></div>
+      <div class="mb-3"><label class="block text-xs font-semibold text-gray-500 mb-1">Kategori / Tag</label>
+        <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="gf-k">
+          ${galeriCats.map(c=>`<option value="${c}"${(item?.kategori||item?.category||'')===c?' selected':''}>${c}</option>`).join('')}
+        </select>
+      </div>
       <div class="mb-3"><label class="block text-xs font-semibold text-gray-500 mb-1">URL / Path Foto</label>
         <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="gf-u" value="${item?.url||''}" placeholder="foto/upacara.jpg atau https://..."
           oninput="const p=document.getElementById('gf-p');if(this.value){p.src=fixGDriveUrl(this.value);p.classList.remove('hidden');}else p.classList.add('hidden')">
@@ -367,8 +373,9 @@ window.formGaleri = function(id) {
 window.saveGaleri = async function(id) {
   const url = document.getElementById('gf-u')?.value.trim();
   const cap = document.getElementById('gf-c')?.value.trim();
+  const kategori = document.getElementById('gf-k')?.value || 'Kegiatan Lainnya';
   if (!url || !cap) { ERR('URL dan keterangan wajib!'); return; }
-  const data = { url, caption: cap, updatedAt: serverTimestamp() };
+  const data = { url, caption: cap, kategori, category: kategori, updatedAt: serverTimestamp() };
   try {
     if (id) { await updateDoc(doc(db, 'galeri', id), data); }
     else { await addDoc(collection(db, 'galeri'), { ...data, createdAt: serverTimestamp() }); }
@@ -394,6 +401,7 @@ function renderGaleri() {
       </div>
       <div class="p-3">
         <p class="text-sm font-medium text-navy-900 truncate mb-2">${EH(g.caption||'')}</p>
+        <span class="inline-block mb-2 text-[10px] font-bold px-2 py-1 rounded-lg bg-blue-50 text-accent">${EH(g.kategori || g.category || 'Kegiatan Lainnya')}</span>
         <div class="flex gap-2">
           <button onclick="formGaleri('${g.id}')" class="flex-1 text-xs px-2 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 font-medium">Edit</button>
           <button onclick="delGaleri('${g.id}')" class="flex-1 text-xs px-2 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-medium">Hapus</button>

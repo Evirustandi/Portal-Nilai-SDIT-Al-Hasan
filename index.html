@@ -799,10 +799,9 @@
           <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-2">
             <button class="berita-tab-btn bg-navy-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 shadow-sm" data-berita-tab="Semua Berita" onclick="setBeritaTab('Semua Berita')">Semua Berita</button>
             <button class="berita-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm" data-berita-tab="Pengumuman" onclick="setBeritaTab('Pengumuman')">Pengumuman</button>
-            <button class="berita-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm" data-berita-tab="Kegiatan Sekolah" onclick="setBeritaTab('Kegiatan Sekolah')">Kegiatan Sekolah</button>
+            <button class="berita-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm" data-berita-tab="Kegiatan" onclick="setBeritaTab('Kegiatan')">Kegiatan</button>
             <button class="berita-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm" data-berita-tab="Prestasi" onclick="setBeritaTab('Prestasi')">Prestasi</button>
-            <button class="berita-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm" data-berita-tab="Artikel Pendidikan" onclick="setBeritaTab('Artikel Pendidikan')">Artikel Pendidikan</button>
-            <button class="berita-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm" data-berita-tab="Agenda" onclick="setBeritaTab('Agenda')">Agenda</button>
+            <button class="berita-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm" data-berita-tab="Penting" onclick="setBeritaTab('Penting')">Penting</button>
           </div>
           <select class="bg-white border border-gray-200 text-gray-800 px-4 py-2.5 rounded-xl font-bold text-sm outline-none shadow-sm"><option>Terbaru</option><option>Terlama</option></select>
         </div>
@@ -1218,37 +1217,7 @@
       }
     }
 
-    // ── 2. DATA DUMMY
-    const orgData = [
-      { inisial: 'R', nama: 'Rahmatuloh, S.Pd.I', jab: 'Kepala Sekolah' },
-      { inisial: 'AO', nama: 'Agisa Oktanadila, S.I.Pust', jab: 'Bendahara Sekolah' },
-      { inisial: 'ME', nama: 'Muhammad Evirustandi', jab: 'Operator Sekolah' },
-      { inisial: 'BFM', nama: 'Bambang Faidul Manan', jab: 'Administrasi' },
-      { inisial: 'RN', nama: 'Risvia Ningsih', jab: 'Media Informasi' },
-      { inisial: 'MSW', nama: 'Mega Sri Wahyuni, S.Pd', jab: 'Guru Kelas 1A' },
-      { inisial: 'DFN', nama: 'Dhea Fitria Ningsih', jab: 'Guru Kelas 1B' },
-      { inisial: 'ANF', nama: 'Alfi Nur Fauziyah, S.Pd', jab: 'Guru Kelas 2A' },
-      { inisial: 'RAB', nama: 'Rif\'at Abdul Basir, S.Pd', jab: 'Guru Kelas 2B' },
-      { inisial: 'RF', nama: 'Resti Febrianti', jab: 'Guru Kelas 3A' }
-    ];
-
-    const programUnggulan = [
-      { ic: 'ph-book-open-text', judul: 'Tahfidz Al-Qur\'an', desc: 'Program menghafal Al-Qur\'an dengan metode yang terstruktur dan menyenangkan.', img: 'https://images.unsplash.com/photo-1605333036495-2eb42a781b0f?auto=format&fit=crop&w=400&q=80' },
-      { ic: 'ph-flask', judul: 'Sains & Teknologi', desc: 'Pembelajaran sains dan teknologi untuk menumbuhkan rasa ingin tahu.', img: 'https://images.unsplash.com/photo-1564069114553-7215e1ff1890?auto=format&fit=crop&w=400&q=80' },
-      { ic: 'ph-soccer-ball', judul: 'Olahraga & Seni', desc: 'Mengembangkan bakat dan minat siswa di bidang olahraga dan seni secara seimbang.', img: 'https://images.unsplash.com/photo-1526232761682-d26e03ac148e?auto=format&fit=crop&w=400&q=80' },
-      { ic: 'ph-users-three', judul: 'Pembinaan Karakter', desc: 'Program pembinaan karakter dan kepemimpinan untuk membentuk pribadi mulia.', img: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=400&q=80' }
-    ];
-
-    const programPendukung = [
-      { ic: 'ph-translate', judul: 'Bahasa Arab & Inggris', desc: 'Meningkatkan kemampuan bahasa asing sebagai bekal komunikasi global.' },
-      { ic: 'ph-book-open', judul: 'Literasi & Numerasi', desc: 'Program penguatan literasi dan numerasi untuk dasar akademik yang kuat.' },
-      { ic: 'ph-desktop', judul: 'Kelas Digital', desc: 'Pemanfaatan teknologi digital dalam proses pembelajaran yang interaktif.' },
-      { ic: 'ph-circles-three', judul: 'Proyek Penguatan P5', desc: 'Projek berbasis karakter dan kreativitas sesuai Kurikulum Merdeka.' },
-      { ic: 'ph-basketball', judul: 'Ekstrakurikuler', desc: 'Beragam kegiatan ekstrakurikuler sesuai minat dan bakat siswa.' },
-      { ic: 'ph-heart', judul: 'Pembiasaan Islami', desc: 'Pembiasaan ibadah dan akhlak mulia dalam kehidupan sehari-hari.' },
-      { ic: 'ph-users', judul: 'Parenting Class', desc: 'Program edukasi untuk orang tua dalam mendukung perkembangan anak.' },
-      { ic: 'ph-bus', judul: 'Kunjungan Edukatif', desc: 'Kegiatan belajar di luar kelas untuk pengalaman nyata dan bermakna.' }
-    ];
+    // ── 2. DATA STATIS NON-CMS
 
     const spmbTimeline = [
       { step: 1, judul: 'Pembukaan Pendaftaran Gelombang 1', tgl: '06 Oktober - 30 November 2025', desc: 'Pengambilan dan pengisian formulir pendaftaran secara online atau langsung ke sekolah.', ic: 'ph-desktop' },
@@ -1260,23 +1229,9 @@
       { step: 7, judul: 'Hari Pertama Sekolah', tgl: '12 Juli 2026', desc: 'Seluruh Siswa SD Islam Terpadu Al-Hasan', ic: 'ph-buildings' }
     ];
 
-    const galeriImg = [
-      { t: 'Kegiatan Belajar Mengajar', c: 'Akademik', f: 32, u: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Kegiatan Keagamaan', c: 'Agama', f: 28, u: 'https://images.unsplash.com/photo-1605333036495-2eb42a781b0f?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Kegiatan Olahraga', c: 'Olahraga', f: 24, u: 'https://images.unsplash.com/photo-1526232761682-d26e03ac148e?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Seni & Budaya', c: 'Seni & Budaya', f: 18, u: 'https://images.unsplash.com/photo-1563806225-728b7b2ce8f5?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Ekstrakurikuler Pramuka', c: 'Ekstrakurikuler', f: 21, u: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Upacara Bendera', c: 'Kegiatan Lainnya', f: 15, u: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Kunjungan & Study Tour', c: 'Kegiatan Lainnya', f: 27, u: 'https://images.unsplash.com/photo-1511649475669-e288648b2339?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Event & Peringatan Hari Besar', c: 'Kegiatan Lainnya', f: 16, u: 'https://images.unsplash.com/photo-1514365313628-d84e4e94119d?auto=format&fit=crop&w=400&q=80' }
-    ];
 
-    const beritaUtama = [
-      { kat: 'Kegiatan Sekolah', jdl: 'Siswa SDIT Al-Hasan Ikuti Kegiatan Menanam Pohon di Kebun Raya', desc: 'Kegiatan ini bertujuan untuk menanamkan kepedulian terhadap lingkungan sejak dini kepada para siswa.', tgl: '20 Mei 2026', l: '256', u: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=600&q=80', b:'20', m:'Mei\n2026' },
-      { kat: 'Prestasi', jdl: 'Tim Robotik SDIT Al-Hasan Raih Juara 2 Lomba Robotik Tingkat Kabupaten', desc: 'Prestasi membanggakan diraih oleh tim robotik SDIT Al-Hasan dalam ajang Lomba Robotik tingkat Kabupaten.', tgl: '15 Mei 2026', l: '342', u: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80', b:'15', m:'Mei\n2026' },
-      { kat: 'Pengumuman', jdl: 'Pengumuman Kelulusan Siswa Kelas 6 Tahun Ajaran 2025/2026', desc: 'Selamat kepada seluruh siswa kelas 6 atas kelulusannya. Teruslah berprestasi dan menjadi generasi terbaik.', tgl: '10 Mei 2026', l: '532', u: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80', b:'10', m:'Mei\n2026' },
-      { kat: 'Artikel Pendidikan', jdl: 'Tips Menumbuhkan Minat Baca pada Anak Usia Sekolah Dasar', desc: 'Membaca adalah jendela dunia. Berikut beberapa tips untuk menumbuhkan minat baca pada anak sejak dini.', tgl: '05 Mei 2026', l: '189', u: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80', b:'05', m:'Mei\n2026' }
-    ];
+    // Penanda mode fallback lokal (saat DATA_NILAI belum tersedia dari Firebase/data.js)
+    let IS_LOCAL_FALLBACK_DATA = false;
 
     // Penanda mode fallback lokal (saat DATA_NILAI belum tersedia dari Firebase/data.js)
     let IS_LOCAL_FALLBACK_DATA = false;
@@ -1333,22 +1288,6 @@
         </div>
       `).join('');
 
-      // Preview Berita Beranda
-      document.getElementById('beranda-berita-preview').innerHTML = beritaUtama.slice(0,3).map(b => `
-        <div class="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden group">
-          <div class="h-48 relative overflow-hidden">
-             <img src="${b.u}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-             <div class="absolute top-4 left-4 bg-white/90 backdrop-blur text-navy-900 text-[10px] font-bold px-3 py-1.5 rounded-lg">${b.kat}</div>
-          </div>
-          <div class="p-6">
-            <div class="text-[10px] text-gray-400 font-bold mb-2">${b.tgl}</div>
-            <h3 class="font-bold text-navy-900 text-base mb-2 group-hover:text-accent transition line-clamp-2">${b.jdl}</h3>
-            <p class="text-xs text-gray-500 font-medium mb-4 line-clamp-2">${b.desc}</p>
-            <a href="#" class="text-accent text-[11px] font-bold flex items-center gap-1">Baca Selengkapnya <i class="ph-bold ph-arrow-right"></i></a>
-          </div>
-        </div>
-      `).join('');
-
       // Struktur Organisasi (Profil)
       const orgSource = (typeof CMS_GURU !== 'undefined' && CMS_GURU.length)
         ? CMS_GURU.filter(g => g.status !== 'Tidak Aktif').map(g => ({
@@ -1356,37 +1295,14 @@
             nama: g.nama || '-',
             jab: g.jabatan || '-'
           }))
-        : orgData;
+        : [];
       document.getElementById('grid-org').innerHTML = orgSource.map(o => `
         <div class="bg-white p-5 rounded-[2rem] border border-gray-100 flex flex-col items-center text-center shadow-sm hover:shadow-md transition">
           <div class="w-12 h-12 bg-blue-50 text-accent font-bold rounded-full flex items-center justify-center text-lg mb-3">${o.inisial}</div>
           <h4 class="font-bold text-navy-900 text-[13px] mb-1 line-clamp-2">${o.nama}</h4>
           <p class="text-[10px] text-gray-500 font-medium">${o.jab}</p>
         </div>
-      `).join('');
-
-      // Program Unggulan
-      document.getElementById('program-unggulan-grid').innerHTML = programUnggulan.map(p => `
-        <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden group hover:shadow-md transition">
-          <div class="h-44 overflow-hidden relative">
-            <img src="${p.img}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-            <div class="absolute -bottom-6 left-6 w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center text-accent text-xl border-4 border-white"><i class="ph-fill ${p.ic}"></i></div>
-          </div>
-          <div class="p-6 pt-10">
-            <h3 class="font-bold text-navy-900 text-base mb-2">${p.judul}</h3>
-            <p class="text-xs text-gray-500 font-medium mb-6 leading-relaxed line-clamp-3">${p.desc}</p>
-            <a href="#" class="text-accent text-xs font-bold flex items-center gap-1.5">Selengkapnya <i class="ph-bold ph-arrow-right"></i></a>
-          </div>
-        </div>
-      `).join('');
-
-      // Program Pendukung
-      document.getElementById('program-pendukung-grid').innerHTML = programPendukung.map(p => `
-        <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-start gap-4">
-          <div class="w-10 h-10 bg-gray-50 text-gray-500 rounded-xl flex items-center justify-center text-xl shrink-0"><i class="ph-fill ${p.ic}"></i></div>
-          <div><h4 class="font-bold text-navy-900 text-sm mb-1.5">${p.judul}</h4><p class="text-[11px] text-gray-500 font-medium leading-relaxed">${p.desc}</p></div>
-        </div>
-      `).join('');
+      `).join('') || `<div class="col-span-full bg-white p-8 rounded-2xl border border-gray-100 text-center text-sm font-medium text-gray-500">Data guru/staf belum tersedia di database.</div>`;
 
       // Timeline SPMB
       document.getElementById('spmb-timeline').innerHTML = spmbTimeline.map(t => `
@@ -1404,24 +1320,39 @@
         </div>
       `).join('');
 
+      const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+      const fixGDrive = u => {
+        if (!u) return u;
+        const m = u.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+        return m ? `https://drive.google.com/thumbnail?id=${m[1]}&sz=w600` : u;
+      };
+      const fmtDate = d => {
+        if (!d) return '';
+        const p = d.split('-'); const bln = ['','Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+        return p.length < 3 ? d : `${p[2]} ${bln[+p[1]]||p[1]} ${p[0]}`;
+      };
+
       function renderGaleriSection(activeTab = 'Semua Kegiatan') {
-        const list = activeTab === 'Semua Kegiatan' ? galeriImg : galeriImg.filter(g => g.c === activeTab);
+        const source = (window.CMS_GALERI || []);
+        const list = activeTab === 'Semua Kegiatan'
+          ? source
+          : source.filter(g => (g.kategori || g.category || 'Kegiatan Lainnya') === activeTab);
         const title = document.getElementById('galeri-tab-title');
         if (title) title.textContent = activeTab;
         document.getElementById('galeri-grid').innerHTML = list.length ? list.map(g => `
           <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden group cursor-pointer p-2">
             <div class="aspect-[4/3] relative overflow-hidden rounded-[1.5rem]">
-              <img src="${g.u}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-              <div class="absolute bottom-3 left-3 bg-black/50 backdrop-blur text-white text-[10px] font-bold px-2 py-1 rounded flex items-center gap-1.5"><i class="ph-bold ph-image"></i> ${g.f} Foto</div>
+              <img src="${fixGDrive(esc(g.url||''))}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
             </div>
             <div class="p-4 pb-2">
-              <h3 class="font-bold text-navy-900 text-sm mb-2 truncate">${g.t}</h3>
-              <span class="inline-block bg-blue-50 text-accent text-[10px] font-bold px-2.5 py-1 rounded-lg tracking-wide">${g.c}</span>
+              <h3 class="font-bold text-navy-900 text-sm mb-2 truncate">${esc(g.caption || 'Tanpa Judul')}</h3>
+              <span class="inline-block bg-blue-50 text-accent text-[10px] font-bold px-2.5 py-1 rounded-lg tracking-wide">${esc(g.kategori || g.category || 'Kegiatan Lainnya')}</span>
             </div>
           </div>
         `).join('') : `<div class="col-span-full bg-white p-8 rounded-2xl border border-gray-100 text-center text-gray-500 text-sm font-medium">Belum ada konten pada tab ${activeTab}.</div>`;
       }
       window.setGaleriTab = function(tab) {
+        window._GALERI_TAB = tab;
         document.querySelectorAll('.galeri-tab-btn').forEach(btn => {
           const active = btn.dataset.galeriTab === tab;
           btn.classList.toggle('bg-navy-900', active);
@@ -1458,34 +1389,33 @@
       `).join('');
 
       function renderBeritaSection(activeTab = 'Semua Berita') {
-        const list = activeTab === 'Semua Berita' ? beritaUtama : beritaUtama.filter(b => b.kat === activeTab);
+        const source = window.CMS_BERITA || [];
+        const list = activeTab === 'Semua Berita' ? source : source.filter(b => (b.kategori || '') === activeTab);
         document.getElementById('berita-list-main').innerHTML = list.length ? list.map(b => `
           <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden flex flex-col sm:flex-row group hover:shadow-md transition p-2">
-            <div class="w-full sm:w-64 h-48 sm:h-auto relative overflow-hidden shrink-0 rounded-[1.5rem]">
-              <img src="${b.u}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-              <div class="absolute top-3 left-3 bg-navy-900 text-white text-center rounded-xl overflow-hidden shadow-sm">
-                <div class="bg-navy-800 text-sm font-black px-3 py-1.5">${b.b}</div>
-                <div class="text-[9px] font-bold px-3 py-1 whitespace-pre-wrap leading-tight bg-navy-900">${b.m}</div>
-              </div>
+            <div class="w-full sm:w-64 h-48 sm:h-auto relative overflow-hidden shrink-0 rounded-[1.5rem] bg-gray-100">
+              ${(b.imageUrl && (b.thumbnailType === 'foto' || !b.thumbnailType))
+                ? `<img src="${esc(b.imageUrl)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">`
+                : `<div class="w-full h-full flex items-center justify-center text-5xl">${esc(b.emoji || '📋')}</div>`}
             </div>
             <div class="p-6 flex flex-col justify-center flex-1">
               <div class="mb-3">
-                <span class="bg-blue-50 text-accent text-[10px] font-bold px-2.5 py-1 rounded-lg">${b.kat}</span>
+                <span class="bg-blue-50 text-accent text-[10px] font-bold px-2.5 py-1 rounded-lg">${esc(b.kategori || 'Berita')}</span>
               </div>
-              <h3 class="font-bold text-navy-900 text-lg mb-2 group-hover:text-accent transition line-clamp-2 leading-snug">${b.jdl}</h3>
-              <p class="text-xs text-gray-500 font-medium mb-4 line-clamp-2 leading-relaxed">${b.desc}</p>
+              <h3 class="font-bold text-navy-900 text-lg mb-2 group-hover:text-accent transition line-clamp-2 leading-snug">${esc(b.judul || '')}</h3>
+              <p class="text-xs text-gray-500 font-medium mb-4 line-clamp-2 leading-relaxed">${esc((b.ringkasan || b.isi || '').substring(0, 180))}</p>
               <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
                 <div class="flex items-center gap-4 text-[11px] text-gray-400 font-medium">
-                  <span class="flex items-center gap-1.5"><i class="ph-bold ph-calendar-blank"></i> ${b.tgl}</span>
-                  <span class="flex items-center gap-1.5"><i class="ph-bold ph-eye"></i> ${b.l} Dilihat</span>
+                  <span class="flex items-center gap-1.5"><i class="ph-bold ph-calendar-blank"></i> ${esc(fmtDate(b.tgl || ''))}</span>
                 </div>
-                <a href="#" class="text-accent text-xs font-bold flex items-center gap-1 hover:underline">Baca <i class="ph-bold ph-arrow-right"></i></a>
+                ${(b.fileUrl ? `<a href="${esc(b.fileUrl)}" target="_blank" class="text-accent text-xs font-bold flex items-center gap-1 hover:underline">Lampiran <i class="ph-bold ph-arrow-right"></i></a>` : '')}
               </div>
             </div>
           </div>
         `).join('') : `<div class="bg-white rounded-2xl border border-gray-100 p-10 text-center text-sm font-medium text-gray-500">Belum ada artikel untuk kategori ${activeTab}.</div>`;
       }
       window.setBeritaTab = function(tab) {
+        window._BERITA_TAB = tab;
         document.querySelectorAll('.berita-tab-btn').forEach(btn => {
           const active = btn.dataset.beritaTab === tab;
           btn.classList.toggle('bg-navy-900', active);
@@ -1498,20 +1428,6 @@
         renderBeritaSection(tab);
       };
       window.setBeritaTab('Semua Berita');
-
-      // Berita Populer
-      document.getElementById('berita-populer').innerHTML = [
-        { n:1, j:'SDIT Al-Hasan Borong Piala di Olimpiade Sains', d:'12 Mei 2026', u:'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=100' },
-        { n:2, j:'Kegiatan Pesantren Kilat Bulan Ramadan', d:'18 Mar 2026', u:'https://images.unsplash.com/photo-1605333036495-2eb42a781b0f?w=100' },
-        { n:3, j:'Upacara Hardiknas 2026 Berlangsung Khidmat', d:'02 Mei 2026', u:'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=100' },
-        { n:4, j:'Siswa SDIT Al-Hasan Lolos Seleksi O2SN', d:'22 Apr 2026', u:'https://images.unsplash.com/photo-1526232761682-d26e03ac148e?w=100' }
-      ].map(b => `
-        <div class="flex items-center gap-4 group cursor-pointer border-b border-gray-50 pb-3 last:border-0 last:pb-0">
-          <div class="text-base font-black text-gray-300 group-hover:text-accent transition w-4 text-center">${b.n}</div>
-          <img src="${b.u}" class="w-14 h-14 rounded-xl object-cover shadow-sm">
-          <div class="flex-1"><h4 class="font-bold text-navy-900 text-xs mb-1 line-clamp-2 group-hover:text-accent transition leading-tight">${b.j}</h4><p class="text-[10px] text-gray-400 font-medium">${b.d}</p></div>
-        </div>
-      `).join('');
 
     });
 

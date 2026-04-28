@@ -101,10 +101,17 @@ function formatTgl(str) {
   return p.length < 3 ? str : `${p[2]} ${bln[+p[1]]||p[1]} ${p[0]}`;
 }
 
+function shouldUsePhoto(item) {
+  return !!(item?.imageUrl && (item?.thumbnailType === 'foto' || !item?.thumbnailType));
+}
+
 // Berita
 function renderBerita() {
   const data = window.CMS_BERITA || [];
   if (!data.length) return;
+  if (typeof window.setBeritaTab === 'function') {
+    window.setBeritaTab(window._BERITA_TAB || 'Semua Berita');
+  }
 
   const bgMap    = { Prestasi:'#FFF8E8', Penting:'#F0F4FF', Kegiatan:'#FFF0F5', Pengumuman:'#E8F5EC' };
   const badgeMap = { Prestasi:'badge-prestasi', Penting:'badge-penting', Kegiatan:'badge-info', Pengumuman:'badge-info' };
@@ -112,7 +119,7 @@ function renderBerita() {
   const makeCard = b => `
     <div class="berita-kartu">
       <div class="berita-img" style="background:${bgMap[b.kategori]||'#E8F5EC'};overflow:hidden">
-        ${(b.thumbnailType === 'foto' && b.imageUrl)
+        ${shouldUsePhoto(b)
           ? `<img src="${escapeHtml(b.imageUrl)}" alt="${escapeHtml(b.judul||'')}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';this.parentNode.textContent='${escapeHtml(b.emoji||'📋')}'">`
           : `${escapeHtml(b.emoji||'📋')}`
         }
@@ -147,13 +154,32 @@ function renderBerita() {
       </div>`).join('');
   }
 
+  const elBerandaPreview = document.getElementById('beranda-berita-preview');
+  if (elBerandaPreview) {
+    elBerandaPreview.innerHTML = data.slice(0,3).map(b => `
+      <div class="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden group">
+        <div class="h-48 relative overflow-hidden bg-gray-100">
+          ${shouldUsePhoto(b)
+            ? `<img src="${escapeHtml(b.imageUrl)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.style.display='none'">`
+            : `<div class="w-full h-full flex items-center justify-center text-5xl">${escapeHtml(b.emoji||'📋')}</div>`}
+          <div class="absolute top-4 left-4 bg-white/90 backdrop-blur text-navy-900 text-[10px] font-bold px-3 py-1.5 rounded-lg">${escapeHtml(b.kategori||'Berita')}</div>
+        </div>
+        <div class="p-6">
+          <div class="text-[10px] text-gray-400 font-bold mb-2">${escapeHtml(formatTgl(b.tgl||''))}</div>
+          <h3 class="font-bold text-navy-900 text-base mb-2 group-hover:text-accent transition line-clamp-2">${escapeHtml(b.judul||'')}</h3>
+          <p class="text-xs text-gray-500 font-medium mb-4 line-clamp-2">${escapeHtml((b.ringkasan||b.isi||'').substring(0,120))}</p>
+          ${b.fileUrl ? `<a href="${escapeHtml(b.fileUrl)}" target="_blank" class="text-accent text-[11px] font-bold flex items-center gap-1">Buka Lampiran <i class="ph-bold ph-arrow-right"></i></a>` : ''}
+        </div>
+      </div>`).join('');
+  }
+
   // Kompatibilitas untuk layout berita index versi baru
   const elMain = document.getElementById('berita-list-main');
   if (elMain) {
     elMain.innerHTML = data.map(b => `
       <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden flex flex-col sm:flex-row group hover:shadow-md transition p-2">
         <div class="w-full sm:w-64 h-48 sm:h-auto relative overflow-hidden shrink-0 rounded-[1.5rem] bg-gray-100">
-          ${(b.thumbnailType === 'foto' && b.imageUrl)
+          ${shouldUsePhoto(b)
             ? `<img src="${escapeHtml(b.imageUrl)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.style.display='none'">`
             : `<div class="w-full h-full flex items-center justify-center text-5xl">${escapeHtml(b.emoji||'📋')}</div>`}
         </div>
@@ -163,6 +189,18 @@ function renderBerita() {
           <p class="text-xs text-gray-500 font-medium mb-4 line-clamp-2 leading-relaxed">${escapeHtml((b.ringkasan||b.isi||'').substring(0,180))}</p>
           ${b.fileUrl?`<a href="${escapeHtml(b.fileUrl)}" target="_blank" class="text-accent text-xs font-bold">Buka Lampiran</a>`:''}
         </div>
+      </div>`).join('');
+  }
+
+  const elPopuler = document.getElementById('berita-populer');
+  if (elPopuler) {
+    elPopuler.innerHTML = data.slice(0,4).map((b, i) => `
+      <div class="flex items-center gap-4 group cursor-pointer border-b border-gray-50 pb-3 last:border-0 last:pb-0">
+        <div class="text-base font-black text-gray-300 group-hover:text-accent transition w-4 text-center">${i + 1}</div>
+        ${shouldUsePhoto(b)
+          ? `<img src="${escapeHtml(b.imageUrl)}" class="w-14 h-14 rounded-xl object-cover shadow-sm" onerror="this.style.display='none'">`
+          : `<div class="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center text-xl">${escapeHtml(b.emoji||'📋')}</div>`}
+        <div class="flex-1"><h4 class="font-bold text-navy-900 text-xs mb-1 line-clamp-2 group-hover:text-accent transition leading-tight">${escapeHtml(b.judul||'')}</h4><p class="text-[10px] text-gray-400 font-medium">${escapeHtml(formatTgl(b.tgl||''))}</p></div>
       </div>`).join('');
   }
 }
@@ -193,6 +231,10 @@ function renderGaleri() {
   // Halaman galeri — semua
   const elFull = document.getElementById('cms-galeri-full');
   if (elFull) elFull.innerHTML = data.map(makeItem).join('');
+
+  if (typeof window.setGaleriTab === 'function') {
+    window.setGaleriTab(window._GALERI_TAB || 'Semua Kegiatan');
+  }
 
   // cms-galeri (kompatibilitas lama)
   const elLama = document.getElementById('cms-galeri');
@@ -240,7 +282,7 @@ function renderProgram() {
 
   const makeKartu = (p, i) => `
     <div class="prog-kartu" style="background:${bgColors[i%bgColors.length]};border-color:${borderColors[i%borderColors.length]}">
-      ${(p.thumbnailType === 'foto' && p.imageUrl) ? `<div style="height:120px;border-radius:12px;overflow:hidden;margin-bottom:10px"><img src="${escapeHtml(p.imageUrl)}" alt="${escapeHtml(p.nama||'')}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'"></div>` : ''}
+      ${shouldUsePhoto(p) ? `<div style="height:120px;border-radius:12px;overflow:hidden;margin-bottom:10px"><img src="${escapeHtml(p.imageUrl)}" alt="${escapeHtml(p.nama||'')}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'"></div>` : ''}
       <div class="prog-header">
         <span class="prog-emoji">${escapeHtml(p.ikon || p.emoji || '📖')}</span>
         <div><div class="prog-nama">${escapeHtml(p.nama || '')}</div></div>
@@ -264,7 +306,7 @@ function renderProgram() {
     elProgramUnggulan.innerHTML = data.slice(0, 4).map(p => `
       <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden group hover:shadow-md transition">
         <div class="h-44 overflow-hidden relative bg-gray-100">
-          ${(p.thumbnailType === 'foto' && p.imageUrl)
+          ${shouldUsePhoto(p)
             ? `<img src="${escapeHtml(p.imageUrl)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.style.display='none'">`
             : `<div class="w-full h-full flex items-center justify-center text-5xl">${escapeHtml(p.ikon || p.emoji || '📖')}</div>`}
         </div>
