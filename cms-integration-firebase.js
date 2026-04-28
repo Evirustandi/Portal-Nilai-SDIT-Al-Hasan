@@ -112,7 +112,7 @@ function renderBerita() {
   const makeCard = b => `
     <div class="berita-kartu">
       <div class="berita-img" style="background:${bgMap[b.kategori]||'#E8F5EC'};overflow:hidden">
-        ${b.imageUrl
+        ${(b.thumbnailType === 'foto' && b.imageUrl)
           ? `<img src="${escapeHtml(b.imageUrl)}" alt="${escapeHtml(b.judul||'')}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';this.parentNode.textContent='${escapeHtml(b.emoji||'📋')}'">`
           : `${escapeHtml(b.emoji||'📋')}`
         }
@@ -153,7 +153,7 @@ function renderBerita() {
     elMain.innerHTML = data.map(b => `
       <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden flex flex-col sm:flex-row group hover:shadow-md transition p-2">
         <div class="w-full sm:w-64 h-48 sm:h-auto relative overflow-hidden shrink-0 rounded-[1.5rem] bg-gray-100">
-          ${b.imageUrl
+          ${(b.thumbnailType === 'foto' && b.imageUrl)
             ? `<img src="${escapeHtml(b.imageUrl)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.style.display='none'">`
             : `<div class="w-full h-full flex items-center justify-center text-5xl">${escapeHtml(b.emoji||'📋')}</div>`}
         </div>
@@ -240,7 +240,7 @@ function renderProgram() {
 
   const makeKartu = (p, i) => `
     <div class="prog-kartu" style="background:${bgColors[i%bgColors.length]};border-color:${borderColors[i%borderColors.length]}">
-      ${p.imageUrl ? `<div style="height:120px;border-radius:12px;overflow:hidden;margin-bottom:10px"><img src="${escapeHtml(p.imageUrl)}" alt="${escapeHtml(p.nama||'')}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'"></div>` : ''}
+      ${(p.thumbnailType === 'foto' && p.imageUrl) ? `<div style="height:120px;border-radius:12px;overflow:hidden;margin-bottom:10px"><img src="${escapeHtml(p.imageUrl)}" alt="${escapeHtml(p.nama||'')}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'"></div>` : ''}
       <div class="prog-header">
         <span class="prog-emoji">${escapeHtml(p.ikon || p.emoji || '📖')}</span>
         <div><div class="prog-nama">${escapeHtml(p.nama || '')}</div></div>
@@ -264,7 +264,7 @@ function renderProgram() {
     elProgramUnggulan.innerHTML = data.slice(0, 4).map(p => `
       <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden group hover:shadow-md transition">
         <div class="h-44 overflow-hidden relative bg-gray-100">
-          ${p.imageUrl
+          ${(p.thumbnailType === 'foto' && p.imageUrl)
             ? `<img src="${escapeHtml(p.imageUrl)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.style.display='none'">`
             : `<div class="w-full h-full flex items-center justify-center text-5xl">${escapeHtml(p.ikon || p.emoji || '📖')}</div>`}
         </div>

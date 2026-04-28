@@ -231,6 +231,7 @@ function renderStat() {
 // ══════════════════════════════════════════════════════════
 window.formBerita = function(id) {
   const item = id ? (window.CMS_BERITA||[]).find(x => x.id === id) : null;
+  const thumbType = item?.thumbnailType || (item?.imageUrl ? 'foto' : 'emoji');
   const cats  = ['Pengumuman','Prestasi','Penting','Kegiatan'];
   const emojis= ['📋','🏆','📝','📣','🎉','📚','🌟','⚠️'];
   const el = document.getElementById('form-berita-area');
@@ -250,19 +251,24 @@ window.formBerita = function(id) {
           <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="bf-k">
             ${cats.map(c=>`<option${item?.kategori===c?' selected':''}>${c}</option>`).join('')}
           </select></div>
-        <div><label class="block text-xs font-semibold text-gray-500 mb-1">Emoji</label>
+        <div><label class="block text-xs font-semibold text-gray-500 mb-1">Tipe Thumbnail</label>
+          <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="bf-thumb" onchange="toggleBeritaThumbFields(this.value)">
+            <option value="emoji"${thumbType==='emoji'?' selected':''}>Emoji</option>
+            <option value="foto"${thumbType==='foto'?' selected':''}>Foto</option>
+          </select></div>
+      </div>
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <div id="bf-emoji-wrap"><label class="block text-xs font-semibold text-gray-500 mb-1">Emoji</label>
           <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="bf-e">
             ${emojis.map(e=>`<option value="${e}"${item?.emoji===e?' selected':''}>${e}</option>`).join('')}
           </select></div>
+        <div id="bf-image-wrap"><label class="block text-xs font-semibold text-gray-500 mb-1">URL Gambar Thumbnail</label>
+          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="bf-img" value="${item?.imageUrl||''}" placeholder="https://...jpg / png"></div>
       </div>
       <div class="mb-4"><label class="block text-xs font-semibold text-gray-500 mb-1">Isi / Deskripsi</label>
         <textarea class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none min-h-20 resize-y" id="bf-i">${item?.isi||''}</textarea>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
-        <div>
-          <label class="block text-xs font-semibold text-gray-500 mb-1">URL Gambar (opsional)</label>
-          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="bf-img" value="${item?.imageUrl||''}" placeholder="https://...jpg / png">
-        </div>
         <div>
           <label class="block text-xs font-semibold text-gray-500 mb-1">URL File (opsional)</label>
           <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="bf-file" value="${item?.fileUrl||''}" placeholder="https://...pdf / dokumen">
@@ -273,6 +279,15 @@ window.formBerita = function(id) {
         <button onclick="closeForm('form-berita-area')" class="border border-gray-200 text-gray-500 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-50">Batal</button>
       </div>
     </div>`;
+  window.toggleBeritaThumbFields(thumbType);
+};
+
+window.toggleBeritaThumbFields = function(type) {
+  const e = document.getElementById('bf-emoji-wrap');
+  const i = document.getElementById('bf-image-wrap');
+  if (!e || !i) return;
+  e.style.display = type === 'emoji' ? '' : 'none';
+  i.style.display = type === 'foto' ? '' : 'none';
 };
 
 window.saveBerita = async function(id) {
@@ -285,6 +300,7 @@ window.saveBerita = async function(id) {
     emoji: document.getElementById('bf-e').value,
     isi,
     ringkasan: isi.substring(0, 160),
+    thumbnailType: document.getElementById('bf-thumb')?.value || 'emoji',
     imageUrl: document.getElementById('bf-img')?.value.trim() || '',
     fileUrl: document.getElementById('bf-file')?.value.trim() || '',
     updatedAt: serverTimestamp()
@@ -466,6 +482,7 @@ window.formProgram = function(id) {
   const item = id ? (window.CMS_PROGRAM||[]).find(x => x.id === id) : null;
   const selectedIkon = item?.ikon || item?.emoji || '📚';
   const selectedDesc = item?.deskripsi || item?.desc || '';
+  const thumbType = item?.thumbnailType || (item?.imageUrl ? 'foto' : 'emoji');
   const el = document.getElementById('form-program-area');
   if (!el) return;
   el.style.display = 'block';
@@ -476,17 +493,24 @@ window.formProgram = function(id) {
       <div class="grid grid-cols-2 gap-3 mb-3">
         <div><label class="block text-xs font-semibold text-gray-500 mb-1">Nama Program</label>
           <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-n" value="${item?.nama||''}" placeholder="Nama program sekolah"></div>
-        <div><label class="block text-xs font-semibold text-gray-500 mb-1">Ikon</label>
+        <div><label class="block text-xs font-semibold text-gray-500 mb-1">Tipe Thumbnail</label>
+          <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-thumb" onchange="toggleProgramThumbFields(this.value)">
+            <option value="emoji"${thumbType==='emoji'?' selected':''}>Emoji / Ikon</option>
+            <option value="foto"${thumbType==='foto'?' selected':''}>Foto</option>
+          </select></div>
+      </div>
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <div id="pf-emoji-wrap"><label class="block text-xs font-semibold text-gray-500 mb-1">Ikon</label>
           <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-i">
             ${ikonList.map(k=>`<option value="${k}"${selectedIkon===k?' selected':''}>${k}</option>`).join('')}
           </select></div>
+        <div id="pf-image-wrap"><label class="block text-xs font-semibold text-gray-500 mb-1">URL Gambar Thumbnail</label>
+          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-img" value="${item?.imageUrl||''}" placeholder="https://...jpg / png"></div>
       </div>
       <div class="mb-3"><label class="block text-xs font-semibold text-gray-500 mb-1">Deskripsi</label>
         <textarea class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none min-h-16 resize-y" id="pf-d">${selectedDesc}</textarea>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
-        <div><label class="block text-xs font-semibold text-gray-500 mb-1">URL Gambar (opsional)</label>
-          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-img" value="${item?.imageUrl||''}" placeholder="https://...jpg / png"></div>
         <div><label class="block text-xs font-semibold text-gray-500 mb-1">URL File (opsional)</label>
           <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-file" value="${item?.fileUrl||''}" placeholder="https://...pdf / dokumen"></div>
       </div>
@@ -497,6 +521,15 @@ window.formProgram = function(id) {
         <button onclick="closeForm('form-program-area')" class="border border-gray-200 text-gray-500 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-50">Batal</button>
       </div>
     </div>`;
+  window.toggleProgramThumbFields(thumbType);
+};
+
+window.toggleProgramThumbFields = function(type) {
+  const e = document.getElementById('pf-emoji-wrap');
+  const i = document.getElementById('pf-image-wrap');
+  if (!e || !i) return;
+  e.style.display = type === 'emoji' ? '' : 'none';
+  i.style.display = type === 'foto' ? '' : 'none';
 };
 
 window.saveProgram = async function(id) {
@@ -509,6 +542,7 @@ window.saveProgram = async function(id) {
     nama,
     ikon,
     emoji: ikon, // kompatibilitas data lama
+    thumbnailType: document.getElementById('pf-thumb')?.value || 'emoji',
     deskripsi,
     desc: deskripsi, // kompatibilitas data lama
     imageUrl: document.getElementById('pf-img')?.value.trim() || '',
