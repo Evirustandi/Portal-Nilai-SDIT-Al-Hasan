@@ -43,6 +43,14 @@ const MAPEL = [
 
 // ── HELPERS UI ────────────────────────────────────────────
 function UID()  { return Date.now().toString(36) + Math.random().toString(36).substr(2); }
+function EH(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 function OK(m)  {
   const n = document.createElement('div');
   n.className = 'fixed top-5 right-5 z-50 bg-green-100 text-green-800 border border-green-300 px-5 py-3 rounded-xl text-sm font-semibold shadow-lg animate-fade';
@@ -55,8 +63,11 @@ function ERR(m) {
   n.textContent = m; document.body.appendChild(n);
   setTimeout(() => n.remove(), 4000);
 }
-function closeForm(id)  { const el = document.getElementById(id); if (el) { el.innerHTML = ''; el.style.display = 'none'; } }
-function openForm(id)   { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+window.closeForm = function(id)  {
+  const el = document.getElementById(id);
+  if (el) { el.innerHTML = ''; el.style.display = 'none'; }
+};
+window.openForm = function(id)   { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
 
 // ── AUTH FIREBASE ─────────────────────────────────────────
 // Login menggunakan Firebase Authentication (Email/Password)
@@ -220,6 +231,7 @@ function renderStat() {
 // ══════════════════════════════════════════════════════════
 window.formBerita = function(id) {
   const item = id ? (window.CMS_BERITA||[]).find(x => x.id === id) : null;
+  const thumbType = item?.thumbnailType || (item?.imageUrl ? 'foto' : 'emoji');
   const cats  = ['Pengumuman','Prestasi','Penting','Kegiatan'];
   const emojis= ['📋','🏆','📝','📣','🎉','📚','🌟','⚠️'];
   const el = document.getElementById('form-berita-area');
@@ -239,29 +251,58 @@ window.formBerita = function(id) {
           <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="bf-k">
             ${cats.map(c=>`<option${item?.kategori===c?' selected':''}>${c}</option>`).join('')}
           </select></div>
-        <div><label class="block text-xs font-semibold text-gray-500 mb-1">Emoji</label>
+        <div><label class="block text-xs font-semibold text-gray-500 mb-1">Tipe Thumbnail</label>
+          <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="bf-thumb" onchange="toggleBeritaThumbFields(this.value)">
+            <option value="emoji"${thumbType==='emoji'?' selected':''}>Emoji</option>
+            <option value="foto"${thumbType==='foto'?' selected':''}>Foto</option>
+          </select></div>
+      </div>
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <div id="bf-emoji-wrap"><label class="block text-xs font-semibold text-gray-500 mb-1">Emoji</label>
           <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="bf-e">
             ${emojis.map(e=>`<option value="${e}"${item?.emoji===e?' selected':''}>${e}</option>`).join('')}
           </select></div>
+        <div id="bf-image-wrap"><label class="block text-xs font-semibold text-gray-500 mb-1">URL Gambar Thumbnail</label>
+          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="bf-img" value="${item?.imageUrl||''}" placeholder="https://...jpg / png"></div>
       </div>
       <div class="mb-4"><label class="block text-xs font-semibold text-gray-500 mb-1">Isi / Deskripsi</label>
         <textarea class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none min-h-20 resize-y" id="bf-i">${item?.isi||''}</textarea>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">URL File (opsional)</label>
+          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="bf-file" value="${item?.fileUrl||''}" placeholder="https://...pdf / dokumen">
+        </div>
       </div>
       <div class="flex gap-2">
         <button onclick="saveBerita('${id||''}')" class="bg-navy-900 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-navy-800">${id?'Simpan Perubahan':'Simpan'}</button>
         <button onclick="closeForm('form-berita-area')" class="border border-gray-200 text-gray-500 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-50">Batal</button>
       </div>
     </div>`;
+  window.toggleBeritaThumbFields(thumbType);
+};
+
+window.toggleBeritaThumbFields = function(type) {
+  const e = document.getElementById('bf-emoji-wrap');
+  const i = document.getElementById('bf-image-wrap');
+  if (!e || !i) return;
+  e.style.display = type === 'emoji' ? '' : 'none';
+  i.style.display = type === 'foto' ? '' : 'none';
 };
 
 window.saveBerita = async function(id) {
   const judul = document.getElementById('bf-j')?.value.trim();
   if (!judul) { ERR('Judul wajib diisi!'); return; }
+  const isi = document.getElementById('bf-i').value;
   const data = {
     judul, tgl: document.getElementById('bf-t').value,
     kategori: document.getElementById('bf-k').value,
     emoji: document.getElementById('bf-e').value,
-    isi: document.getElementById('bf-i').value,
+    isi,
+    ringkasan: isi.substring(0, 160),
+    thumbnailType: document.getElementById('bf-thumb')?.value || 'emoji',
+    imageUrl: document.getElementById('bf-img')?.value.trim() || '',
+    fileUrl: document.getElementById('bf-file')?.value.trim() || '',
     updatedAt: serverTimestamp()
   };
   try {
@@ -288,9 +329,9 @@ function renderBerita() {
   if (!data.length) { el.innerHTML = '<tr><td colspan="6" class="text-center text-gray-400 py-10">Belum ada berita. Klik + Tambah Berita.</td></tr>'; return; }
   el.innerHTML = data.map((b, i) => `<tr>
     <td>${i+1}</td>
-    <td><span class="text-xl mr-2">${b.emoji||'📋'}</span><span class="font-medium text-navy-900">${b.judul}</span><div class="text-xs text-gray-400 mt-0.5">${(b.isi||'').substring(0,60)}...</div></td>
-    <td><span class="badge badge-blue">${b.kategori||''}</span></td>
-    <td class="text-gray-400">${b.tgl||''}</td>
+    <td><span class="text-xl mr-2">${EH(b.emoji||'📋')}</span><span class="font-medium text-navy-900">${EH(b.judul||'')}</span><div class="text-xs text-gray-400 mt-0.5">${EH((b.isi||'').substring(0,60))}...</div></td>
+    <td><span class="badge badge-blue">${EH(b.kategori||'')}</span></td>
+    <td class="text-gray-400">${EH(b.tgl||'')}</td>
     <td><span class="badge badge-green">Aktif</span></td>
     <td class="text-right"><div class="flex gap-2 justify-end">
       <button onclick="formBerita('${b.id}')" class="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 font-medium">Edit</button>
@@ -303,6 +344,7 @@ function renderBerita() {
 // ══════════════════════════════════════════════════════════
 window.formGaleri = function(id) {
   const item = id ? (window.CMS_GALERI||[]).find(x => x.id === id) : null;
+  const galeriCats = ['Akademik','Agama','Olahraga','Seni & Budaya','Ekstrakurikuler','Kegiatan Lainnya'];
   const el = document.getElementById('form-galeri-area');
   if (!el) return;
   el.style.display = 'block';
@@ -311,6 +353,11 @@ window.formGaleri = function(id) {
       <h4 class="text-sm font-bold text-navy-900 mb-4">${id?'Edit':'Tambah'} Foto Galeri</h4>
       <div class="mb-3"><label class="block text-xs font-semibold text-gray-500 mb-1">Keterangan Foto</label>
         <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="gf-c" value="${item?.caption||''}" placeholder="Keterangan foto kegiatan"></div>
+      <div class="mb-3"><label class="block text-xs font-semibold text-gray-500 mb-1">Kategori / Tag</label>
+        <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="gf-k">
+          ${galeriCats.map(c=>`<option value="${c}"${(item?.kategori||item?.category||'')===c?' selected':''}>${c}</option>`).join('')}
+        </select>
+      </div>
       <div class="mb-3"><label class="block text-xs font-semibold text-gray-500 mb-1">URL / Path Foto</label>
         <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="gf-u" value="${item?.url||''}" placeholder="foto/upacara.jpg atau https://..."
           oninput="const p=document.getElementById('gf-p');if(this.value){p.src=fixGDriveUrl(this.value);p.classList.remove('hidden');}else p.classList.add('hidden')">
@@ -326,8 +373,9 @@ window.formGaleri = function(id) {
 window.saveGaleri = async function(id) {
   const url = document.getElementById('gf-u')?.value.trim();
   const cap = document.getElementById('gf-c')?.value.trim();
+  const kategori = document.getElementById('gf-k')?.value || 'Kegiatan Lainnya';
   if (!url || !cap) { ERR('URL dan keterangan wajib!'); return; }
-  const data = { url, caption: cap, updatedAt: serverTimestamp() };
+  const data = { url, caption: cap, kategori, category: kategori, updatedAt: serverTimestamp() };
   try {
     if (id) { await updateDoc(doc(db, 'galeri', id), data); }
     else { await addDoc(collection(db, 'galeri'), { ...data, createdAt: serverTimestamp() }); }
@@ -352,7 +400,8 @@ function renderGaleri() {
         <img src="${fixGDriveUrl(g.url)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.style.background='#f3f4f6'">
       </div>
       <div class="p-3">
-        <p class="text-sm font-medium text-navy-900 truncate mb-2">${g.caption}</p>
+        <p class="text-sm font-medium text-navy-900 truncate mb-2">${EH(g.caption||'')}</p>
+        <span class="inline-block mb-2 text-[10px] font-bold px-2 py-1 rounded-lg bg-blue-50 text-accent">${EH(g.kategori || g.category || 'Kegiatan Lainnya')}</span>
         <div class="flex gap-2">
           <button onclick="formGaleri('${g.id}')" class="flex-1 text-xs px-2 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 font-medium">Edit</button>
           <button onclick="delGaleri('${g.id}')" class="flex-1 text-xs px-2 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-medium">Hapus</button>
@@ -422,11 +471,11 @@ function renderGuru() {
   const badge = s => s==='Aktif'?'bg-green-100 text-green-700':s==='Cuti'?'bg-yellow-100 text-yellow-700':'bg-red-100 text-red-700';
   el.innerHTML = data.map(g => `
     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col items-center text-center hover:shadow-md transition">
-      <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-xl font-extrabold text-navy-900 mb-3">${g.inisial||'?'}</div>
-      <h3 class="font-bold text-navy-900 text-sm leading-tight">${g.nama}</h3>
-      <p class="text-xs text-gray-400 mt-1 mb-1">${g.jabatan}</p>
-      <p class="text-xs text-gray-400 mb-3">${g.mapel||''}</p>
-      <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${badge(g.status)}">${g.status}</span>
+      <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-xl font-extrabold text-navy-900 mb-3">${EH(g.inisial||'?')}</div>
+      <h3 class="font-bold text-navy-900 text-sm leading-tight">${EH(g.nama||'')}</h3>
+      <p class="text-xs text-gray-400 mt-1 mb-1">${EH(g.jabatan||'')}</p>
+      <p class="text-xs text-gray-400 mb-3">${EH(g.mapel||'')}</p>
+      <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${badge(g.status)}">${EH(g.status||'')}</span>
       <div class="flex gap-2 mt-4 w-full">
         <button onclick="formGuru('${g.id}')" class="flex-1 text-xs px-2 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 font-medium">Edit</button>
         <button onclick="delGuru('${g.id}')" class="flex-1 text-xs px-2 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-medium">Hapus</button>
@@ -439,6 +488,9 @@ function renderGuru() {
 // ══════════════════════════════════════════════════════════
 window.formProgram = function(id) {
   const item = id ? (window.CMS_PROGRAM||[]).find(x => x.id === id) : null;
+  const selectedIkon = item?.ikon || item?.emoji || '📚';
+  const selectedDesc = item?.deskripsi || item?.desc || '';
+  const thumbType = item?.thumbnailType || (item?.imageUrl ? 'foto' : 'emoji');
   const el = document.getElementById('form-program-area');
   if (!el) return;
   el.style.display = 'block';
@@ -449,13 +501,26 @@ window.formProgram = function(id) {
       <div class="grid grid-cols-2 gap-3 mb-3">
         <div><label class="block text-xs font-semibold text-gray-500 mb-1">Nama Program</label>
           <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-n" value="${item?.nama||''}" placeholder="Nama program sekolah"></div>
-        <div><label class="block text-xs font-semibold text-gray-500 mb-1">Ikon</label>
-          <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-i">
-            ${ikonList.map(k=>`<option value="${k}"${item?.ikon===k?' selected':''}>${k}</option>`).join('')}
+        <div><label class="block text-xs font-semibold text-gray-500 mb-1">Tipe Thumbnail</label>
+          <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-thumb" onchange="toggleProgramThumbFields(this.value)">
+            <option value="emoji"${thumbType==='emoji'?' selected':''}>Emoji / Ikon</option>
+            <option value="foto"${thumbType==='foto'?' selected':''}>Foto</option>
           </select></div>
       </div>
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <div id="pf-emoji-wrap"><label class="block text-xs font-semibold text-gray-500 mb-1">Ikon</label>
+          <select class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-i">
+            ${ikonList.map(k=>`<option value="${k}"${selectedIkon===k?' selected':''}>${k}</option>`).join('')}
+          </select></div>
+        <div id="pf-image-wrap"><label class="block text-xs font-semibold text-gray-500 mb-1">URL Gambar Thumbnail</label>
+          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-img" value="${item?.imageUrl||''}" placeholder="https://...jpg / png"></div>
+      </div>
       <div class="mb-3"><label class="block text-xs font-semibold text-gray-500 mb-1">Deskripsi</label>
-        <textarea class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none min-h-16 resize-y" id="pf-d">${item?.deskripsi||''}</textarea>
+        <textarea class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none min-h-16 resize-y" id="pf-d">${selectedDesc}</textarea>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+        <div><label class="block text-xs font-semibold text-gray-500 mb-1">URL File (opsional)</label>
+          <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-file" value="${item?.fileUrl||''}" placeholder="https://...pdf / dokumen"></div>
       </div>
       <div class="mb-4"><label class="block text-xs font-semibold text-gray-500 mb-1">Tags (pisahkan dengan koma)</label>
         <input class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" id="pf-t" value="${(item?.tags||[]).join(', ')}" placeholder="Akademik, Seni, Olahraga"></div>
@@ -464,13 +529,35 @@ window.formProgram = function(id) {
         <button onclick="closeForm('form-program-area')" class="border border-gray-200 text-gray-500 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-50">Batal</button>
       </div>
     </div>`;
+  window.toggleProgramThumbFields(thumbType);
+};
+
+window.toggleProgramThumbFields = function(type) {
+  const e = document.getElementById('pf-emoji-wrap');
+  const i = document.getElementById('pf-image-wrap');
+  if (!e || !i) return;
+  e.style.display = type === 'emoji' ? '' : 'none';
+  i.style.display = type === 'foto' ? '' : 'none';
 };
 
 window.saveProgram = async function(id) {
   const nama = document.getElementById('pf-n')?.value.trim();
   if (!nama) { ERR('Nama program wajib!'); return; }
   const tags = (document.getElementById('pf-t')?.value||'').split(',').map(t=>t.trim()).filter(Boolean);
-  const data = { nama, ikon: document.getElementById('pf-i').value, deskripsi: document.getElementById('pf-d').value, tags, updatedAt: serverTimestamp() };
+  const ikon = document.getElementById('pf-i').value;
+  const deskripsi = document.getElementById('pf-d').value;
+  const data = {
+    nama,
+    ikon,
+    emoji: ikon, // kompatibilitas data lama
+    thumbnailType: document.getElementById('pf-thumb')?.value || 'emoji',
+    deskripsi,
+    desc: deskripsi, // kompatibilitas data lama
+    imageUrl: document.getElementById('pf-img')?.value.trim() || '',
+    fileUrl: document.getElementById('pf-file')?.value.trim() || '',
+    tags,
+    updatedAt: serverTimestamp()
+  };
   try {
     if (id) { await updateDoc(doc(db, 'program', id), data); }
     else { await addDoc(collection(db, 'program'), { ...data, createdAt: serverTimestamp() }); }
@@ -601,8 +688,8 @@ function renderProgram() {
   const tot = document.getElementById('s-prog-tot'); if (tot) tot.textContent = data.length;
   if (!data.length) { el.innerHTML = '<tr><td colspan="4" class="text-center text-gray-400 py-10">Belum ada program.</td></tr>'; return; }
   el.innerHTML = data.map(p => `<tr>
-    <td><span class="text-2xl mr-2">${p.ikon||'📚'}</span><span class="font-medium text-navy-900">${p.nama}</span></td>
-    <td class="text-gray-500">${(p.tags||[]).map(t=>`<span class="badge badge-blue mr-1">${t}</span>`).join('')}</td>
+    <td><span class="text-2xl mr-2">${EH(p.ikon||p.emoji||'📚')}</span><span class="font-medium text-navy-900">${EH(p.nama||'')}</span></td>
+    <td class="text-gray-500">${(p.tags||[]).map(t=>`<span class="badge badge-blue mr-1">${EH(t)}</span>`).join('')}</td>
     <td><span class="badge badge-green">Aktif</span></td>
     <td class="text-right"><div class="flex gap-2 justify-end">
       <button onclick="formProgram('${p.id}')" class="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 font-medium">Edit</button>
@@ -617,12 +704,12 @@ function renderSpmb() {
   if (!data.length) { el.innerHTML = '<tr><td colspan="7" class="text-center text-gray-400 py-10">Belum ada data pendaftar.</td></tr>'; return; }
   const badge = s => s==='Diterima'?'badge-green':s==='Menunggu'?'badge-yellow':'badge-red';
   el.innerHTML = data.map(s => `<tr>
-    <td class="font-mono text-xs">${s.noPendaftaran||'-'}</td>
-    <td class="font-medium text-navy-900">${s.namaAnak||''}</td>
-    <td class="text-gray-500">${s.namaOrtu||''}</td>
-    <td><a href="https://wa.me/${(s.noWa||'').replace(/\D/g,'')}" target="_blank" class="text-accent hover:underline">${s.noWa||''}</a></td>
-    <td><span class="badge ${badge(s.status)}">${s.status||'Menunggu'}</span></td>
-    <td class="text-gray-400">${s.tglDaftar||''}</td>
+    <td class="font-mono text-xs">${EH(s.noPendaftaran||'-')}</td>
+    <td class="font-medium text-navy-900">${EH(s.namaAnak||'')}</td>
+    <td class="text-gray-500">${EH(s.namaOrtu||'')}</td>
+    <td><a href="https://wa.me/${(s.noWa||'').replace(/\D/g,'')}" target="_blank" class="text-accent hover:underline">${EH(s.noWa||'')}</a></td>
+    <td><span class="badge ${badge(s.status)}">${EH(s.status||'Menunggu')}</span></td>
+    <td class="text-gray-400">${EH(s.tglDaftar||'')}</td>
     <td class="text-right"><div class="flex gap-2 justify-end">
       <button onclick="formSpmb('${s.id}')" class="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 font-medium">Edit</button>
       <button onclick="delSpmb('${s.id}')" class="text-xs px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-medium">Hapus</button>
@@ -638,6 +725,17 @@ window.loadNilaiDropdown = function() {
   if (!sel) return;
   sel.innerHTML = '<option value="">-- Pilih Siswa --</option>' +
     DATA_NILAI.map(s => `<option value="${s.nisn}">${s.nama} (${s.nisn}) - Kelas ${s.kelas}</option>`).join('');
+};
+
+window.filterNilaiSiswa = function(keyword = '') {
+  const sel = document.getElementById('nv-siswa');
+  if (!sel) return;
+  const k = String(keyword).toLowerCase().trim();
+  const list = !k ? DATA_NILAI : DATA_NILAI.filter(s =>
+    String(s.nama || '').toLowerCase().includes(k) || String(s.nisn || '').includes(k)
+  );
+  sel.innerHTML = '<option value="">-- Pilih Siswa --</option>' +
+    list.map(s => `<option value="${s.nisn}">${s.nama} (${s.nisn}) - Kelas ${s.kelas}</option>`).join('');
 };
 
 window.loadFormNilai = function() {
@@ -671,7 +769,7 @@ window.saveNilai = async function() {
   const arr = [];
   MAPEL.forEach((m,i) => {
     const v = parseInt(document.getElementById('nv-' + i)?.value);
-    if (!isNaN(v)) arr.push({ mapel: m, nilai: v, kkm: 70 });
+    if (!isNaN(v)) arr.push({ mapel: m, nilai: v, kkm: 60 });
   });
 
   try {
@@ -699,6 +797,7 @@ const EXCEL_COL_MAP = {
 
 window.prosesFile = function(file) {
   if (!file) return;
+  OK(`File dipilih: ${file.name}. Sedang diproses...`);
   if (file.name.match(/\.xlsx?$/i)) prosesExcel(file);
   else prosesCSV(file);
 };
@@ -733,7 +832,7 @@ async function bacaExcel(file) {
           Object.entries(EXCEL_COL_MAP).forEach(([col, mapel]) => {
             if (row[col] !== null && row[col] !== undefined) {
               const v = parseInt(parseFloat(row[col]));
-              if (!isNaN(v) && v >= 0) nilaiArr.push({ mapel, nilai:v, kkm:70 });
+              if (!isNaN(v) && v >= 0) nilaiArr.push({ mapel, nilai:v, kkm:60 });
             }
           });
 
@@ -781,7 +880,7 @@ function prosesCSV(file) {
       const cols = lines[i].split(',').map(c=>c.trim());
       const [nisn,nama,kelas,tgl,ul,...vals] = cols;
       if (!nisn||!ul) { gagal++; continue; }
-      const nilaiArr = MAPEL.map((m,j) => ({ mapel:m, nilai:parseInt(vals[j])||0, kkm:70 })).filter(n=>!isNaN(n.nilai));
+      const nilaiArr = MAPEL.map((m,j) => ({ mapel:m, nilai:parseInt(vals[j])||0, kkm:60 })).filter(n=>!isNaN(n.nilai));
       try {
         const ref = doc(db,'siswa',nisn);
         const snap = await getDoc(ref);
@@ -836,8 +935,8 @@ async function renderUsers() {
     const active = a => a!==false ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500';
     // Render hanya <tr> rows karena <table> sudah ada di HTML
     el.innerHTML = users.map(u=>`<tr class="border-b border-gray-50 hover:bg-gray-50">
-        <td class="py-3 pl-4 font-medium">${u.nama||'-'}</td>
-        <td class="py-3 text-gray-400">${u.email||'-'}</td>
+        <td class="py-3 pl-4 font-medium">${EH(u.nama||'-')}</td>
+        <td class="py-3 text-gray-400">${EH(u.email||'-')}</td>
         <td class="py-3"><span class="text-xs font-semibold px-2 py-0.5 rounded-full ${badge(u.role)}">${u.role==='admin'?'Admin':'Guru'}</span></td>
         <td class="py-3"><span class="text-xs font-semibold px-2 py-0.5 rounded-full ${active(u.aktif)}">${u.aktif!==false?'Aktif':'Nonaktif'}</span></td>
         <td class="py-3 flex gap-2">
