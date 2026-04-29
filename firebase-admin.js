@@ -769,7 +769,7 @@ window.saveNilai = async function() {
   const arr = [];
   MAPEL.forEach((m,i) => {
     const v = parseInt(document.getElementById('nv-' + i)?.value);
-    if (!isNaN(v)) arr.push({ mapel: m, nilai: v, kkm: 70 });
+    if (!isNaN(v)) arr.push({ mapel: m, nilai: v, kkm: 60 });
   });
 
   try {
@@ -832,7 +832,7 @@ async function bacaExcel(file) {
           Object.entries(EXCEL_COL_MAP).forEach(([col, mapel]) => {
             if (row[col] !== null && row[col] !== undefined) {
               const v = parseInt(parseFloat(row[col]));
-              if (!isNaN(v) && v >= 0) nilaiArr.push({ mapel, nilai:v, kkm:70 });
+              if (!isNaN(v) && v >= 0) nilaiArr.push({ mapel, nilai:v, kkm:60 });
             }
           });
 
@@ -880,7 +880,7 @@ function prosesCSV(file) {
       const cols = lines[i].split(',').map(c=>c.trim());
       const [nisn,nama,kelas,tgl,ul,...vals] = cols;
       if (!nisn||!ul) { gagal++; continue; }
-      const nilaiArr = MAPEL.map((m,j) => ({ mapel:m, nilai:parseInt(vals[j])||0, kkm:70 })).filter(n=>!isNaN(n.nilai));
+      const nilaiArr = MAPEL.map((m,j) => ({ mapel:m, nilai:parseInt(vals[j])||0, kkm:60 })).filter(n=>!isNaN(n.nilai));
       try {
         const ref = doc(db,'siswa',nisn);
         const snap = await getDoc(ref);

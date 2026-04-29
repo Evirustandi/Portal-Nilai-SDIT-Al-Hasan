@@ -1554,16 +1554,17 @@
 
       let totalNilai = 0;
       nilaiList.forEach((n, idx) => {
+        const kkmValue = Number(n.kkm) === 70 ? 60 : Number(n.kkm || 60);
         totalNilai += n.nilai;
-        let colorClass = n.nilai >= 85 ? 'text-green-600' : (n.nilai >= n.kkm ? 'text-accent' : 'text-red-600');
-        let badgeClass = n.nilai >= n.kkm ? 'bg-green-50 text-green-600 border border-green-200' : 'bg-red-50 text-red-600 border border-red-200';
-        let ketText = n.nilai >= n.kkm ? 'Tuntas' : 'Perlu Bimbingan';
+        let colorClass = n.nilai >= 85 ? 'text-green-600' : (n.nilai >= kkmValue ? 'text-accent' : 'text-red-600');
+        let badgeClass = n.nilai >= kkmValue ? 'bg-green-50 text-green-600 border border-green-200' : 'bg-red-50 text-red-600 border border-red-200';
+        let ketText = n.nilai >= kkmValue ? 'Tuntas' : 'Perlu Bimbingan';
         let isLast = idx === nilaiList.length - 1;
         
         tableHtml += `
           <tr class="${isLast ? '' : 'border-b border-gray-50'} hover:bg-gray-50/50 transition">
             <td class="py-3.5 px-4">${n.mapel}</td>
-            <td class="py-3.5 px-4 text-center text-gray-400 font-bold">${n.kkm}</td>
+            <td class="py-3.5 px-4 text-center text-gray-400 font-bold">${kkmValue}</td>
             <td class="py-3.5 px-4 text-center font-extrabold ${colorClass}">${n.nilai}</td>
             <td class="py-3.5 px-4 text-right"><span class="text-[10px] font-bold px-2.5 py-1 rounded-md ${badgeClass}">${ketText}</span></td>
           </tr>
