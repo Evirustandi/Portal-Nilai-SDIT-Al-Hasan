@@ -211,6 +211,11 @@ function renderGaleri() {
   const data = window.CMS_GALERI || [];
   if (!data.length) return;
 
+  const heroImg = document.getElementById('hero-beranda-img');
+  if (heroImg && data[0]?.url) {
+    heroImg.src = fixGDriveUrl(data[0].url);
+  }
+
   const makeItem = g => `
     <div class="galeri-item">
       <img src="${fixGDriveUrl(g.url)}" alt="${escapeHtml(g.caption)}" loading="lazy"
