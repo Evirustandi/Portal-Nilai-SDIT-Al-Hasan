@@ -143,7 +143,7 @@ function renderBerita() {
       <div class="berita-body">
         <span class="berita-badge ${badgeMap[b.kategori]||'badge-info'}">${escapeHtml(b.kategori||'')}</span>
         <div class="berita-tgl">${escapeHtml(formatTgl(b.tgl))}</div>
-        <div class="berita-judul">${escapeHtml(b.judul||'')}</div>
+        <div class="berita-judul"><a href="#" class="js-open-berita" data-berita="${escapeHtml(encodeURIComponent(JSON.stringify(b)))}">${escapeHtml(b.judul||'')}</a></div>
         ${b.isi?`<div class="berita-isi">${escapeHtml(b.isi.substring(0,90))}${b.isi.length>90?'...':''}</div>`:''}
         ${b.fileUrl?`<a href="${escapeHtml(b.fileUrl)}" target="_blank" style="display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:#1D4ED8">Lihat File</a>`:''}
       </div>
@@ -165,7 +165,7 @@ function renderBerita() {
         <div style="height:80px;background:${bgMap[b.kategori]||'#E8F5EC'};display:flex;align-items:center;justify-content:center;font-size:28px">${escapeHtml(b.emoji||'📋')}</div>
         <div style="padding:.7rem .9rem">
           <div style="font-size:10px;color:#8A9BB5;margin-bottom:3px">${formatTgl(b.tgl)}</div>
-          <div style="font-size:13px;font-weight:600;line-height:1.4">${escapeHtml(b.judul||'')}</div>
+          <div style="font-size:13px;font-weight:600;line-height:1.4"><a href="#" class="js-open-berita" data-berita="${escapeHtml(encodeURIComponent(JSON.stringify(b)))}">${escapeHtml(b.judul||'')}</a></div>
         </div>
       </div>`).join('');
   }
@@ -182,7 +182,7 @@ function renderBerita() {
         </div>
         <div class="p-6">
           <div class="text-[10px] text-gray-400 font-bold mb-2">${escapeHtml(formatTgl(b.tgl||''))}</div>
-          <h3 class="font-bold text-navy-900 text-base mb-2 group-hover:text-accent transition line-clamp-2">${escapeHtml(b.judul||'')}</h3>
+          <h3 class="font-bold text-navy-900 text-base mb-2 group-hover:text-accent transition line-clamp-2"><a href="#" class="js-open-berita" data-berita="${escapeHtml(encodeURIComponent(JSON.stringify(b)))}">${escapeHtml(b.judul||'')}</a></h3>
           <p class="text-xs text-gray-500 font-medium mb-4 line-clamp-2">${escapeHtml((b.ringkasan||b.isi||'').substring(0,120))}</p>
           ${b.fileUrl ? `<a href="${escapeHtml(b.fileUrl)}" target="_blank" class="text-accent text-[11px] font-bold flex items-center gap-1">Buka Lampiran <i class="ph-bold ph-arrow-right"></i></a>` : ''}
         </div>
@@ -201,7 +201,7 @@ function renderBerita() {
         </div>
         <div class="p-6 flex flex-col justify-center flex-1">
           <div class="mb-3"><span class="bg-blue-50 text-accent text-[10px] font-bold px-2.5 py-1 rounded-lg">${escapeHtml(b.kategori||'')}</span></div>
-          <h3 class="font-bold text-navy-900 text-lg mb-2 line-clamp-2 leading-snug">${escapeHtml(b.judul||'')}</h3>
+          <h3 class="font-bold text-navy-900 text-lg mb-2 line-clamp-2 leading-snug"><a href="#" class="js-open-berita" data-berita="${escapeHtml(encodeURIComponent(JSON.stringify(b)))}">${escapeHtml(b.judul||'')}</a></h3>
           <p class="text-xs text-gray-500 font-medium mb-4 line-clamp-2 leading-relaxed">${escapeHtml((b.ringkasan||b.isi||'').substring(0,180))}</p>
           ${b.fileUrl?`<a href="${escapeHtml(b.fileUrl)}" target="_blank" class="text-accent text-xs font-bold">Buka Lampiran</a>`:''}
         </div>
@@ -216,7 +216,7 @@ function renderBerita() {
         ${shouldUsePhoto(b)
           ? `<img src="${escapeHtml(b.imageUrl)}" class="w-14 h-14 rounded-xl object-cover shadow-sm" onerror="this.style.display='none'">`
           : `<div class="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center text-xl">${escapeHtml(b.emoji||'📋')}</div>`}
-        <div class="flex-1"><h4 class="font-bold text-navy-900 text-xs mb-1 line-clamp-2 group-hover:text-accent transition leading-tight">${escapeHtml(b.judul||'')}</h4><p class="text-[10px] text-gray-400 font-medium">${escapeHtml(formatTgl(b.tgl||''))}</p></div>
+        <div class="flex-1"><h4 class="font-bold text-navy-900 text-xs mb-1 line-clamp-2 group-hover:text-accent transition leading-tight"><a href="#" class="js-open-berita" data-berita="${escapeHtml(encodeURIComponent(JSON.stringify(b)))}">${escapeHtml(b.judul||'')}</a></h4><p class="text-[10px] text-gray-400 font-medium">${escapeHtml(formatTgl(b.tgl||''))}</p></div>
       </div>`).join('');
   }
 }

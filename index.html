@@ -1188,6 +1188,17 @@
     </div>
   </footer>
 
+  <!-- Berita Popup Detail -->
+  <div id="berita-popup" class="fixed inset-0 bg-black/60 z-[100] hidden items-center justify-center p-4">
+    <div class="bg-white w-full max-w-4xl max-h-[92vh] overflow-y-auto rounded-3xl shadow-2xl border border-gray-100">
+      <div class="sticky top-0 bg-white/95 backdrop-blur px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+        <div class="text-sm font-semibold text-gray-500">Beranda &gt; Berita &gt; Detail Berita</div>
+        <button onclick="closeBeritaPopup()" class="text-2xl leading-none text-gray-400 hover:text-gray-700">&times;</button>
+      </div>
+      <div id="berita-popup-body" class="p-6 md:p-8"></div>
+    </div>
+  </div>
+
   <!-- ========================================== -->
   <!-- SCRIPT UNTUK MERENDER DATA & NAVIGASI      -->
   <!-- ========================================== -->
@@ -1428,7 +1439,9 @@
               <div class="mb-3">
                 <span class="bg-blue-50 text-accent text-[10px] font-bold px-2.5 py-1 rounded-lg">${esc(b.kategori || 'Berita')}</span>
               </div>
-              <h3 class="font-bold text-navy-900 text-lg mb-2 group-hover:text-accent transition line-clamp-2 leading-snug">${esc(b.judul || '')}</h3>
+              <h3 class="font-bold text-navy-900 text-lg mb-2 group-hover:text-accent transition line-clamp-2 leading-snug">
+                <a href="#" class="js-open-berita" data-berita="${esc(encodeURIComponent(JSON.stringify(b)))}">${esc(b.judul || '')}</a>
+              </h3>
               <p class="text-xs text-gray-500 font-medium mb-4 line-clamp-2 leading-relaxed">${esc((b.ringkasan || b.isi || '').substring(0, 180))}</p>
               <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
                 <div class="flex items-center gap-4 text-[11px] text-gray-400 font-medium">
@@ -1470,6 +1483,40 @@
           w.document.close();
         } catch (e) { console.error(e); }
       };
+
+      window.openBeritaPopup = function(payload) {
+        try {
+          const data = JSON.parse(decodeURIComponent(payload));
+          const popup = document.getElementById('berita-popup');
+          const body = document.getElementById('berita-popup-body');
+          if (!popup || !body) return;
+          body.innerHTML = `
+            <span class="inline-block bg-blue-50 text-accent text-xs font-bold px-3 py-1 rounded-xl mb-4">${esc(data.kategori || 'Berita')}</span>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-navy-900 leading-tight mb-4">${esc(data.judul || '')}</h2>
+            <div class="text-sm text-gray-500 font-medium mb-6">${esc(fmtDate(data.tgl || ''))} • Oleh Admin SDIT Al-Hasan</div>
+            ${(data.imageUrl ? `<img src="${esc(data.imageUrl)}" class="w-full rounded-2xl mb-6 object-cover max-h-[420px]">` : '')}
+            <div class="text-[15px] leading-8 text-gray-700 whitespace-pre-line">${esc(data.isi || data.ringkasan || '')}</div>
+          `;
+          popup.classList.remove('hidden');
+          popup.classList.add('flex');
+          document.body.style.overflow = 'hidden';
+        } catch(e) { console.error(e); }
+      };
+      window.closeBeritaPopup = function() {
+        const popup = document.getElementById('berita-popup');
+        if (!popup) return;
+        popup.classList.add('hidden');
+        popup.classList.remove('flex');
+        document.body.style.overflow = '';
+      };
+      document.addEventListener('click', (e) => {
+        const trg = e.target.closest('.js-open-berita');
+        if (trg) {
+          e.preventDefault();
+          openBeritaPopup(trg.getAttribute('data-berita'));
+        }
+        if (e.target.id === 'berita-popup') closeBeritaPopup();
+      });
 
     });
 
