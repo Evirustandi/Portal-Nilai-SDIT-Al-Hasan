@@ -1433,7 +1433,7 @@
                 <div class="flex items-center gap-4 text-[11px] text-gray-400 font-medium">
                   <span class="flex items-center gap-1.5"><i class="ph-bold ph-calendar-blank"></i> ${esc(fmtDate(b.tgl || ''))}</span>
                 </div>
-                <button onclick='openCmsDetail("berita","${encodeURIComponent(JSON.stringify(b))}")' class="text-accent text-xs font-bold flex items-center gap-1 hover:underline">Baca Selengkapnya <i class="ph-bold ph-arrow-right"></i></button>
+                <button data-berita-detail="${esc(encodeURIComponent(JSON.stringify(b)))}" class="btn-berita-detail text-accent text-xs font-bold flex items-center gap-1 hover:underline">Baca Selengkapnya <i class="ph-bold ph-arrow-right"></i></button>
               </div>
             </div>
           </div>
@@ -1451,6 +1451,12 @@
           btn.classList.toggle('text-gray-600', !active);
         });
         renderBeritaSection(tab);
+        document.querySelectorAll('.btn-berita-detail').forEach(btn => {
+          btn.onclick = () => {
+            const raw = btn.getAttribute('data-berita-detail') || '';
+            try { openCmsDetail('berita', raw); } catch (e) { console.error(e); }
+          };
+        });
       };
       window.setBeritaTab('Semua Berita');
 
@@ -1601,6 +1607,45 @@
     }
   </script>
   
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    import { firebaseConfig } from "./firebase-config.js";
+
+    const appPublic = initializeApp(firebaseConfig, 'public-spmb');
+    const dbPublic = getFirestore(appPublic);
+
+    const spmbFormPublic = document.getElementById('spmb-form-public');
+    if (spmbFormPublic) {
+      spmbFormPublic.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = spmbFormPublic.querySelector('button[type="submit"]');
+        if (btn) btn.disabled = true;
+        try {
+          const fd = new FormData(spmbFormPublic);
+          await addDoc(collection(dbPublic, 'spmb'), {
+            namaAnak: fd.get('namaAnak') || '',
+            tglLahir: fd.get('tglLahir') || '',
+            jk: fd.get('jk') || '',
+            asalSekolah: fd.get('asalSekolah') || '',
+            ortu: fd.get('ortu') || '',
+            wa: fd.get('wa') || '',
+            alamat: fd.get('alamat') || '',
+            status: 'Baru',
+            tanggal: new Date().toISOString().slice(0,10),
+            createdAt: serverTimestamp()
+          });
+          alert('Formulir berhasil dikirim.');
+          spmbFormPublic.reset();
+        } catch (err) {
+          console.error('Gagal kirim formulir SPMB:', err);
+          alert('Gagal mengirim formulir. Coba lagi.');
+        } finally {
+          if (btn) btn.disabled = false;
+        }
+      });
+    }
+  </script>
   <script type="module" src="cms-integration-firebase.js"></script>
 </body>
 </html>
