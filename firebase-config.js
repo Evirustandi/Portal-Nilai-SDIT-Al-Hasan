@@ -36,6 +36,11 @@ export const firebaseConfig = {
  *
  * ATURAN FIRESTORE (Firestore Rules):
  * ─────────────────────────────────────────────────────────
+ * ⚠️ PENTING UNTUK PRODUCTION:
+ * - Jangan gunakan allow read: if true untuk data siswa/nilai.
+ * - Gunakan role-based access (admin/guru/orangtua) + auth wajib.
+ * - Pertimbangkan memisah data sensitif (nilai) ke koleksi private.
+ *
  * Paste rules berikut di Firebase Console → Firestore → Rules:
  *
  * rules_version = '2';
@@ -57,6 +62,29 @@ export const firebaseConfig = {
  *
  *     // Settings
  *     match /settings/{id} { allow read: if true; allow write: if request.auth != null; }
+ *   }
+ * }
+ */
+
+/**
+ * CONTOH BASELINE RULES (LEBIH AMAN, SESUAIKAN DENGAN APP ANDA):
+ * rules_version = '2';
+ * service cloud.firestore {
+ *   match /databases/{database}/documents {
+ *     function signedIn() { return request.auth != null; }
+ *     function isAdmin() { return signedIn() && request.auth.token.role == 'admin'; }
+ *     function isGuru()  { return signedIn() && request.auth.token.role == 'guru'; }
+ *
+ *     match /berita/{id}  { allow read: if true; allow write: if isAdmin() || isGuru(); }
+ *     match /galeri/{id}  { allow read: if true; allow write: if isAdmin() || isGuru(); }
+ *     match /guru/{id}    { allow read: if true; allow write: if isAdmin(); }
+ *     match /program/{id} { allow read: if true; allow write: if isAdmin() || isGuru(); }
+ *     match /spmb/{id}    { allow read, write: if isAdmin(); }
+ *
+ *     // Data nilai siswa: minimal admin/guru terautentikasi
+ *     match /siswa/{nisn} { allow read, write: if isAdmin() || isGuru(); }
+ *     match /users/{id}   { allow read, write: if isAdmin(); }
+ *     match /settings/{id}{ allow read: if true; allow write: if isAdmin(); }
  *   }
  * }
  */
