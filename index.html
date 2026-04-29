@@ -1296,10 +1296,11 @@
         { i:'chats-teardrop', t:'Komunikasi Aktif', d:'Portal nilai online, grup kelas, dan pertemuan orang tua rutin setiap semester.' }
       ];
       document.getElementById('beranda-keunggulan').innerHTML = kData.map(k => `
-        <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100 hover:shadow-md transition flex flex-col md:flex-row gap-5 items-start">
-          <div class="w-12 h-12 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-2xl shrink-0"><i class="ph ph-${k.i}"></i></div>
-          <div><h3 class="font-bold text-navy-900 mb-1.5">${k.t}</h3><p class="text-xs text-gray-500 font-medium leading-relaxed">${k.d}</p></div>
-        </a>
+        <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100 hover:shadow-md transition h-full">
+          <div class="w-12 h-12 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-2xl mb-4"><i class="ph ph-${k.i}"></i></div>
+          <h3 class="font-bold text-navy-900 mb-2">${k.t}</h3>
+          <p class="text-sm text-gray-500 font-medium leading-relaxed">${k.d}</p>
+        </div>
       `).join('');
 
       // Struktur Organisasi (Profil)
