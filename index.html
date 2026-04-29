@@ -87,7 +87,7 @@
   <nav class="bg-white py-4 px-4 md:px-8 shadow-sm sticky top-0 z-50 flex justify-between items-center border-b border-gray-100">
     <div class="flex items-center gap-3 cursor-pointer" onclick="navigate('beranda')">
       <div class="w-10 h-10 rounded-lg overflow-hidden shadow-md bg-white border border-gray-100">
-        <img src="logo.png" alt="Logo SD  Islam Terpadu Al-Hasan" class="w-full h-full object-contain p-1">
+        <img src="logo.png" alt="Logo SDIT Al-Hasan" class="w-full h-full object-contain p-1">
       </div>
       <div>
         <div class="font-extrabold text-navy-900 leading-none tracking-tight text-lg">SD ISLAM TERPADU<br><span class="text-accent">AL-HASAN</span></div>
@@ -241,7 +241,7 @@
           <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Profil SD  Islam Terpadu Al-Hasan</h1>
           <p class="text-gray-300 font-medium text-base">Mengenal lebih dekat SD Islam Terpadu Al-Hasan — sejarah, visi, misi, dan struktur organisasi kami.</p>
         </div>
-        <div class="md:w-1/2 h-64 md:h-auto relative">
+        <div class="md:w-1/2 h-64 md:h-80 relative">
           <div class="absolute inset-0 bg-gradient-to-r from-navy-900 to-transparent z-10 hidden md:block"></div>
           <div class="absolute inset-0 bg-gradient-to-t from-navy-900 to-transparent z-10 block md:hidden"></div>
           <img src="https://drive.google.com/thumbnail?id=13LXg8x9eSbY3OPxlX1Fgo-r_XB3NzWhh&sz=w1200" class="w-full h-full object-cover">
@@ -333,7 +333,7 @@
           <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Akademik</h1>
           <p class="text-gray-300 font-medium text-base">Informasi kurikulum, mata pelajaran, sistem penilaian, dan kalender akademik.</p>
         </div>
-        <div class="md:w-1/2 h-64 md:h-auto relative">
+        <div class="md:w-1/2 h-64 md:h-80 relative">
           <div class="absolute inset-0 bg-gradient-to-r from-navy-900 to-transparent z-10 hidden md:block"></div>
           <div class="absolute inset-0 bg-gradient-to-t from-navy-900 to-transparent z-10 block md:hidden"></div>
           <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
@@ -481,7 +481,7 @@
         <div class="akademik-panel hidden" id="akademik-panel-penilaian">
           <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
             <h2 class="text-3xl font-extrabold text-navy-900 mb-1">Sistem Penilaian</h2>
-            <p class="text-sm text-gray-500 font-medium mb-6">Komponen dan kriteria penilaian yang digunakan di SD  Islam Terpadu Al-Hasan.</p>
+            <p class="text-sm text-gray-500 font-medium mb-6">Komponen dan kriteria penilaian yang digunakan di SDIT Al-Hasan.</p>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div class="border border-gray-100 rounded-2xl p-5 text-center">
                 <div class="w-12 h-12 mx-auto rounded-full bg-green-50 text-green-600 flex items-center justify-center text-2xl mb-3">📖</div>
@@ -561,7 +561,7 @@
           <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Program Sekolah</h1>
           <p class="text-gray-300 font-medium text-base">Berbagai program untuk mengembangkan potensi akademik, spiritual, dan karakter siswa.</p>
         </div>
-        <div class="md:w-1/2 h-64 md:h-auto relative">
+        <div class="md:w-1/2 h-64 md:h-80 relative">
           <div class="absolute inset-0 bg-gradient-to-r from-navy-900 to-transparent z-10 hidden md:block"></div>
           <div class="absolute inset-0 bg-gradient-to-t from-navy-900 to-transparent z-10 block md:hidden"></div>
           <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
@@ -608,7 +608,7 @@
           <p class="text-blue-200 font-medium mb-2">Tahun Ajaran 2026/2027</p>
           <p class="text-white text-sm">Alhamdulillah, Kuota Sudah Terpenuhi.</p>
         </div>
-        <div class="md:w-1/2 h-64 md:h-auto relative">
+        <div class="md:w-1/2 h-64 md:h-80 relative">
           <div class="absolute inset-0 bg-gradient-to-r from-navy-900 to-transparent z-10 hidden md:block"></div>
           <div class="absolute inset-0 bg-gradient-to-t from-navy-900 to-transparent z-10 block md:hidden"></div>
           <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
@@ -682,19 +682,19 @@
         <h2 class="text-2xl font-extrabold text-navy-900 mb-2">Formulir Pendaftaran Online</h2>
         <p class="text-gray-500 text-sm font-medium mb-6">Lengkapi data calon siswa pada formulir di bawah ini.</p>
         
-        <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm mb-16">
+        <form id="spmb-form-public" class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm mb-16">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
                <label class="block text-xs font-bold text-navy-900 mb-2">Nama Lengkap Calon Siswa</label>
-               <input type="text" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition" placeholder="Nama sesuai akta lahir">
+               <input type="text" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition" name="namaAnak" required placeholder="Nama sesuai akta lahir">
             </div>
             <div>
                <label class="block text-xs font-bold text-navy-900 mb-2">Tanggal Lahir</label>
-               <input type="date" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition">
+               <input type="date" name="tglLahir" required class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition">
             </div>
             <div>
                <label class="block text-xs font-bold text-navy-900 mb-2">Jenis Kelamin</label>
-               <select class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition text-gray-500">
+               <select name="jk" required class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition text-gray-500">
                   <option>Pilih jenis kelamin</option>
                   <option>Laki-laki</option>
                   <option>Perempuan</option>
@@ -702,23 +702,23 @@
             </div>
             <div>
                <label class="block text-xs font-bold text-navy-900 mb-2">Asal TK / PAUD</label>
-               <input type="text" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition" placeholder="Nama sekolah asal">
+               <input type="text" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition" name="asalSekolah" placeholder="Nama sekolah asal">
             </div>
             <div>
                <label class="block text-xs font-bold text-navy-900 mb-2">Nama Orang Tua / Wali</label>
-               <input type="text" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition" placeholder="Nama lengkap">
+               <input type="text" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition" name="ortu" required placeholder="Nama lengkap">
             </div>
             <div>
                <label class="block text-xs font-bold text-navy-900 mb-2">No. WhatsApp Aktif</label>
-               <input type="text" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition" placeholder="08xxxxxxxxxx">
+               <input type="text" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition" name="wa" required placeholder="08xxxxxxxxxx">
             </div>
           </div>
           <div class="mb-8">
              <label class="block text-xs font-bold text-navy-900 mb-2">Alamat Lengkap</label>
-             <input type="text" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition" placeholder="Jalan, RT/RW, Kelurahan, Kecamatan, Kabupaten/Kota">
+             <input type="text" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 text-sm focus:border-accent focus:bg-white outline-none transition" name="alamat" required placeholder="Jalan, RT/RW, Kelurahan, Kecamatan, Kabupaten/Kota">
           </div>
-          <button class="w-full bg-navy-900 text-white font-bold py-4 rounded-xl hover:bg-navy-800 transition shadow-md text-sm">Kirim Formulir Pendaftaran</button>
-        </div>
+          <button type="submit" class="w-full bg-navy-900 text-white font-bold py-4 rounded-xl hover:bg-navy-800 transition shadow-md text-sm">Kirim Formulir Pendaftaran</button>
+        </form>
 
         <div class="bg-blue-50 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 border border-blue-100">
           <div class="flex items-center gap-4">
@@ -741,7 +741,7 @@
           <p class="text-gray-300 font-medium text-base mb-6">Kumpulan dokumentasi kegiatan dan momen berharga di SD Islam Terpadu Al-Hasan.</p>
           <button class="bg-transparent border border-white/30 text-white px-6 py-3 rounded-xl text-sm font-bold hover:bg-white/10 transition flex items-center gap-2 w-max"><i class="ph-bold ph-squares-four"></i> Lihat Video Kegiatan</button>
         </div>
-        <div class="md:w-1/2 h-64 md:h-auto relative">
+        <div class="md:w-1/2 h-64 md:h-80 relative">
           <div class="absolute inset-0 bg-gradient-to-r from-navy-900 to-transparent z-10 hidden md:block"></div>
           <div class="absolute inset-0 bg-gradient-to-t from-navy-900 to-transparent z-10 block md:hidden"></div>
           <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
@@ -788,7 +788,7 @@
             <button class="bg-accent text-white px-5 py-2.5 rounded-lg hover:bg-blue-700 transition"><i class="ph-bold ph-magnifying-glass"></i></button>
           </div>
         </div>
-        <div class="md:w-1/2 h-64 md:h-auto relative">
+        <div class="md:w-1/2 h-64 md:h-80 relative">
           <div class="absolute inset-0 bg-gradient-to-r from-navy-900 to-transparent z-10 hidden md:block"></div>
           <div class="absolute inset-0 bg-gradient-to-t from-navy-900 to-transparent z-10 block md:hidden"></div>
           <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
@@ -874,7 +874,7 @@
             <div class="flex items-center gap-3"><div class="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center text-xl"><i class="ph-fill ph-shield-check"></i></div> <div><div class="font-bold text-sm">Informasi Akurat</div><div class="text-[10px] text-gray-400">Informasi yang kami berikan jelas akurat</div></div></div>
           </div>
         </div>
-        <div class="md:w-1/2 h-64 md:h-auto relative">
+        <div class="md:w-1/2 h-64 md:h-80 relative">
           <div class="absolute inset-0 bg-gradient-to-r from-navy-900 to-transparent z-10 hidden md:block"></div>
           <div class="absolute inset-0 bg-gradient-to-t from-navy-900 to-transparent z-10 block md:hidden"></div>
           <img src="https://drive.google.com/thumbnail?id=13LXg8x9eSbY3OPxlX1Fgo-r_XB3NzWhh&sz=w1200" class="w-full h-full object-cover">
@@ -1118,8 +1118,8 @@
       
       <div class="lg:col-span-4 pr-4">
         <div class="flex items-center gap-3 mb-6">
-          <div class="w-10 h-10 border border-white/20 rounded-lg flex items-center justify-center text-white text-xl">
-            <i class="ph-fill ph-mosque"></i>
+          <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center overflow-hidden">
+            <img src="logo.png" alt="Logo SDIT Al-Hasan" class="w-full h-full object-contain p-1">
           </div>
           <div>
             <div class="font-extrabold text-white leading-tight text-base tracking-wide">SD ISLAM TERPADU<br>AL-HASAN</div>
@@ -1127,10 +1127,10 @@
         </div>
         <p class="text-[13px] mb-8 leading-relaxed font-medium text-gray-400">Mewujudkan generasi islami yang cerdas, berakhlak mulia, dan berdaya saing global di era digital.</p>
         <div class="flex gap-3">
-          <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition text-white"><i class="ph-fill ph-facebook-logo"></i></a>
-          <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition text-white"><i class="ph-fill ph-instagram-logo"></i></a>
-          <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition text-white"><i class="ph-fill ph-youtube-logo"></i></a>
-          <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-500 transition text-white"><i class="ph-fill ph-whatsapp-logo"></i></a>
+          <a href="https://www.tiktok.com/@sditalhasan?_r=1&_t=ZS-95vzbINxccn" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition text-white"><i class="ph-fill ph-tiktok-logo"></i></a>
+          <a href="https://www.instagram.com/sdit_al.hasan?igsh=MW8zY2ZpcTc3cG9vZA==" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition text-white"><i class="ph-fill ph-instagram-logo"></i></a>
+          <a href="https://www.youtube.com/@sdital-hasan1522" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition text-white"><i class="ph-fill ph-youtube-logo"></i></a>
+          <a href="https://wa.me/6285772860115" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-500 transition text-white"><i class="ph-fill ph-whatsapp-logo"></i></a>
         </div>
       </div>
       
@@ -1299,7 +1299,7 @@
         <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100 hover:shadow-md transition flex flex-col md:flex-row gap-5 items-start">
           <div class="w-12 h-12 bg-blue-50 text-accent rounded-xl flex items-center justify-center text-2xl shrink-0"><i class="ph ph-${k.i}"></i></div>
           <div><h3 class="font-bold text-navy-900 mb-1.5">${k.t}</h3><p class="text-xs text-gray-500 font-medium leading-relaxed">${k.d}</p></div>
-        </div>
+        </a>
       `).join('');
 
       // Struktur Organisasi (Profil)
@@ -1342,7 +1342,7 @@
             </div>
             <div class="w-12 h-12 border border-gray-100 rounded-xl flex items-center justify-center text-accent text-xl shrink-0 hidden sm:flex bg-blue-50/50"><i class="ph-fill ${t.ic}"></i></div>
           </div>
-        </div>
+        </a>
       `).join('');
 
       const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
@@ -1393,12 +1393,12 @@
 
       // Video
       document.getElementById('video-grid').innerHTML = [
-        {t:'Profil SD Islam Terpadu Al-Hasan', d:'12 Jan 2026', dur:'02:45', u:'https://images.unsplash.com/photo-1546410531-bea5aadcb6ce?auto=format&fit=crop&w=400&q=80'},
-        {t:'Kegiatan Tahfidz Al-Qur\'an', d:'08 Jan 2026', dur:'03:18', u:'https://images.unsplash.com/photo-1605333036495-2eb42a781b0f?auto=format&fit=crop&w=400&q=80'},
-        {t:'Praktikum IPA di Laboratorium', d:'05 Jan 2026', dur:'04:02', u:'https://images.unsplash.com/photo-1564069114553-7215e1ff1890?auto=format&fit=crop&w=400&q=80'},
-        {t:'Pertandingan Persahabatan Futsal', d:'02 Jan 2026', dur:'01:56', u:'https://images.unsplash.com/photo-1526232761682-d26e03ac148e?auto=format&fit=crop&w=400&q=80'}
+        {t:'Kegiatan SDIT Al-Hasan 1', d:'YouTube', dur:'Video', u:'https://img.youtube.com/vi/428z416-sfM/hqdefault.jpg', l:'https://youtu.be/428z416-sfM?si=TLnWx0eXqrdmKzdt'},
+        {t:'Kegiatan SDIT Al-Hasan 2', d:'YouTube', dur:'Video', u:'https://img.youtube.com/vi/Ap-70FR-l2M/hqdefault.jpg', l:'https://youtu.be/Ap-70FR-l2M?si=d72_DDFe3gvP8zIN'},
+        {t:'Kegiatan SDIT Al-Hasan 3', d:'YouTube', dur:'Video', u:'https://img.youtube.com/vi/Pu20NEsekko/hqdefault.jpg', l:'https://youtu.be/Pu20NEsekko?si=RgN3deTLvCYM_nNx'},
+        {t:'Kegiatan SDIT Al-Hasan 4', d:'YouTube', dur:'Video', u:'https://img.youtube.com/vi/CJlVOR9tknY/hqdefault.jpg', l:'https://youtu.be/CJlVOR9tknY?si=tK4RsCKoR1SQ3p1O'}
       ].map(v => `
-        <div class="group cursor-pointer bg-white p-2 rounded-[2rem] border border-gray-100 shadow-sm">
+        <a href="${v.l}" target="_blank" rel="noopener" class="group cursor-pointer bg-white p-2 rounded-[2rem] border border-gray-100 shadow-sm block">
           <div class="aspect-video rounded-[1.5rem] relative overflow-hidden mb-3">
             <img src="${v.u}" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black/20 flex items-center justify-center group-hover:bg-black/40 transition">
@@ -1410,7 +1410,7 @@
              <h4 class="font-bold text-navy-900 text-sm line-clamp-2 mb-1">${v.t}</h4>
              <p class="text-[11px] text-gray-500 font-medium">${v.d}</p>
           </div>
-        </div>
+        </a>
       `).join('');
 
       function renderBeritaSection(activeTab = 'Semua Berita') {
@@ -1433,7 +1433,7 @@
                 <div class="flex items-center gap-4 text-[11px] text-gray-400 font-medium">
                   <span class="flex items-center gap-1.5"><i class="ph-bold ph-calendar-blank"></i> ${esc(fmtDate(b.tgl || ''))}</span>
                 </div>
-                ${(b.fileUrl ? `<a href="${esc(b.fileUrl)}" target="_blank" class="text-accent text-xs font-bold flex items-center gap-1 hover:underline">Lampiran <i class="ph-bold ph-arrow-right"></i></a>` : '')}
+                <button onclick='openCmsDetail("berita","${encodeURIComponent(JSON.stringify(b))}")' class="text-accent text-xs font-bold flex items-center gap-1 hover:underline">Baca Selengkapnya <i class="ph-bold ph-arrow-right"></i></button>
               </div>
             </div>
           </div>
@@ -1453,6 +1453,16 @@
         renderBeritaSection(tab);
       };
       window.setBeritaTab('Semua Berita');
+
+      window.openCmsDetail = function(type, payload) {
+        try {
+          const data = JSON.parse(decodeURIComponent(payload));
+          const w = window.open('', '_blank');
+          if (!w) return;
+          w.document.write(`<html><head><title>${type==='berita'?'Detail Berita':'Detail Program'}</title><style>body{font-family:Arial;padding:24px;line-height:1.6}img{max-width:100%;border-radius:12px}h1{color:#111827}</style></head><body><h1>${data.judul||data.nama||''}</h1>${data.imageUrl?`<img src="${data.imageUrl}">`:''}<p>${data.isi||data.deskripsi||data.desc||''}</p>${data.fileUrl?`<p><a href="${data.fileUrl}" target="_blank">Buka Lampiran</a></p>`:''}</body></html>`);
+          w.document.close();
+        } catch (e) { console.error(e); }
+      };
 
     });
 

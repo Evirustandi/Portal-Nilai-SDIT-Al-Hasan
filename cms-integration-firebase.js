@@ -105,6 +105,22 @@ function shouldUsePhoto(item) {
   return !!(item?.imageUrl && (item?.thumbnailType === 'foto' || !item?.thumbnailType));
 }
 
+function openCmsDetailPage(type, data) {
+  try {
+    const w = window.open('', '_blank');
+    if (!w) return;
+    const title = type === 'berita' ? 'Detail Berita' : 'Detail Program';
+    const heading = escapeHtml(data.judul || data.nama || '');
+    const body = escapeHtml(data.isi || data.deskripsi || data.desc || '');
+    const image = data.imageUrl ? `<img src="${fixGDriveUrl(escapeHtml(data.imageUrl))}" style="max-width:100%;border-radius:12px;margin:10px 0 16px 0;">` : '';
+    const lampiran = data.fileUrl ? `<p><a href="${escapeHtml(data.fileUrl)}" target="_blank" rel="noopener">Buka Lampiran</a></p>` : '';
+    w.document.write(`<html><head><title>${title}</title><meta charset="utf-8"><style>body{font-family:Arial,sans-serif;padding:24px;line-height:1.6;color:#1f2937}h1{margin:0 0 10px 0;color:#111827}</style></head><body><h1>${heading}</h1>${image}<p>${body}</p>${lampiran}</body></html>`);
+    w.document.close();
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 // Berita
 function renderBerita() {
   const data = window.CMS_BERITA || [];
@@ -287,7 +303,7 @@ function renderProgram() {
 
   const makeKartu = (p, i) => `
     <div class="prog-kartu" style="background:${bgColors[i%bgColors.length]};border-color:${borderColors[i%borderColors.length]}">
-      ${shouldUsePhoto(p) ? `<div style="height:120px;border-radius:12px;overflow:hidden;margin-bottom:10px"><img src="${escapeHtml(p.imageUrl)}" alt="${escapeHtml(p.nama||'')}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'"></div>` : ''}
+      ${shouldUsePhoto(p) ? `<div style="height:120px;border-radius:12px;overflow:hidden;margin-bottom:10px"><img src="${fixGDriveUrl(escapeHtml(p.imageUrl))}" alt="${escapeHtml(p.nama||'')}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'"></div>` : ''}
       <div class="prog-header">
         <span class="prog-emoji">${escapeHtml(p.ikon || p.emoji || '📖')}</span>
         <div><div class="prog-nama">${escapeHtml(p.nama || '')}</div></div>
@@ -295,6 +311,7 @@ function renderProgram() {
       <div class="prog-desc">${escapeHtml(p.deskripsi || p.desc || '')}</div>
       <div class="prog-pills">${(p.tags||[]).map(t=>`<span class="prog-pill">${escapeHtml(t)}</span>`).join('')}</div>
       ${p.fileUrl ? `<a href="${escapeHtml(p.fileUrl)}" target="_blank" style="display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:#1D4ED8">Lihat File Program</a>` : ''}
+      <button data-prog-detail="${escapeHtml(encodeURIComponent(JSON.stringify(p)))}" class="btn-prog-detail" style="display:inline-block;margin-top:8px;margin-left:8px;background:none;border:none;padding:0;font-size:12px;font-weight:700;color:#1D4ED8;cursor:pointer">Lihat Detail</button>
     </div>`;
 
   const el = document.getElementById('cms-program');
@@ -312,14 +329,22 @@ function renderProgram() {
       <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden group hover:shadow-md transition">
         <div class="h-44 overflow-hidden relative bg-gray-100">
           ${shouldUsePhoto(p)
-            ? `<img src="${escapeHtml(p.imageUrl)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.style.display='none'">`
+            ? `<img src="${fixGDriveUrl(escapeHtml(p.imageUrl))}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.style.display='none'">`
             : `<div class="w-full h-full flex items-center justify-center text-5xl">${escapeHtml(p.ikon || p.emoji || '📖')}</div>`}
         </div>
         <div class="p-6">
           <h3 class="font-bold text-navy-900 text-base mb-2">${escapeHtml(p.nama || '')}</h3>
           <p class="text-xs text-gray-500 font-medium mb-3 line-clamp-3">${escapeHtml((p.deskripsi || p.desc || '').substring(0, 180))}</p>
-          ${p.fileUrl ? `<a href="${escapeHtml(p.fileUrl)}" target="_blank" class="text-accent text-xs font-bold">Buka Lampiran</a>` : ''}
+          <button data-prog-detail="${escapeHtml(encodeURIComponent(JSON.stringify(p)))}" class="text-accent text-xs font-bold btn-prog-detail">Lihat Detail</button>
         </div>
       </div>`).join('');
   }
+
+  document.querySelectorAll('.btn-prog-detail').forEach(btn => {
+    btn.onclick = () => {
+      const raw = btn.getAttribute('data-prog-detail') || '';
+      try { openCmsDetailPage('program', JSON.parse(decodeURIComponent(raw))); }
+      catch (e) { console.error(e); }
+    };
+  });
 }
