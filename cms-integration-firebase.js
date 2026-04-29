@@ -222,6 +222,7 @@ function renderBerita() {
 }
 
 // Galeri
+// Galeri
 function renderGaleri() {
   const data = window.CMS_GALERI || [];
   if (!data.length) return;
@@ -260,7 +261,7 @@ function renderGaleri() {
   const elLama = document.getElementById('cms-galeri');
   if (elLama) elLama.innerHTML = data.map(makeItem).join('');
 }
-
+   
 // Guru / Staf
 function renderGuru() {
   const data = (window.CMS_GURU || []).filter(g => g.status === 'Aktif');
