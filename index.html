@@ -67,7 +67,7 @@
     .nav-link.active { color: #1D4ED8; }
   </style>
 </head>
-<body class="text-gray-800 antialiased bg-[#F8FAFC] flex flex-col min-h-screen">
+<body class="text-gray-800 antialiased bg-[#F8FAFC] flex flex-col min-h-screen overflow-x-hidden">
 
   <!-- 1. TOP BAR -->
   <div class="bg-navy-900 text-white text-[11px] font-medium py-2 px-4 md:px-8 flex justify-between items-center hidden lg:flex">
@@ -150,7 +150,7 @@
 
         <div class="lg:w-1/2 relative w-full flex justify-end">
           <div class="relative w-full max-w-[550px] aspect-[4/3] rounded-[3rem] rounded-bl-[6rem] overflow-hidden shadow-2xl border-8 border-white bg-gray-100">
-            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80&w=800" alt="Siswa SDIT" class="w-full h-full object-cover">
+            <img id="hero-beranda-img" src="https://drive.google.com/thumbnail?id=1f6lXON-DMeZWp-UIjxeO_MDaGUgnxalM&sz=w1200" alt="Siswa SDIT" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://picsum.photos/800/600?school';">
           </div>
           <!-- Floating Badge -->
           <div class="absolute -bottom-6 -left-6 md:left-4 bg-white rounded-2xl shadow-xl p-4 flex items-center gap-4 z-20 border border-gray-100">
@@ -212,12 +212,7 @@
           </div>
           <a href="javascript:navigate('galeri')" class="text-navy-900 font-bold text-sm border border-gray-200 px-5 py-2.5 rounded-xl hover:bg-gray-50 flex items-center gap-2">Lihat Semua Galeri <i class="ph-bold ph-arrow-right"></i></a>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <img src="https://drive.google.com/uc?export=view&id=1uLX4d7MsnFfxJ0QI3Rk6tE1VIbkGWf-1" class="rounded-[2rem] aspect-[4/3] object-cover shadow-sm w-full">
-          <img src="https://drive.google.com/uc?export=view&id=15xjJXMqh9Ga0lTdy-pDZnfosL3MXXE2I" class="rounded-[2rem] aspect-[4/3] object-cover shadow-sm w-full">
-          <img src="https://drive.google.com/uc?export=view&id=15VSEBklhVAox3wSf2HdQ6YkwVkSvqL2A" class="rounded-[2rem] aspect-[4/3] object-cover shadow-sm w-full">
-          <img src="https://drive.google.com/uc?export=view&id=1OdEwGx8nyuVpNU_y-Uak5ybLtXnR7kTW" class="rounded-[2rem] aspect-[4/3] object-cover shadow-sm w-full">
-        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="cms-galeri-beranda"></div>
       </section>
 
       <!-- Berita & Pengumuman Preview -->
@@ -346,14 +341,15 @@
 
       <div class="max-w-6xl mx-auto px-4 md:px-8 mt-8">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-2 flex flex-wrap gap-2 text-sm font-bold">
-          <button class="px-6 py-3 bg-accent text-white rounded-xl shadow-md">Kurikulum</button>
-          <button class="px-6 py-3 text-gray-500 hover:bg-gray-50 rounded-xl transition">Mata Pelajaran</button>
-          <button class="px-6 py-3 text-gray-500 hover:bg-gray-50 rounded-xl transition">Sistem Penilaian</button>
-          <button class="px-6 py-3 text-gray-500 hover:bg-gray-50 rounded-xl transition">Kalender Akademik</button>
+          <button class="px-6 py-3 bg-accent text-white rounded-xl shadow-md akademik-tab-btn" data-akademik-tab="kurikulum" onclick="switchAkademikTab('kurikulum')">Kurikulum</button>
+          <button class="px-6 py-3 text-gray-500 hover:bg-gray-50 rounded-xl transition akademik-tab-btn" data-akademik-tab="mapel" onclick="switchAkademikTab('mapel')">Mata Pelajaran</button>
+          <button class="px-6 py-3 text-gray-500 hover:bg-gray-50 rounded-xl transition akademik-tab-btn" data-akademik-tab="penilaian" onclick="switchAkademikTab('penilaian')">Sistem Penilaian</button>
+          <button class="px-6 py-3 text-gray-500 hover:bg-gray-50 rounded-xl transition akademik-tab-btn" data-akademik-tab="kalender" onclick="switchAkademikTab('kalender')">Kalender Akademik</button>
         </div>
       </div>
 
       <section class="py-12 px-4 md:px-8 max-w-6xl mx-auto">
+        <div class="akademik-panel" id="akademik-panel-kurikulum">
         <div class="flex flex-col lg:flex-row gap-12 items-center mb-16">
           <div class="lg:w-1/2">
             <h2 class="text-2xl font-extrabold text-navy-900 mb-4">Kurikulum Merdeka</h2>
@@ -440,6 +436,118 @@
             <div class="w-14 h-14 mx-auto bg-orange-50 text-orange-500 rounded-xl flex items-center justify-center text-2xl mb-4"><i class="ph-fill ph-chart-line-up"></i></div>
             <h4 class="font-bold text-navy-900 mb-2 text-sm">Evaluasi Berkala</h4>
             <p class="text-xs text-gray-500 font-medium">Evaluasi rutin untuk memantau kemajuan belajar dan memberikan umpan balik yang konstruktif.</p>
+          </div>
+        </div>
+        </div>
+
+        <div class="akademik-panel hidden" id="akademik-panel-mapel">
+          <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
+              <div>
+                <h2 class="text-3xl font-extrabold text-navy-900 mb-1">Mata Pelajaran</h2>
+                <p class="text-sm text-gray-500 font-medium">Daftar mata pelajaran yang digunakan pada setiap jenjang kelas.</p>
+              </div>
+              <div class="flex items-center gap-3">
+                <label class="text-sm font-bold text-gray-500">Pilih Jenjang</label>
+                <select class="border border-gray-200 rounded-xl px-4 py-2.5 text-sm font-semibold text-navy-900 bg-white">
+                  <option>Semua Jenjang</option>
+                  <option>Kelas 1-3</option>
+                  <option>Kelas 4-6</option>
+                </select>
+              </div>
+            </div>
+            <div class="overflow-x-auto rounded-xl border border-gray-100">
+              <table class="w-full text-sm">
+                <thead class="bg-gray-50 text-gray-500 uppercase text-[11px]">
+                  <tr>
+                    <th class="py-3 px-4 text-left">No</th>
+                    <th class="py-3 px-4 text-left">Kelompok</th>
+                    <th class="py-3 px-4 text-left">Jenjang</th>
+                    <th class="py-3 px-4 text-left">Deskripsi</th>
+                    <th class="py-3 px-4 text-center">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody class="text-gray-600 font-medium">
+                  <tr class="border-t border-gray-100"><td class="py-3 px-4">1</td><td class="py-3 px-4 font-semibold text-navy-900">Kelompok Umum</td><td class="py-3 px-4">1 2 3 4 5 6</td><td class="py-3 px-4">Bahasa Indonesia, Matematika, IPAS, Pendidikan Pancasila, dan Bahasa Inggris.</td><td class="py-3 px-4 text-center">👁️</td></tr>
+                  <tr class="border-t border-gray-100"><td class="py-3 px-4">2</td><td class="py-3 px-4 font-semibold text-navy-900">Kelompok Keislaman</td><td class="py-3 px-4">1 2 3 4 5 6</td><td class="py-3 px-4">Pendidikan Agama Islam, Al-Qur'an, Akhlak, dan pembiasaan ibadah harian.</td><td class="py-3 px-4 text-center">👁️</td></tr>
+                  <tr class="border-t border-gray-100"><td class="py-3 px-4">3</td><td class="py-3 px-4 font-semibold text-navy-900">Kelompok Penguatan</td><td class="py-3 px-4">1 2 3 4 5 6</td><td class="py-3 px-4">Seni Budaya, PJOK, Bahasa Sunda, dan Projek Penguatan Profil Pelajar Pancasila.</td><td class="py-3 px-4 text-center">👁️</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="akademik-panel hidden" id="akademik-panel-penilaian">
+          <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+            <h2 class="text-3xl font-extrabold text-navy-900 mb-1">Sistem Penilaian</h2>
+            <p class="text-sm text-gray-500 font-medium mb-6">Komponen dan kriteria penilaian yang digunakan di SDIT Al-Hasan.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div class="border border-gray-100 rounded-2xl p-5 text-center">
+                <div class="w-12 h-12 mx-auto rounded-full bg-green-50 text-green-600 flex items-center justify-center text-2xl mb-3">📖</div>
+                <h4 class="font-bold text-navy-900 mb-1">STS (Sumatif Tengah Semester)</h4>
+                <p class="text-xs text-gray-500 font-medium mb-3">Evaluasi capaian kompetensi di pertengahan semester untuk memetakan progres belajar siswa.</p>
+                <p class="font-bold text-gray-600 text-sm">Penilaian Tengah Semester</p>
+              </div>
+              <div class="border border-gray-100 rounded-2xl p-5 text-center">
+                <div class="w-12 h-12 mx-auto rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-2xl mb-3">🧾</div>
+                <h4 class="font-bold text-navy-900 mb-1">SAS (Sumatif Akhir Semester)</h4>
+                <p class="text-xs text-gray-500 font-medium mb-3">Penilaian menyeluruh di akhir semester sebagai dasar laporan hasil belajar.</p>
+                <p class="font-bold text-gray-600 text-sm">Penilaian Akhir Semester</p>
+              </div>
+              <div class="border border-gray-100 rounded-2xl p-5 text-center">
+                <div class="w-12 h-12 mx-auto rounded-full bg-purple-50 text-purple-600 flex items-center justify-center text-2xl mb-3">🗂️</div>
+                <h4 class="font-bold text-navy-900 mb-1">Penilaian Harian & Projek</h4>
+                <p class="text-xs text-gray-500 font-medium mb-3">Penilaian praktik, proyek, dan keterampilan proses.</p>
+                <p class="font-bold text-gray-600 text-sm">Penilaian Formatif</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="akademik-panel hidden" id="akademik-panel-kalender">
+          <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+            <h2 class="text-3xl font-extrabold text-navy-900 mb-1">Kalender Akademik</h2>
+            <p class="text-sm text-gray-500 font-medium mb-6">Jadwal kegiatan akademik selama tahun ajaran berjalan.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div class="border border-gray-100 rounded-2xl overflow-hidden">
+                <div class="flex justify-between items-center px-4 py-3 border-b border-gray-100 bg-gray-50">
+                  <button class="text-gray-400">◀</button>
+                  <h4 class="font-bold text-navy-900">Mei 2025</h4>
+                  <button class="text-gray-400">▶</button>
+                </div>
+                <div class="grid grid-cols-7 text-center text-xs font-bold text-gray-400 py-3 border-b border-gray-50">
+                  <div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div><div>Min</div>
+                </div>
+                <div class="grid grid-cols-7 gap-y-3 p-4 text-sm text-navy-900 text-center">
+                  <div class="text-gray-300">28</div><div class="text-gray-300">29</div><div class="text-gray-300">30</div><div><span class="inline-flex w-8 h-8 rounded-full bg-green-500 text-white items-center justify-center">1</span></div><div>2</div><div>3</div><div>4</div>
+                  <div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>10</div><div>11</div>
+                  <div>12</div><div>13</div><div>14</div><div><span class="inline-flex w-8 h-8 rounded-full bg-blue-600 text-white items-center justify-center">15</span></div><div>16</div><div>17</div><div>18</div>
+                  <div>19</div><div><span class="inline-flex w-8 h-8 rounded-full bg-amber-500 text-white items-center justify-center">20</span></div><div>21</div><div>22</div><div>23</div><div>24</div><div>25</div>
+                  <div>26</div><div>27</div><div>28</div><div>29</div><div><span class="inline-flex w-8 h-8 rounded-full bg-purple-500 text-white items-center justify-center">30</span></div><div>31</div><div class="text-gray-300">1</div>
+                </div>
+              </div>
+              <div class="border border-gray-100 rounded-2xl p-4">
+                <h4 class="font-bold text-navy-900 mb-3">Rangkuman Semester</h4>
+                <div class="space-y-4 text-sm">
+                  <div class="border border-gray-100 rounded-xl p-4">
+                    <p class="font-semibold text-navy-900 mb-2">Semester Ganjil</p>
+                    <ul class="text-gray-500 space-y-1 list-disc pl-4">
+                      <li>Awal tahun ajaran: Juli</li>
+                      <li>STS 1: September/Oktober</li>
+                      <li>SAS 1: Desember</li>
+                    </ul>
+                  </div>
+                  <div class="border border-gray-100 rounded-xl p-4">
+                    <p class="font-semibold text-navy-900 mb-2">Semester Genap</p>
+                    <ul class="text-gray-500 space-y-1 list-disc pl-4">
+                      <li>Mulai semester: Januari</li>
+                      <li>STS 2: Maret/April</li>
+                      <li>SAS 2 & pembagian rapor: Juni</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -641,15 +749,16 @@
 
       <section class="py-12 px-4 md:px-8 max-w-7xl mx-auto">
         <div class="flex gap-3 overflow-x-auto hide-scrollbar pb-4 mb-8">
-          <button class="bg-navy-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 flex items-center gap-2 shadow-md"><i class="ph-bold ph-squares-four"></i> Semua Kegiatan</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm"><i class="ph-bold ph-graduation-cap"></i> Akademik</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm"><i class="ph-bold ph-mosque"></i> Agama</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm"><i class="ph-bold ph-soccer-ball"></i> Olahraga</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm"><i class="ph-bold ph-palette"></i> Seni & Budaya</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm"><i class="ph-bold ph-users-three"></i> Ekstrakurikuler</button>
-          <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm"><i class="ph-bold ph-dots-three"></i> Kegiatan Lainnya</button>
+          <button class="galeri-tab-btn bg-navy-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 flex items-center gap-2 shadow-md" data-galeri-tab="Semua Kegiatan" onclick="setGaleriTab('Semua Kegiatan')"><i class="ph-bold ph-squares-four"></i> Semua Kegiatan</button>
+          <button class="galeri-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm" data-galeri-tab="Akademik" onclick="setGaleriTab('Akademik')"><i class="ph-bold ph-graduation-cap"></i> Akademik</button>
+          <button class="galeri-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm" data-galeri-tab="Agama" onclick="setGaleriTab('Agama')"><i class="ph-bold ph-mosque"></i> Agama</button>
+          <button class="galeri-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm" data-galeri-tab="Olahraga" onclick="setGaleriTab('Olahraga')"><i class="ph-bold ph-soccer-ball"></i> Olahraga</button>
+          <button class="galeri-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm" data-galeri-tab="Seni & Budaya" onclick="setGaleriTab('Seni & Budaya')"><i class="ph-bold ph-palette"></i> Seni & Budaya</button>
+          <button class="galeri-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm" data-galeri-tab="Ekstrakurikuler" onclick="setGaleriTab('Ekstrakurikuler')"><i class="ph-bold ph-users-three"></i> Ekstrakurikuler</button>
+          <button class="galeri-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 flex items-center gap-2 shadow-sm" data-galeri-tab="Kegiatan Lainnya" onclick="setGaleriTab('Kegiatan Lainnya')"><i class="ph-bold ph-dots-three"></i> Kegiatan Lainnya</button>
         </div>
 
+        <h3 class="text-lg font-extrabold text-navy-900 mb-4" id="galeri-tab-title">Semua Kegiatan</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12" id="galeri-grid"></div>
         
         <div class="text-center border-b border-gray-200 pb-16">
@@ -688,12 +797,11 @@
       <section class="py-12 px-4 md:px-8 max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row justify-between gap-4 mb-8">
           <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-2">
-            <button class="bg-navy-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 shadow-sm">Semua Berita</button>
-            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm">Pengumuman</button>
-            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm">Kegiatan Sekolah</button>
-            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm">Prestasi</button>
-            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm">Artikel Pendidikan</button>
-            <button class="bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm">Agenda</button>
+            <button class="berita-tab-btn bg-navy-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 shadow-sm" data-berita-tab="Semua Berita" onclick="setBeritaTab('Semua Berita')">Semua Berita</button>
+            <button class="berita-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm" data-berita-tab="Pengumuman" onclick="setBeritaTab('Pengumuman')">Pengumuman</button>
+            <button class="berita-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm" data-berita-tab="Kegiatan" onclick="setBeritaTab('Kegiatan')">Kegiatan</button>
+            <button class="berita-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm" data-berita-tab="Prestasi" onclick="setBeritaTab('Prestasi')">Prestasi</button>
+            <button class="berita-tab-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-bold text-sm shrink-0 hover:bg-gray-50 shadow-sm" data-berita-tab="Penting" onclick="setBeritaTab('Penting')">Penting</button>
           </div>
           <select class="bg-white border border-gray-200 text-gray-800 px-4 py-2.5 rounded-xl font-bold text-sm outline-none shadow-sm"><option>Terbaru</option><option>Terlama</option></select>
         </div>
@@ -884,10 +992,10 @@
 
     <!-- 9. PORTAL NILAI -->
     <div id="portal" class="view-section">
-      <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
+      <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8 overflow-x-hidden">
         
         <!-- Sidebar Kiri -->
-        <div class="w-full md:w-64 bg-navy-900 text-white rounded-3xl p-6 flex flex-col min-h-[500px] shrink-0 sticky top-24 shadow-lg border border-navy-800">
+        <div class="w-full md:w-64 bg-navy-900 text-white rounded-3xl p-5 md:p-6 flex flex-col min-h-[420px] md:min-h-[500px] shrink-0 md:sticky md:top-24 shadow-lg border border-navy-800">
           <h3 class="text-[10px] font-bold tracking-widest text-gray-400 uppercase mb-6 pl-2">PORTAL ORANG TUA</h3>
           <nav class="space-y-2 flex-1">
             <a href="#" class="flex items-center gap-3 bg-white/10 text-white font-bold px-4 py-3 rounded-xl border border-white/5"><i class="ph-fill ph-house text-xl"></i> Lihat Nilai</a>
@@ -1089,7 +1197,12 @@
     // ── 1. FUNGSI NAVIGASI SPA
     function navigate(viewId) {
       document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-      document.getElementById(viewId).classList.add('active');
+      const targetSection = document.getElementById(viewId);
+      if (!targetSection) {
+        console.warn('Section tidak ditemukan:', viewId);
+        return;
+      }
+      targetSection.classList.add('active');
       window.scrollTo(0, 0);
 
       document.querySelectorAll('.nav-link').forEach(el => {
@@ -1097,37 +1210,28 @@
         if(el.getAttribute('data-target') === viewId) el.classList.add('active');
       });
       
-      document.getElementById('mobile-menu').classList.add('hidden');
+      document.getElementById('mobile-menu')?.classList.add('hidden');
 
       // Tampilkan/Sembunyikan CTA dan Footer untuk Portal Nilai (mengikuti desain Portal Nilai yang clean)
       if(viewId === 'portal') {
-        document.getElementById('cta-footer').style.display = 'none';
-        document.getElementById('footer-section').style.display = 'none';
+        if (document.getElementById('cta-footer')) document.getElementById('cta-footer').style.display = 'none';
+        if (document.getElementById('footer-section')) document.getElementById('footer-section').style.display = 'none';
       } else {
-        document.getElementById('cta-footer').style.display = 'block';
-        document.getElementById('footer-section').style.display = 'block';
+        if (document.getElementById('cta-footer')) document.getElementById('cta-footer').style.display = 'block';
+        if (document.getElementById('footer-section')) document.getElementById('footer-section').style.display = 'block';
       }
     }
 
-    // ── 2. DATA DUMMY
-    const orgData = [
-      { inisial: 'R', nama: 'Rahmatuloh, S.Pd.I', jab: 'Kepala Sekolah' },
-      { inisial: 'AO', nama: 'Agisa Oktanadila, S.I.Pust', jab: 'Bendahara Sekolah' },
-      { inisial: 'ME', nama: 'Muhammad Evirustandi', jab: 'Operator Sekolah' },
-      { inisial: 'BFM', nama: 'Bambang Faidul Manan', jab: 'Administrasi' },
-      { inisial: 'RN', nama: 'Risvia Ningsih', jab: 'Media Informasi' },
-      { inisial: 'MSW', nama: 'Mega Sri Wahyuni, S.Pd', jab: 'Guru Kelas 1A' },
-      { inisial: 'DFN', nama: 'Dhea Fitria Ningsih', jab: 'Guru Kelas 1B' },
-      { inisial: 'ANF', nama: 'Alfi Nur Fauziyah, S.Pd', jab: 'Guru Kelas 2A' },
-      { inisial: 'RAB', nama: 'Rif\'at Abdul Basir, S.Pd', jab: 'Guru Kelas 2B' },
-      { inisial: 'RF', nama: 'Resti Febrianti', jab: 'Guru Kelas 3A' }
-    ];
+    // ── 2. DATA STATIS NON-CMS
 
-    const programUnggulan = [
-      { ic: 'ph-book-open-text', judul: 'Tahfidz Al-Qur\'an', desc: 'Program menghafal Al-Qur\'an dengan metode yang terstruktur dan menyenangkan.', img: 'https://images.unsplash.com/photo-1605333036495-2eb42a781b0f?auto=format&fit=crop&w=400&q=80' },
-      { ic: 'ph-flask', judul: 'Sains & Teknologi', desc: 'Pembelajaran sains dan teknologi untuk menumbuhkan rasa ingin tahu.', img: 'https://images.unsplash.com/photo-1564069114553-7215e1ff1890?auto=format&fit=crop&w=400&q=80' },
-      { ic: 'ph-soccer-ball', judul: 'Olahraga & Seni', desc: 'Mengembangkan bakat dan minat siswa di bidang olahraga dan seni secara seimbang.', img: 'https://images.unsplash.com/photo-1526232761682-d26e03ac148e?auto=format&fit=crop&w=400&q=80' },
-      { ic: 'ph-users-three', judul: 'Pembinaan Karakter', desc: 'Program pembinaan karakter dan kepemimpinan untuk membentuk pribadi mulia.', img: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=400&q=80' }
+    const spmbTimeline = [
+      { step: 1, judul: 'Pembukaan Pendaftaran Gelombang 1', tgl: '06 Oktober - 30 November 2025', desc: 'Pengambilan dan pengisian formulir pendaftaran secara online atau langsung ke sekolah.', ic: 'ph-desktop' },
+      { step: 2, judul: 'Pendaftaran Gelombang 2', tgl: '01 Desember 2025 - 31 Januari 2026', desc: 'Pengisian formulir pendaftaran secara online atau langsung ke sekolah.', ic: 'ph-clipboard-text' },
+      { step: 3, judul: 'Daftar Ulang', tgl: '19 - 23 Januari 2026', desc: 'Pembayaran biaya pendaftaran dan penyerahan berkas dokumen asli.', ic: 'ph-folder-open' },
+      { step: 4, judul: 'Pengukuran Baju', tgl: '10 - 11 Maret 2026', desc: 'Pengukuran baju secara langsung oleh vendor.', ic: 'ph-t-shirt' },
+      { step: 5, judul: 'Pembagian Baju', tgl: '10 Juli 2026', desc: 'Pembagian baju seragam.', ic: 'ph-gift' },
+      { step: 6, judul: 'Silaturahmi & Serah Terima Siswa Baru', tgl: '10 Juli 2026', desc: 'Penyerahan amanat dari orang tua siswa ke sekolah.', ic: 'ph-handshake' },
+      { step: 7, judul: 'Hari Pertama Sekolah', tgl: '12 Juli 2026', desc: 'Seluruh Siswa SD Islam Terpadu Al-Hasan', ic: 'ph-buildings' }
     ];
 
     const programPendukung = [
@@ -1141,36 +1245,13 @@
       { ic: 'ph-bus', judul: 'Kunjungan Edukatif', desc: 'Kegiatan belajar di luar kelas untuk pengalaman nyata dan bermakna.' }
     ];
 
-    const spmbTimeline = [
-      { step: 1, judul: 'Pembukaan Pendaftaran Gelombang 1', tgl: '06 Oktober - 30 November 2025', desc: 'Pengambilan dan pengisian formulir pendaftaran secara online atau langsung ke sekolah.', ic: 'ph-desktop' },
-      { step: 2, judul: 'Pendaftaran Gelombang 2', tgl: '01 Desember 2025 - 31 Januari 2026', desc: 'Pengisian formulir pendaftaran secara online atau langsung ke sekolah.', ic: 'ph-clipboard-text' },
-      { step: 3, judul: 'Daftar Ulang', tgl: '19 - 23 Januari 2026', desc: 'Pembayaran biaya pendaftaran dan penyerahan berkas dokumen asli.', ic: 'ph-folder-open' },
-      { step: 4, judul: 'Pengukuran Baju', tgl: '10 - 11 Maret 2026', desc: 'Pengukuran baju secara langsung oleh vendor.', ic: 'ph-t-shirt' },
-      { step: 5, judul: 'Pembagian Baju', tgl: '10 Juli 2026', desc: 'Pembagian baju seragam.', ic: 'ph-gift' },
-      { step: 6, judul: 'Silaturahmi & Serah Terima Siswa Baru', tgl: '10 Juli 2026', desc: 'Penyerahan amanat dari orang tua siswa ke sekolah.', ic: 'ph-handshake' },
-      { step: 7, judul: 'Hari Pertama Sekolah', tgl: '12 Juli 2026', desc: 'Seluruh Siswa SD Islam Terpadu Al-Hasan', ic: 'ph-buildings' }
-    ];
 
-    const galeriImg = [
-      { t: 'Kegiatan Belajar Mengajar', c: 'Akademik', f: 32, u: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Kegiatan Keagamaan', c: 'Agama', f: 28, u: 'https://images.unsplash.com/photo-1605333036495-2eb42a781b0f?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Kegiatan Olahraga', c: 'Olahraga', f: 24, u: 'https://images.unsplash.com/photo-1526232761682-d26e03ac148e?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Seni & Budaya', c: 'Seni & Budaya', f: 18, u: 'https://images.unsplash.com/photo-1563806225-728b7b2ce8f5?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Ekstrakurikuler Pramuka', c: 'Ekstrakurikuler', f: 21, u: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Upacara Bendera', c: 'Kegiatan Lainnya', f: 15, u: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Kunjungan & Study Tour', c: 'Kegiatan Lainnya', f: 27, u: 'https://images.unsplash.com/photo-1511649475669-e288648b2339?auto=format&fit=crop&w=400&q=80' },
-      { t: 'Event & Peringatan Hari Besar', c: 'Kegiatan Lainnya', f: 16, u: 'https://images.unsplash.com/photo-1514365313628-d84e4e94119d?auto=format&fit=crop&w=400&q=80' }
-    ];
-
-    const beritaUtama = [
-      { kat: 'Kegiatan Sekolah', jdl: 'Siswa SDIT Al-Hasan Ikuti Kegiatan Menanam Pohon di Kebun Raya', desc: 'Kegiatan ini bertujuan untuk menanamkan kepedulian terhadap lingkungan sejak dini kepada para siswa.', tgl: '20 Mei 2026', l: '256', u: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=600&q=80', b:'20', m:'Mei\n2026' },
-      { kat: 'Prestasi', jdl: 'Tim Robotik SDIT Al-Hasan Raih Juara 2 Lomba Robotik Tingkat Kabupaten', desc: 'Prestasi membanggakan diraih oleh tim robotik SDIT Al-Hasan dalam ajang Lomba Robotik tingkat Kabupaten.', tgl: '15 Mei 2026', l: '342', u: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80', b:'15', m:'Mei\n2026' },
-      { kat: 'Pengumuman', jdl: 'Pengumuman Kelulusan Siswa Kelas 6 Tahun Ajaran 2025/2026', desc: 'Selamat kepada seluruh siswa kelas 6 atas kelulusannya. Teruslah berprestasi dan menjadi generasi terbaik.', tgl: '10 Mei 2026', l: '532', u: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80', b:'10', m:'Mei\n2026' },
-      { kat: 'Artikel Pendidikan', jdl: 'Tips Menumbuhkan Minat Baca pada Anak Usia Sekolah Dasar', desc: 'Membaca adalah jendela dunia. Berikut beberapa tips untuk menumbuhkan minat baca pada anak sejak dini.', tgl: '05 Mei 2026', l: '189', u: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80', b:'05', m:'Mei\n2026' }
-    ];
+    // Penanda mode fallback lokal (saat DATA_NILAI belum tersedia dari Firebase/data.js)
+    let IS_LOCAL_FALLBACK_DATA = false;
 
     // Dummy Rapor untuk test jika data.js tidak ada
     if(typeof DATA_NILAI === 'undefined') {
+      IS_LOCAL_FALLBACK_DATA = true;
       var DATA_NILAI = [
         {
           nisn: "3177667971",
@@ -1191,6 +1272,18 @@
 
     // ── 3. RENDER FUNGSI
     document.addEventListener('DOMContentLoaded', () => {
+      window.switchAkademikTab = function(tab) {
+        document.querySelectorAll('.akademik-tab-btn').forEach(btn => {
+          const active = btn.dataset.akademikTab === tab;
+          btn.classList.toggle('bg-accent', active);
+          btn.classList.toggle('text-white', active);
+          btn.classList.toggle('shadow-md', active);
+          btn.classList.toggle('text-gray-500', !active);
+        });
+        document.querySelectorAll('.akademik-panel').forEach(panel => panel.classList.add('hidden'));
+        document.getElementById('akademik-panel-' + tab)?.classList.remove('hidden');
+      };
+      window.switchAkademikTab('kurikulum');
       
       // Keunggulan Beranda
       const kData = [
@@ -1208,53 +1301,32 @@
         </div>
       `).join('');
 
-      // Preview Berita Beranda
-      document.getElementById('beranda-berita-preview').innerHTML = beritaUtama.slice(0,3).map(b => `
-        <div class="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden group">
-          <div class="h-48 relative overflow-hidden">
-             <img src="${b.u}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-             <div class="absolute top-4 left-4 bg-white/90 backdrop-blur text-navy-900 text-[10px] font-bold px-3 py-1.5 rounded-lg">${b.kat}</div>
-          </div>
-          <div class="p-6">
-            <div class="text-[10px] text-gray-400 font-bold mb-2">${b.tgl}</div>
-            <h3 class="font-bold text-navy-900 text-base mb-2 group-hover:text-accent transition line-clamp-2">${b.jdl}</h3>
-            <p class="text-xs text-gray-500 font-medium mb-4 line-clamp-2">${b.desc}</p>
-            <a href="#" class="text-accent text-[11px] font-bold flex items-center gap-1">Baca Selengkapnya <i class="ph-bold ph-arrow-right"></i></a>
-          </div>
-        </div>
-      `).join('');
-
       // Struktur Organisasi (Profil)
-      document.getElementById('grid-org').innerHTML = orgData.map(o => `
+      const orgSource = (typeof CMS_GURU !== 'undefined' && CMS_GURU.length)
+        ? CMS_GURU.filter(g => g.status !== 'Tidak Aktif').map(g => ({
+            inisial: g.inisial || (g.nama || '?').split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase(),
+            nama: g.nama || '-',
+            jab: g.jabatan || '-'
+          }))
+        : [];
+      document.getElementById('grid-org').innerHTML = orgSource.map(o => `
         <div class="bg-white p-5 rounded-[2rem] border border-gray-100 flex flex-col items-center text-center shadow-sm hover:shadow-md transition">
           <div class="w-12 h-12 bg-blue-50 text-accent font-bold rounded-full flex items-center justify-center text-lg mb-3">${o.inisial}</div>
           <h4 class="font-bold text-navy-900 text-[13px] mb-1 line-clamp-2">${o.nama}</h4>
           <p class="text-[10px] text-gray-500 font-medium">${o.jab}</p>
         </div>
-      `).join('');
+      `).join('') || `<div class="col-span-full bg-white p-8 rounded-2xl border border-gray-100 text-center text-sm font-medium text-gray-500">Data guru/staf belum tersedia di database.</div>`;
 
-      // Program Unggulan
-      document.getElementById('program-unggulan-grid').innerHTML = programUnggulan.map(p => `
-        <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden group hover:shadow-md transition">
-          <div class="h-44 overflow-hidden relative">
-            <img src="${p.img}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-            <div class="absolute -bottom-6 left-6 w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center text-accent text-xl border-4 border-white"><i class="ph-fill ${p.ic}"></i></div>
+      // Program Pendukung (tetap statis seperti versi sebelumnya)
+      const elProgramPendukung = document.getElementById('program-pendukung-grid');
+      if (elProgramPendukung) {
+        elProgramPendukung.innerHTML = programPendukung.map(p => `
+          <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-start gap-4">
+            <div class="w-10 h-10 bg-gray-50 text-gray-500 rounded-xl flex items-center justify-center text-xl shrink-0"><i class="ph-fill ${p.ic}"></i></div>
+            <div><h4 class="font-bold text-navy-900 text-sm mb-1.5">${p.judul}</h4><p class="text-[11px] text-gray-500 font-medium leading-relaxed">${p.desc}</p></div>
           </div>
-          <div class="p-6 pt-10">
-            <h3 class="font-bold text-navy-900 text-base mb-2">${p.judul}</h3>
-            <p class="text-xs text-gray-500 font-medium mb-6 leading-relaxed line-clamp-3">${p.desc}</p>
-            <a href="#" class="text-accent text-xs font-bold flex items-center gap-1.5">Selengkapnya <i class="ph-bold ph-arrow-right"></i></a>
-          </div>
-        </div>
-      `).join('');
-
-      // Program Pendukung
-      document.getElementById('program-pendukung-grid').innerHTML = programPendukung.map(p => `
-        <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-start gap-4">
-          <div class="w-10 h-10 bg-gray-50 text-gray-500 rounded-xl flex items-center justify-center text-xl shrink-0"><i class="ph-fill ${p.ic}"></i></div>
-          <div><h4 class="font-bold text-navy-900 text-sm mb-1.5">${p.judul}</h4><p class="text-[11px] text-gray-500 font-medium leading-relaxed">${p.desc}</p></div>
-        </div>
-      `).join('');
+        `).join('');
+      }
 
       // Timeline SPMB
       document.getElementById('spmb-timeline').innerHTML = spmbTimeline.map(t => `
@@ -1272,19 +1344,51 @@
         </div>
       `).join('');
 
-      // Galeri
-      document.getElementById('galeri-grid').innerHTML = galeriImg.map(g => `
-        <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden group cursor-pointer p-2">
-          <div class="aspect-[4/3] relative overflow-hidden rounded-[1.5rem]">
-            <img src="${g.u}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-            <div class="absolute bottom-3 left-3 bg-black/50 backdrop-blur text-white text-[10px] font-bold px-2 py-1 rounded flex items-center gap-1.5"><i class="ph-bold ph-image"></i> ${g.f} Foto</div>
+      const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+      const fixGDrive = u => {
+        if (!u) return u;
+        const m = u.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+        return m ? `https://drive.google.com/thumbnail?id=${m[1]}&sz=w600` : u;
+      };
+      const fmtDate = d => {
+        if (!d) return '';
+        const p = d.split('-'); const bln = ['','Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+        return p.length < 3 ? d : `${p[2]} ${bln[+p[1]]||p[1]} ${p[0]}`;
+      };
+
+      function renderGaleriSection(activeTab = 'Semua Kegiatan') {
+        const source = (window.CMS_GALERI || []);
+        const list = activeTab === 'Semua Kegiatan'
+          ? source
+          : source.filter(g => (g.kategori || g.category || 'Kegiatan Lainnya') === activeTab);
+        const title = document.getElementById('galeri-tab-title');
+        if (title) title.textContent = activeTab;
+        document.getElementById('galeri-grid').innerHTML = list.length ? list.map(g => `
+          <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden group cursor-pointer p-2">
+            <div class="aspect-[4/3] relative overflow-hidden rounded-[1.5rem]">
+              <img src="${fixGDrive(esc(g.url||''))}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+            </div>
+            <div class="p-4 pb-2">
+              <h3 class="font-bold text-navy-900 text-sm mb-2 truncate">${esc(g.caption || 'Tanpa Judul')}</h3>
+              <span class="inline-block bg-blue-50 text-accent text-[10px] font-bold px-2.5 py-1 rounded-lg tracking-wide">${esc(g.kategori || g.category || 'Kegiatan Lainnya')}</span>
+            </div>
           </div>
-          <div class="p-4 pb-2">
-            <h3 class="font-bold text-navy-900 text-sm mb-2 truncate">${g.t}</h3>
-            <span class="inline-block bg-blue-50 text-accent text-[10px] font-bold px-2.5 py-1 rounded-lg tracking-wide">${g.c}</span>
-          </div>
-        </div>
-      `).join('');
+        `).join('') : `<div class="col-span-full bg-white p-8 rounded-2xl border border-gray-100 text-center text-gray-500 text-sm font-medium">Belum ada konten pada tab ${activeTab}.</div>`;
+      }
+      window.setGaleriTab = function(tab) {
+        window._GALERI_TAB = tab;
+        document.querySelectorAll('.galeri-tab-btn').forEach(btn => {
+          const active = btn.dataset.galeriTab === tab;
+          btn.classList.toggle('bg-navy-900', active);
+          btn.classList.toggle('text-white', active);
+          btn.classList.toggle('border', !active);
+          btn.classList.toggle('border-gray-200', !active);
+          btn.classList.toggle('bg-white', !active);
+          btn.classList.toggle('text-gray-600', !active);
+        });
+        renderGaleriSection(tab);
+      };
+      window.setGaleriTab('Semua Kegiatan');
 
       // Video
       document.getElementById('video-grid').innerHTML = [
@@ -1308,46 +1412,46 @@
         </div>
       `).join('');
 
-      // Berita List Main
-      document.getElementById('berita-list-main').innerHTML = beritaUtama.map(b => `
-        <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden flex flex-col sm:flex-row group hover:shadow-md transition p-2">
-          <div class="w-full sm:w-64 h-48 sm:h-auto relative overflow-hidden shrink-0 rounded-[1.5rem]">
-            <img src="${b.u}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-            <div class="absolute top-3 left-3 bg-navy-900 text-white text-center rounded-xl overflow-hidden shadow-sm">
-              <div class="bg-navy-800 text-sm font-black px-3 py-1.5">${b.b}</div>
-              <div class="text-[9px] font-bold px-3 py-1 whitespace-pre-wrap leading-tight bg-navy-900">${b.m}</div>
+      function renderBeritaSection(activeTab = 'Semua Berita') {
+        const source = window.CMS_BERITA || [];
+        const list = activeTab === 'Semua Berita' ? source : source.filter(b => (b.kategori || '') === activeTab);
+        document.getElementById('berita-list-main').innerHTML = list.length ? list.map(b => `
+          <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden flex flex-col sm:flex-row group hover:shadow-md transition p-2">
+            <div class="w-full sm:w-64 h-48 sm:h-auto relative overflow-hidden shrink-0 rounded-[1.5rem] bg-gray-100">
+              ${(b.imageUrl && (b.thumbnailType === 'foto' || !b.thumbnailType))
+                ? `<img src="${esc(b.imageUrl)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">`
+                : `<div class="w-full h-full flex items-center justify-center text-5xl">${esc(b.emoji || '📋')}</div>`}
             </div>
-          </div>
-          <div class="p-6 flex flex-col justify-center flex-1">
-            <div class="mb-3">
-              <span class="bg-blue-50 text-accent text-[10px] font-bold px-2.5 py-1 rounded-lg">${b.kat}</span>
-            </div>
-            <h3 class="font-bold text-navy-900 text-lg mb-2 group-hover:text-accent transition line-clamp-2 leading-snug">${b.jdl}</h3>
-            <p class="text-xs text-gray-500 font-medium mb-4 line-clamp-2 leading-relaxed">${b.desc}</p>
-            <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
-              <div class="flex items-center gap-4 text-[11px] text-gray-400 font-medium">
-                <span class="flex items-center gap-1.5"><i class="ph-bold ph-calendar-blank"></i> ${b.tgl}</span>
-                <span class="flex items-center gap-1.5"><i class="ph-bold ph-eye"></i> ${b.l} Dilihat</span>
+            <div class="p-6 flex flex-col justify-center flex-1">
+              <div class="mb-3">
+                <span class="bg-blue-50 text-accent text-[10px] font-bold px-2.5 py-1 rounded-lg">${esc(b.kategori || 'Berita')}</span>
               </div>
-              <a href="#" class="text-accent text-xs font-bold flex items-center gap-1 hover:underline">Baca <i class="ph-bold ph-arrow-right"></i></a>
+              <h3 class="font-bold text-navy-900 text-lg mb-2 group-hover:text-accent transition line-clamp-2 leading-snug">${esc(b.judul || '')}</h3>
+              <p class="text-xs text-gray-500 font-medium mb-4 line-clamp-2 leading-relaxed">${esc((b.ringkasan || b.isi || '').substring(0, 180))}</p>
+              <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
+                <div class="flex items-center gap-4 text-[11px] text-gray-400 font-medium">
+                  <span class="flex items-center gap-1.5"><i class="ph-bold ph-calendar-blank"></i> ${esc(fmtDate(b.tgl || ''))}</span>
+                </div>
+                ${(b.fileUrl ? `<a href="${esc(b.fileUrl)}" target="_blank" class="text-accent text-xs font-bold flex items-center gap-1 hover:underline">Lampiran <i class="ph-bold ph-arrow-right"></i></a>` : '')}
+              </div>
             </div>
           </div>
-        </div>
-      `).join('');
-
-      // Berita Populer
-      document.getElementById('berita-populer').innerHTML = [
-        { n:1, j:'SDIT Al-Hasan Borong Piala di Olimpiade Sains', d:'12 Mei 2026', u:'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=100' },
-        { n:2, j:'Kegiatan Pesantren Kilat Bulan Ramadan', d:'18 Mar 2026', u:'https://images.unsplash.com/photo-1605333036495-2eb42a781b0f?w=100' },
-        { n:3, j:'Upacara Hardiknas 2026 Berlangsung Khidmat', d:'02 Mei 2026', u:'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=100' },
-        { n:4, j:'Siswa SDIT Al-Hasan Lolos Seleksi O2SN', d:'22 Apr 2026', u:'https://images.unsplash.com/photo-1526232761682-d26e03ac148e?w=100' }
-      ].map(b => `
-        <div class="flex items-center gap-4 group cursor-pointer border-b border-gray-50 pb-3 last:border-0 last:pb-0">
-          <div class="text-base font-black text-gray-300 group-hover:text-accent transition w-4 text-center">${b.n}</div>
-          <img src="${b.u}" class="w-14 h-14 rounded-xl object-cover shadow-sm">
-          <div class="flex-1"><h4 class="font-bold text-navy-900 text-xs mb-1 line-clamp-2 group-hover:text-accent transition leading-tight">${b.j}</h4><p class="text-[10px] text-gray-400 font-medium">${b.d}</p></div>
-        </div>
-      `).join('');
+        `).join('') : `<div class="bg-white rounded-2xl border border-gray-100 p-10 text-center text-sm font-medium text-gray-500">Belum ada artikel untuk kategori ${activeTab}.</div>`;
+      }
+      window.setBeritaTab = function(tab) {
+        window._BERITA_TAB = tab;
+        document.querySelectorAll('.berita-tab-btn').forEach(btn => {
+          const active = btn.dataset.beritaTab === tab;
+          btn.classList.toggle('bg-navy-900', active);
+          btn.classList.toggle('text-white', active);
+          btn.classList.toggle('border', !active);
+          btn.classList.toggle('border-gray-200', !active);
+          btn.classList.toggle('bg-white', !active);
+          btn.classList.toggle('text-gray-600', !active);
+        });
+        renderBeritaSection(tab);
+      };
+      window.setBeritaTab('Semua Berita');
 
     });
 
@@ -1373,8 +1477,15 @@
       // Tampilkan kontainer dengan animasi
       container.classList.remove('hidden');
 
+      const fallbackWarn = IS_LOCAL_FALLBACK_DATA
+        ? `<div class="mb-4 bg-amber-50 border border-amber-200 text-amber-800 text-xs font-medium px-4 py-3 rounded-xl">
+             ⚠️ Portal sedang memakai data fallback lokal (demo). Pastikan Firestore aktif untuk data nilai terbaru.
+           </div>`
+        : '';
+
       if (!dataSiswa) {
         container.innerHTML = `
+          ${fallbackWarn}
           <div class="text-center py-8">
             <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 border border-red-100"><i class="ph-fill ph-warning-circle"></i></div>
             <h3 class="font-bold text-navy-900 text-lg mb-2">Data Tidak Ditemukan</h3>
@@ -1391,6 +1502,7 @@
 
       if (nilaiList.length === 0) {
         container.innerHTML = `
+          ${fallbackWarn}
           <div class="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">
             <div class="w-12 h-12 bg-navy-900 text-white rounded-xl flex items-center justify-center text-xl font-bold"><i class="ph-fill ph-student"></i></div>
             <div>
@@ -1455,6 +1567,7 @@
       `;
 
       container.innerHTML = `
+        ${fallbackWarn}
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-gray-100">
           <div class="flex items-center gap-4">
             <div class="w-14 h-14 bg-blue-50 text-accent rounded-2xl flex items-center justify-center text-2xl font-black border border-blue-100">${dataSiswa.nama.charAt(0)}</div>
