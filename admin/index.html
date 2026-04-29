@@ -537,6 +537,7 @@
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <label class="input-label">Pilih Siswa</label>
+                  <input id="nv-search" oninput="filterNilaiSiswa(this.value)" class="input-field mb-2" placeholder="Cari nama / NISN siswa...">
                   <select id="nv-siswa" onchange="loadFormNilai()" class="input-field cursor-pointer bg-gray-50">
                     <option value="">-- Pilih Siswa --</option>
                   </select>

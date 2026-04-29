@@ -727,6 +727,17 @@ window.loadNilaiDropdown = function() {
     DATA_NILAI.map(s => `<option value="${s.nisn}">${s.nama} (${s.nisn}) - Kelas ${s.kelas}</option>`).join('');
 };
 
+window.filterNilaiSiswa = function(keyword = '') {
+  const sel = document.getElementById('nv-siswa');
+  if (!sel) return;
+  const k = String(keyword).toLowerCase().trim();
+  const list = !k ? DATA_NILAI : DATA_NILAI.filter(s =>
+    String(s.nama || '').toLowerCase().includes(k) || String(s.nisn || '').includes(k)
+  );
+  sel.innerHTML = '<option value="">-- Pilih Siswa --</option>' +
+    list.map(s => `<option value="${s.nisn}">${s.nama} (${s.nisn}) - Kelas ${s.kelas}</option>`).join('');
+};
+
 window.loadFormNilai = function() {
   const nisn = document.getElementById('nv-siswa')?.value;
   const ul   = document.getElementById('nv-ul')?.value;
@@ -786,6 +797,7 @@ const EXCEL_COL_MAP = {
 
 window.prosesFile = function(file) {
   if (!file) return;
+  OK(`File dipilih: ${file.name}. Sedang diproses...`);
   if (file.name.match(/\.xlsx?$/i)) prosesExcel(file);
   else prosesCSV(file);
 };

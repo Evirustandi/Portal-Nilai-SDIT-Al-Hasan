@@ -1595,7 +1595,7 @@
               <div class="text-[11px] font-bold text-gray-500 mt-1">NISN: ${dataSiswa.nisn} <span class="mx-1">•</span> Kelas ${dataSiswa.kelas}</div>
             </div>
           </div>
-          <button class="bg-white border border-gray-200 text-navy-900 px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-gray-50 flex items-center justify-center gap-2 shadow-sm"><i class="ph-bold ph-printer"></i> Cetak PDF</button>
+          <button onclick="printNilaiPdf()" class="bg-white border border-gray-200 text-navy-900 px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-gray-50 flex items-center justify-center gap-2 shadow-sm"><i class="ph-bold ph-printer"></i> Cetak PDF</button>
         </div>
         <div class="mb-5 flex justify-between items-end">
           <div>
@@ -1605,6 +1605,26 @@
         </div>
         ${tableHtml}
       `;
+    }
+  </script>
+
+  <script>
+    function printNilaiPdf() {
+      const el = document.getElementById('hasil-nilai-container');
+      if (!el || !el.innerText.trim()) {
+        alert('Data nilai belum tersedia untuk dicetak.');
+        return;
+      }
+      const w = window.open('', '_blank');
+      if (!w) return;
+      w.document.write(`
+        <html><head><title>Cetak Nilai</title>
+        <style>body{font-family:Arial,sans-serif;padding:24px;color:#111827}table{width:100%;border-collapse:collapse}td,th{border:1px solid #e5e7eb;padding:8px;text-align:left}th{background:#f9fafb}</style>
+        </head><body>${el.innerHTML}</body></html>
+      `);
+      w.document.close();
+      w.focus();
+      w.print();
     }
   </script>
   
