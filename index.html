@@ -1341,21 +1341,30 @@
         `).join('');
       }
 
-      // Timeline SPMB
-      document.getElementById('spmb-timeline').innerHTML = spmbTimeline.map(t => `
-        <div class="flex gap-4 sm:gap-6 relative group">
-          <div class="absolute left-5 top-10 bottom-[-16px] w-0.5 bg-gray-100 group-last:hidden"></div>
-          <div class="w-10 h-10 bg-navy-900 text-white rounded-full flex items-center justify-center font-bold text-sm shrink-0 shadow-sm relative z-10">${t.step}</div>
-          <div class="bg-white border border-gray-100 rounded-[1.5rem] p-5 sm:p-6 flex-1 shadow-sm flex items-center justify-between gap-4">
-            <div>
-              <h3 class="font-bold text-navy-900 text-sm mb-1">${t.judul}</h3>
-              <p class="text-[11px] font-medium text-gray-400 mb-2">${t.tgl}</p>
-              <p class="text-[12px] text-gray-500 font-medium leading-relaxed">${t.desc}</p>
-            </div>
-            <div class="w-12 h-12 border border-gray-100 rounded-xl flex items-center justify-center text-accent text-xl shrink-0 hidden sm:flex bg-blue-50/50"><i class="ph-fill ${t.ic}"></i></div>
+      // Timeline SPMB - Vertical Stepper
+      document.getElementById('spmb-timeline').innerHTML = `<div class="relative flex flex-col gap-0">` + spmbTimeline.map((t, idx) => `
+        <div class="flex gap-5 relative">
+          <!-- Connector line -->
+          <div class="flex flex-col items-center">
+            <div class="w-11 h-11 bg-navy-900 text-white rounded-full flex items-center justify-center font-extrabold text-sm shrink-0 shadow-md z-10 border-2 border-white ring-2 ring-navy-900/20">${t.step}</div>
+            ${idx < spmbTimeline.length - 1 ? `<div class="w-0.5 flex-1 bg-gradient-to-b from-navy-900/30 to-gray-100 my-1" style="min-height:32px"></div>` : ''}
           </div>
-        </a>
-      `).join('');
+          <!-- Card -->
+          <div class="pb-${idx < spmbTimeline.length - 1 ? '5' : '0'} flex-1">
+            <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow flex items-center justify-between gap-4">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-[10px] font-bold text-accent uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-full">Tahap ${t.step}</span>
+                </div>
+                <h3 class="font-extrabold text-navy-900 text-sm mb-1">${t.judul}</h3>
+                <p class="text-[11px] font-semibold text-accent mb-2 flex items-center gap-1"><i class="ph-fill ph-calendar-blank"></i> ${t.tgl}</p>
+                <p class="text-[12px] text-gray-500 font-medium leading-relaxed">${t.desc}</p>
+              </div>
+              <div class="w-12 h-12 border border-blue-100 rounded-xl flex items-center justify-center text-accent text-2xl shrink-0 hidden sm:flex bg-blue-50"><i class="ph-fill ${t.ic}"></i></div>
+            </div>
+          </div>
+        </div>
+      `).join('') + `</div>`;
 
       const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
       const fixGDrive = u => {
@@ -1704,8 +1713,15 @@
             tanggal: new Date().toISOString().slice(0,10),
             createdAt: serverTimestamp()
           });
-          alert('Formulir berhasil dikirim.');
-          spmbFormPublic.reset();
+          // Tampilkan pesan sukses yang ramah untuk orang tua
+          spmbFormPublic.innerHTML = `
+            <div class="flex flex-col items-center justify-center py-12 text-center gap-4">
+              <div class="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center text-4xl">✅</div>
+              <h3 class="font-extrabold text-navy-900 text-xl">Pendaftaran Berhasil Terkirim!</h3>
+              <p class="text-sm text-gray-500 font-medium max-w-sm leading-relaxed">Terima kasih, data calon siswa telah kami terima. Pihak sekolah akan menghubungi Anda melalui WhatsApp yang telah didaftarkan.</p>
+              <p class="text-xs text-gray-400 font-medium">Informasi lebih lanjut: <span class="text-accent font-bold">0857-7286-0115</span></p>
+            </div>
+          `;
         } catch (err) {
           console.error('Gagal kirim formulir SPMB:', err);
           alert('Gagal mengirim formulir. Coba lagi.');
